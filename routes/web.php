@@ -39,52 +39,75 @@ use App\Http\Controllers\ExportController;
 |
 */
 
-Route::get('/', function () {
-    return view('/home');
-})->middleware('auth');
+// Route::get('/', function () {
+//     return view('/home');
+// })->middleware('auth');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
+});
+
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/partrepair', [PartrepairController::class, 'index'])->name('partrepair');
-    // Route::get('/partrepair/request', [PartrepairController::class, 'request'])->name('request');
-    // Route::get('/partrepair/ganttchart', [GanttchartController::class, 'index'])->name('ganttchart');
-    // Route::get('/partrepair/deletedtable', [WaitingrepairController::class, 'deleted'])->name('deletedtable');
-    // Route::get('/partrepair/finishtable', [WaitingrepairController::class, 'finish'])->name('finishtable');
+    Route::get('/partrepair', [PartrepairController::class, 'index'])->name('partrepair');
+    Route::get('/partrepair/request', [PartrepairController::class, 'request'])->name('request');
+    Route::get('/partrepair/ganttchart', [GanttchartController::class, 'index'])->name('ganttchart');
+    Route::get('/partrepair/deletedtable', [WaitingrepairController::class, 'deleted'])->name('deletedtable');
+    Route::get('/partrepair/finishtable', [WaitingrepairController::class, 'finish'])->name('finishtable');
 
-    // Route::prefix('partrepair')->name('partrepair.')->group(function () {
-    //     Route::get('/waitingtable', [WaitingrepairController::class, 'index'])->name('waitingtable.index');
-    //     Route::get('/registeredticket', [RegisteredTicketController::class, 'index'])->name('registeredticket.index');
-    //     Route::get('/waitingtable/{id}', [WaitingrepairController::class, 'waitingRepairForm1'])->name('waitingtable.show');
-    //     Route::get('/waitingtable/form2/{id}', [WaitingrepairController::class, 'waitingRepairForm2'])->name('waitingtable.show.form2');
-    //     Route::get('/waitingtable/form3/{id}', [WaitingrepairController::class, 'waitingRepairForm3'])->name('waitingtable.show.form3');
-    //     Route::get('/waitingtable/form4/{id}', [WaitingrepairController::class, 'waitingRepairForm4'])->name('waitingtable.show.form4');
-    //     Route::get('/waitingtable/form5/{id}', [WaitingrepairController::class, 'waitingRepairForm5'])->name('waitingtable.show.form5');
-    //     Route::delete('/waitingtable/{id}', [WaitingrepairController::class, 'destroy'])->name('waitingtable.destroy');
-    //     Route::post('/waitingtable', [WaitingrepairController::class, 'store'])->name('waitingtable.store');
-    //     Route::put('/progresstable/revision/{id}', [ProgressrepairController::class, 'revision'])->name('progress.revision');
-    //     Route::put('/progresstable/delay/{id}', [ProgressrepairController::class, 'delay'])->name('progress.delay');
-    //     Route::resource('/progresstable', ProgressrepairController::class);
-    //     Route::resource('/progresspemakaian', ProgresspemakaianController::class);
-    //     Route::resource('/progresstrial', ProgresstrialController::class);
-    //     Route::resource('/finishrepair', FinishrepairController::class);
-    //     Route::resource('/stockout', StockoutController::class);
-    // });
+    Route::prefix('partrepair')->name('partrepair.')->group(function () {
+        Route::get('/waitingtable', [WaitingrepairController::class, 'index'])->name('waitingtable.index');
+        Route::get('/registeredticket', [RegisteredTicketController::class, 'index'])->name('registeredticket.index');
+        Route::get('/waitingtable/{id}', [WaitingrepairController::class, 'waitingRepairForm1'])->name('waitingtable.show');
+        Route::get('/waitingtable/form2/{id}', [WaitingrepairController::class, 'waitingRepairForm2'])->name('waitingtable.show.form2');
+        Route::get('/waitingtable/form3/{id}', [WaitingrepairController::class, 'waitingRepairForm3'])->name('waitingtable.show.form3');
+        Route::get('/waitingtable/form4/{id}', [WaitingrepairController::class, 'waitingRepairForm4'])->name('waitingtable.show.form4');
+        Route::get('/waitingtable/form5/{id}', [WaitingrepairController::class, 'waitingRepairForm5'])->name('waitingtable.show.form5');
+        Route::delete('/waitingtable/{id}', [WaitingrepairController::class, 'destroy'])->name('waitingtable.destroy');
+        Route::post('/waitingtable', [WaitingrepairController::class, 'store'])->name('waitingtable.store');
+        Route::put('/progresstable/revision/{id}', [ProgressrepairController::class, 'revision'])->name('progress.revision');
+        Route::put('/progresstable/delay/{id}', [ProgressrepairController::class, 'delay'])->name('progress.delay');
+        Route::resource('/progresstable', ProgressrepairController::class);
+        Route::resource('/progresspemakaian', ProgresspemakaianController::class);
+        Route::resource('/progresstrial', ProgresstrialController::class);
+        Route::resource('/finishrepair', FinishrepairController::class);
+        Route::resource('/stockout', StockoutController::class);
+        Route::resource('/waitingapprove', WaitingApprovalController::class);
+    });
 
-    // Route::resource('matrix/section', SectionController::class);
-    // Route::resource('matrix/line', LineController::class);
-    // Route::resource('matrix/machine', MachineController::class);
-    // Route::resource('matrix/maker', MakerController::class);
-    // Route::resource('matrix/master_spare_part', MastersparepartController::class);
-    // Route::resource('matrix/standard_pengecekan', StandardpengecekanController::class);
-    // Route::resource('matrix/repair_kit', RepairkitController::class);
-    // Route::resource('matrix/subcont', SubcontController::class);
-    // Route::resource('matrix/item_standard', ItemstandardController::class);
-    // Route::resource('matrix/code_part_repair', CodepartrepairController::class);
+    Route::resource('matrix/section', SectionController::class);
+    Route::resource('matrix/line', LineController::class);
+    Route::resource('matrix/machine', MachineController::class);
+    Route::resource('matrix/maker', MakerController::class);
+    Route::resource('matrix/master_spare_part', MastersparepartController::class);
+    Route::resource('matrix/standard_pengecekan', StandardpengecekanController::class);
+    Route::resource('matrix/repair_kit', RepairkitController::class);
+    Route::resource('matrix/subcont', SubcontController::class);
+    Route::resource('matrix/item_standard', ItemstandardController::class);
+    Route::resource('matrix/code_part_repair', CodepartrepairController::class);
     Route::resource('matrix/category_code', CategoryCodeController::class);
-    // Route::resource('Auth/profile', ProfileController::class);
+    Route::resource('Auth/profile', ProfileController::class);
+
+
+    Route::get('/ajax', [InfoController::class, 'index'])->name('ajax');
+    Route::get('/getline', [InfoController::class, 'getline'])->name('get-line');
+    Route::get('/getmachine', [InfoController::class, 'getmachine'])->name('get-machine');
+    Route::get('/getlabour', [InfoController::class, 'getlabour'])->name('get-labour');
+    Route::get('/get-number-of-repair', [InfoController::class, 'getNumberOfRepair'])->name('get-number-of-repair');
+    Route::get('/getMaker', [InfoController::class, 'getmaker'])->name('get-maker');
+    Route::get('/getTypeOfPart', [InfoController::class, 'getTyoeOfPart'])->name('get-type-of-part');
+    Route::get('/getSubcont', [InfoController::class, 'getSubcont'])->name('get-subcont');
+    Route::get('/getcategory', [InfoController::class, 'getcategory'])->name('get-category');
+    Route::get('/report', 'HomeController@reportHome')->name('report');
+    Route::get('/partrepair/masterdelete', [InfoController::class, 'masterdelete'])->name('part-repair-master-delete');
+    Route::get('/getmaster', [InfoController::class, 'getmaster'])->name('get-master');
+    Route::get('/mymodel', [InfoController::class, 'mymodel'])->name('mymodel');
+    Route::get('/mymodelrevision', [InfoController::class, 'mymodelrevision'])->name('mymodelrevision');
+    Route::patch('/updatemodel/{id}', [InfoController::class, 'updatemodel']);
+    Route::post('/export', [ExportController::class, 'export'])->name('export');
 });
 
 // Route::group(['middleware' => 'auth'], function () {
