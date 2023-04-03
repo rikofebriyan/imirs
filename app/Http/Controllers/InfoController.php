@@ -15,6 +15,7 @@ use App\Models\Progressrepair;
 use App\Models\MasterSparePart;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\User;
+use Yajra\DataTables\DataTables;
 
 // use App\Finishrepair;
 // use App\User;
@@ -156,7 +157,7 @@ class InfoController extends Controller
         $model = MasterSparePart::query();
         return Datatables::of($model)
             ->addColumn('action', function ($model) {
-                return '<form action="' . route('matrix.master_spare_part.destroy', $model->id) . '" method="DELETE" style="display:inline">
+                return '<form action="' . route('master_spare_part.destroy', $model->id) . '" method="DELETE" style="display:inline">
             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(`Yakin?`)"><i class="bi bi-trash"></i></button>
             </form><button type="button" class="btn icon btn-primary btn-sm me-1" data-bs-toggle="modal"
             data-bs-target="#modalasu" data-id="' . $model->id . '">

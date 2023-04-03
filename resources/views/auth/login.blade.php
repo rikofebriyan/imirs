@@ -33,16 +33,16 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="email" id="email" name="email"
-                                class="form-control form-control-xl @if ($errors->has('email')) is-invalid @endif"
-                                placeholder="email" value="{{ old('email') }}">
+                            <input type="text" id="NPK" name="NPK"
+                                class="form-control form-control-xl @if ($errors->has('NPK')) is-invalid @endif"
+                                placeholder="NPK" value="{{ old('NPK') }}">
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                             <div class="invalid-feedback">
-                                @error('email')
+                                @error('NPK')
                                     <span class="text-danger" role="alert">
-                                        <strong>Email / Password yang anda masukkan salah</strong>
+                                        <strong>NPK yang anda masukkan salah</strong>
                                     </span>
                                 @enderror
                             </div>

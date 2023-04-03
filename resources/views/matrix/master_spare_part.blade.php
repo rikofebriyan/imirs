@@ -46,81 +46,84 @@
     </div>
 
     <!-- Modal -->
-    {{ Form::open(['route' => 'matrix.master_spare_part.store', 'method' => 'POST']) }}
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Master Spare Part</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-
-                    <div class="form-group mt-2">
-                        <label for="item_code">Item_code</label>
-                        <input type="text" id="item_code" name="item_code" class="form-control" required>
+    {{-- {{ Form::open(['route' => 'matrix.master_spare_part.store', 'method' => 'POST']) }} --}}
+    <form action="{{ route('master_spare_part.store') }}" method="POST">
+        @csrf
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Master Spare Part</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body">
 
-                    <div class="form-group mt-2">
-                        <label for="item_name">Item_name</label>
-                        <input type="text" id="item_name" name="item_name" class="form-control" value=""required>
+
+                        <div class="form-group mt-2">
+                            <label for="item_code">Item_code</label>
+                            <input type="text" id="item_code" name="item_code" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="item_name">Item_name</label>
+                            <input type="text" id="item_name" name="item_name" class="form-control"
+                                value=""required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="description">Description</label>
+                            <input type="text" id="description" name="description" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="qty">Qty</label>
+                            <input type="text" id="qty" name="qty" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="price">Price</label>
+                            <input type="text" id="price" name="price" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="status">Status</label>
+                            <input type="text" id="status" name="status" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="wh_code">Wh_code</label>
+                            <input type="text" id="wh_code" name="wh_code" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="rack_code">Rack_code</label>
+                            <input type="text" id="rack_code" name="rack_code" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="order_point">Order_point</label>
+                            <input type="text" id="order_point" name="order_point" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="order_qty">Order_qty</label>
+                            <input type="text" id="order_qty" name="order_qty" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="account_no">Account_no</label>
+                            <input type="text" id="account_no" name="account_no" class="form-control" required>
+                        </div>
+
                     </div>
-
-                    <div class="form-group mt-2">
-                        <label for="description">Description</label>
-                        <input type="text" id="description" name="description" class="form-control" required>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
-
-                    <div class="form-group mt-2">
-                        <label for="qty">Qty</label>
-                        <input type="text" id="qty" name="qty" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label for="price">Price</label>
-                        <input type="text" id="price" name="price" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label for="status">Status</label>
-                        <input type="text" id="status" name="status" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label for="wh_code">Wh_code</label>
-                        <input type="text" id="wh_code" name="wh_code" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label for="rack_code">Rack_code</label>
-                        <input type="text" id="rack_code" name="rack_code" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label for="order_point">Order_point</label>
-                        <input type="text" id="order_point" name="order_point" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label for="order_qty">Order_qty</label>
-                        <input type="text" id="order_qty" name="order_qty" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label for="account_no">Account_no</label>
-                        <input type="text" id="account_no" name="account_no" class="form-control" required>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
-    </div>
-    {{ Form::close() }}
+    </form>
 
     <div class="modal fade" id="modalasu" tabindex="-1" aria-labelledby="modalUpdateBarang" aria-hidden="true">
         <div class="modal-dialog">
@@ -133,8 +136,8 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="">
-                        {{ csrf_field() }}
-                        {{ method_field('PATCH') }}
+                        @csrf
+                        @method('PATCH')
                         <input type="hidden" name="_method" value="PATCH">
 
                         <input type="hidden" name="id" value="">
@@ -209,7 +212,7 @@
             </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    </form>
 @endsection
 
 @section('script')
@@ -234,7 +237,7 @@
             var modal = $(this);
             var form = modal.find('form');
             console.log(form);
-            modal.find('form').attr('action', "{{ route('matrix.master_spare_part.store') }}/" + id);
+            modal.find('form').attr('action', "{{ route('master_spare_part.store') }}/" + id);
 
             // Populate the form with the model 's data
             // axios.get('/mymodel/' + id).then(function(response) {

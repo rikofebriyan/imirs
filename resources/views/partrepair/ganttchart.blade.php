@@ -182,8 +182,8 @@
                 <div class="modal-body">
 
                     <form method="POST" action="">
-                        {{ csrf_field() }}
-                        {{ method_field('PUT') }}
+                        @csrf
+                        @method('PUT')
                         {{-- <input type="hidden" name="_method" value="PATCH"> --}}
                         <input type="hidden" class="form-control" name="id" value="">
 
@@ -220,7 +220,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>
@@ -235,8 +235,8 @@
                 <div class="modal-body">
 
                     <form method="POST" action="">
-                        {{ csrf_field() }}
-                        {{ method_field('PUT') }}
+                        @csrf
+                        @method('PUT')
                         {{-- <input type="hidden" name="_method" value="PATCH"> --}}
                         <input type="hidden" class="form-control" name="id" value="">
 
@@ -257,7 +257,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>

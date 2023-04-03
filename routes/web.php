@@ -2,32 +2,32 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\InfoController;
-use App\Http\Controllers\LineController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MakerController;
-use App\Http\Controllers\ExportController;
-use App\Http\Controllers\MachineController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SectionController;
-use App\Http\Controllers\SubcontController;
-use App\Http\Controllers\StockoutController;
-use App\Http\Controllers\RepairkitController;
-use App\Http\Controllers\GanttchartController;
-use App\Http\Controllers\PartrepairController;
-use App\Http\Controllers\CategoryCodeController;
-use App\Http\Controllers\FinishrepairController;
-use App\Http\Controllers\ItemstandardController;
-use App\Http\Controllers\ProgresstrialController;
-use App\Http\Controllers\WaitingrepairController;
-use App\Http\Controllers\CodepartrepairController;
-use App\Http\Controllers\ProgressrepairController;
-use App\Http\Controllers\MastersparepartController;
-use App\Http\Controllers\WaitingApprovalController;
-use App\Http\Controllers\RegisteredTicketController;
-use App\Http\Controllers\ProgresspemakaianController;
-use App\Http\Controllers\StandardpengecekanController;
+// use App\Http\Controllers\HomeController;
+// use App\Http\Controllers\InfoController;
+// use App\Http\Controllers\LineController;
+// use App\Http\Controllers\UserController;
+// use App\Http\Controllers\MakerController;
+// use App\Http\Controllers\ExportController;
+// use App\Http\Controllers\MachineController;
+// use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\SectionController;
+// use App\Http\Controllers\SubcontController;
+// use App\Http\Controllers\StockoutController;
+// use App\Http\Controllers\RepairkitController;
+// use App\Http\Controllers\GanttchartController;
+// use App\Http\Controllers\PartrepairController;
+// use App\Http\Controllers\CategoryCodeController;
+// use App\Http\Controllers\FinishrepairController;
+// use App\Http\Controllers\ItemstandardController;
+// use App\Http\Controllers\ProgresstrialController;
+// use App\Http\Controllers\WaitingrepairController;
+// use App\Http\Controllers\CodepartrepairController;
+// use App\Http\Controllers\ProgressrepairController;
+// use App\Http\Controllers\MastersparepartController;
+// use App\Http\Controllers\WaitingApprovalController;
+// use App\Http\Controllers\RegisteredTicketController;
+// use App\Http\Controllers\ProgresspemakaianController;
+// use App\Http\Controllers\StandardpengecekanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,7 +107,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/getTypeOfPart', [InfoController::class, 'getTyoeOfPart'])->name('get-type-of-part');
     Route::get('/getSubcont', [InfoController::class, 'getSubcont'])->name('get-subcont');
     Route::get('/getcategory', [InfoController::class, 'getcategory'])->name('get-category');
-    Route::get('/report', 'HomeController@reportHome')->name('report');
+    Route::get('/report', [HomeController::class, 'reportHome'])->name('report');
     Route::get('/partrepair/masterdelete', [InfoController::class, 'masterdelete'])->name('part-repair-master-delete');
     Route::get('/getmaster', [InfoController::class, 'getmaster'])->name('get-master');
     Route::get('/mymodel', [InfoController::class, 'mymodel'])->name('mymodel');

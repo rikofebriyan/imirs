@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Waitingrepair;
-
 use App\Http\Requests;
+
+// use App\Waitingrepair;
+
+use Illuminate\Http\Request;
+use App\Models\Waitingrepair;
+use App\Http\Controllers\Controller;
 
 class WaitingApprovalController extends Controller
 {
