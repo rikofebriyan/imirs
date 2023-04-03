@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Maker;
-use App\MasterSparePart;
-use App\RepairKit;
-use Illuminate\Http\Request;
+use App\Models\Maker;
 
 use App\Http\Requests;
+use App\Models\RepairKit;
+use Illuminate\Http\Request;
+use App\Models\MasterSparePart;
+use App\Http\Controllers\Controller;
 
 class RepairkitController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -24,10 +21,10 @@ class RepairkitController extends Controller
     {
 
         $join = RepairKit::join('makers', 'repair_kits.maker', '=', 'makers.id')
-                                    ->join('master_spare_parts', 'repair_kits.master_spare_part_id', '=', 'master_spare_parts.id')
-                                    ->select('repair_kits.*', 'makers.name as maker_name', 'master_spare_parts.item_name as sparepart_name')
-                                    ->get();
-// dd($join);
+            ->join('master_spare_parts', 'repair_kits.master_spare_part_id', '=', 'master_spare_parts.id')
+            ->select('repair_kits.*', 'makers.name as maker_name', 'master_spare_parts.item_name as sparepart_name')
+            ->get();
+        // dd($join);
         $tabel2 = MasterSparePart::all();
         $tabel3 = Maker::all();
         $partr = RepairKit::all()->sortByDesc('id');
@@ -64,7 +61,7 @@ class RepairkitController extends Controller
 
         // create new task
         RepairKit::create($request->all());
-        return redirect()->route('matrix.repair_kit.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('repair_kit.index')->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -101,7 +98,7 @@ class RepairkitController extends Controller
             'item_name' => 'required',
         ]);
         RepairKit::find($id)->update($request->all());
-        return redirect()->route('matrix.repair_kit.index')->with('success','RepairKit updated successfully');
+        return redirect()->route('repair_kit.index')->with('success', 'RepairKit updated successfully');
     }
 
     /**
@@ -113,6 +110,6 @@ class RepairkitController extends Controller
     public function destroy($id)
     {
         RepairKit::find($id)->delete();
-        return redirect()->route('matrix.repair_kit.index')->with('success','Task removed successfully');
+        return redirect()->route('repair_kit.index')->with('success', 'Task removed successfully');
     }
 }

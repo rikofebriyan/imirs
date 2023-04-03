@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Response; //new
-use Illuminate\Support\Facades\Input;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Session;
-use PHPExcel_Cell_DataType;
-use \PHPExcel_Style_NumberFormat;
-use App\Http\Controllers\Controller;
-use App\Models\Waitingrepair;
-use Illuminate\Http\Request;
 use App\Http\Requests;
 use PHPExcel_IOFactory;
+use PHPExcel_Cell_DataType;
+use Illuminate\Http\Request;
+use App\Models\Waitingrepair;
+use \PHPExcel_Style_NumberFormat;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Response; //new
 
 class ExportController extends Controller
 {
@@ -69,7 +70,7 @@ class ExportController extends Controller
         );
         $file = public_path('tester.xlsx');
 
-        $objPHPExcel = PHPExcel_IOFactory::load($file);
+        $objPHPExcel = IOFactory::load($file);
         $sheet = $objPHPExcel->getSheetByName('I-Mirs');
         if ($sheet == null) {
             $sheet = $objPHPExcel->createSheet();
@@ -83,14 +84,14 @@ class ExportController extends Controller
         $sheet->setAutoFilter('A1:' . $sheet->getHighestColumn() . $sheet->getHighestRow());
 
         $file2 = public_path('I-Mirs Data.xlsx');
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save($file2);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="I-Mirs Data Table.xlsx"');
         header('Cache-Control: max-age=0');
 
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $temp_file = tempnam(sys_get_temp_dir(), 'excel');
         $objWriter->save($temp_file);
         $objWriter->save('php://output');
@@ -135,7 +136,7 @@ class ExportController extends Controller
         $filename = 'I-Mirs';
         $file = public_path('tester.xlsx');
 
-        $objPHPExcel = PHPExcel_IOFactory::load($file);
+        $objPHPExcel = IOFactory::load($file);
         $objPHPExcel->createSheet();
         $objPHPExcel->setActiveSheetIndex($objPHPExcel->getSheetCount() - 1);
         $objPHPExcel->getActiveSheet()->setTitle('New sheet');
@@ -159,14 +160,14 @@ class ExportController extends Controller
         // $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Hello world!');
 
         $file2 = public_path('tester2.xlsx');
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save($file2);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="tester2.xlsx"');
         header('Cache-Control: max-age=0');
 
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $temp_file = tempnam(sys_get_temp_dir(), 'excel');
         $objWriter->save($temp_file);
         $objWriter->save('php://output');

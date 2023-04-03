@@ -47,7 +47,7 @@
                                         data-bs-target="#asu{{ $req->id }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <form action="{{ route('matrix.category_code.update', $req->id) }}" method="POST">
+                                    <form action="{{ route('category_code.update', $req->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
@@ -85,17 +85,8 @@
                                     <button type="submit" class="btn icon btn-danger btn-sm"><i
                                             class="bi bi-trash3"></i></button>
                                     {{ Form::close() }} --}}
-                                    <form action="{{ route('matrix.category_code.destroy', $req->id) }}" method="POST"
+                                    <form action="{{ route('category_code.destroy', $req->id) }}" method="POST"
                                         style="display:inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn icon btn-danger btn-sm">
-                                            <i class="bi bi-trash3"></i>
-                                        </button>
-                                    </form>
-
-                                    <form action="{{ route('matrix.category_code.destroy', $req->id) }}" method="POST"
-                                        style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn icon btn-danger btn-sm">

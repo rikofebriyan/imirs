@@ -48,7 +48,7 @@ class CategoryCodeController extends Controller
 
         // create new task
         CategoryCode::create($request->all());
-        return redirect()->route('matrix.category_code.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('category_code.index')->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -83,7 +83,7 @@ class CategoryCodeController extends Controller
     public function update(UpdateCategoryCodeRequest $request, CategoryCode $categoryCode, $id)
     {
         CategoryCode::find($id)->update($request->all());
-        return redirect()->route('matrix.category_code.index')->with('success', 'CategoryCode updated successfully');
+        return redirect()->route('category_code.index')->with('success', 'CategoryCode updated successfully');
     }
 
     /**
@@ -95,6 +95,6 @@ class CategoryCodeController extends Controller
     public function destroy($id)
     {
         CategoryCode::find($id)->delete();
-        return redirect()->route('matrix.category_code.index')->with('success', 'Task removed successfully');
+        return redirect()->route('category_code.index')->with('success', 'Task removed successfully');
     }
 }

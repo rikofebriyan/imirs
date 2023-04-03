@@ -51,7 +51,7 @@ class MakerController extends Controller
 
         // create new task
         Maker::create($request->all());
-        return redirect()->route('matrix.maker.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('maker.index')->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -88,7 +88,7 @@ class MakerController extends Controller
             'name' => 'required',
         ]);
         Maker::find($id)->update($request->all());
-        return redirect()->route('matrix.maker.index')->with('success', 'Maker updated successfully');
+        return redirect()->route('maker.index')->with('success', 'Maker updated successfully');
     }
 
     /**
@@ -100,6 +100,6 @@ class MakerController extends Controller
     public function destroy($id)
     {
         Maker::find($id)->delete();
-        return redirect()->route('matrix.maker.index')->with('success', 'Task removed successfully');
+        return redirect()->route('maker.index')->with('success', 'Task removed successfully');
     }
 }

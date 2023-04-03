@@ -46,54 +46,59 @@
                                         data-bs-target="#asu{{ $req->id }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.user.update', $req->id]]) !!}
-                                    <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
-                                        aria-labelledby="modalUpdateBarang" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Update Barang</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group mt-2">
-                                                        <label for="name">Name</label>
-                                                        <input type="text" id="name" name="name"
-                                                            class="form-control text-center" value="{{ $req->name }}"
-                                                            required>
+                                    <form action="{{ route('user.update', $req->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        {{-- {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.user.update', $req->id]]) !!} --}}
+                                        <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
+                                            aria-labelledby="modalUpdateBarang" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Update Barang</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
-                                                    <div class="form-group mt-2">
-                                                        <label for="NPK">NPK</label>
-                                                        <input type="text" id="NPK" name="NPK"
-                                                            class="form-control text-center" value="{{ $req->NPK }}"
-                                                            required>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <label for="jabatan">Jabatan</label>
-                                                        <select class="form-control choices" id="jabatan" name="jabatan"
-                                                            required>
+                                                    <div class="modal-body">
+                                                        <div class="form-group mt-2">
+                                                            <label for="name">Name</label>
+                                                            <input type="text" id="name" name="name"
+                                                                class="form-control text-center"
+                                                                value="{{ $req->name }}" required>
+                                                        </div>
+                                                        <div class="form-group mt-2">
+                                                            <label for="NPK">NPK</label>
+                                                            <input type="text" id="NPK" name="NPK"
+                                                                class="form-control text-center"
+                                                                value="{{ $req->NPK }}" required>
+                                                        </div>
+                                                        <div class="form-group mt-2">
+                                                            <label for="jabatan">Jabatan</label>
+                                                            <select class="form-control choices" id="jabatan"
+                                                                name="jabatan" required>
 
-                                                            <option value="Admin"
-                                                                @if ($req->jabatan == 'Admin') selected @endif>Admin
-                                                            </option>
-                                                            <option value="Maintenance"
-                                                                @if ($req->jabatan == 'Maintenance') selected @endif>
-                                                                Maintenance
-                                                            </option>
-                                                            <option value="RepairMan"
-                                                                @if ($req->jabatan == 'RepairMan') selected @endif>RepairMan
-                                                            </option>
-                                                            <option value="Supervisor"
-                                                                @if ($req->jabatan == 'Supervisor') selected @endif>Supervisor
-                                                            </option>
-                                                        </select>
-                                                    </div>
+                                                                <option value="Admin"
+                                                                    @if ($req->jabatan == 'Admin') selected @endif>Admin
+                                                                </option>
+                                                                <option value="Maintenance"
+                                                                    @if ($req->jabatan == 'Maintenance') selected @endif>
+                                                                    Maintenance
+                                                                </option>
+                                                                <option value="RepairMan"
+                                                                    @if ($req->jabatan == 'RepairMan') selected @endif>
+                                                                    RepairMan
+                                                                </option>
+                                                                <option value="Supervisor"
+                                                                    @if ($req->jabatan == 'Supervisor') selected @endif>
+                                                                    Supervisor
+                                                                </option>
+                                                            </select>
+                                                        </div>
 
 
-                                                    {{-- <select class="form-control choices" id="nama_pic" name="nama_pic"
+                                                        {{-- <select class="form-control choices" id="nama_pic" name="nama_pic"
                                                         required>
                                                         <option value="" selected disabled>Pilih ...</option>
                                                         @foreach ($req as $rq)
@@ -103,28 +108,33 @@
                                                         @endforeach
                                                     </select> --}}
 
-                                                    <div class="form-group mt-2">
-                                                        <label for="email">Email</label>
-                                                        <input type="email" id="email" name="email"
-                                                            class="form-control text-center" value="{{ $req->email }}"
-                                                            required>
+                                                        <div class="form-group mt-2">
+                                                            <label for="email">Email</label>
+                                                            <input type="email" id="email" name="email"
+                                                                class="form-control text-center"
+                                                                value="{{ $req->email }}" required>
+                                                        </div>
+                                                        <div class="form-group mt-2">
+                                                            {{-- <label for="password">Isi dengan password baru</label> --}}
+                                                            <input type="hidden" id="password" name="password"
+                                                                class="form-control text-center"
+                                                                value="{{ $req->password }}" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Perbarui
+                                                            Data</button>
                                                     </div>
-                                                    <div class="form-group mt-2">
-                                                        {{-- <label for="password">Isi dengan password baru</label> --}}
-                                                        <input type="hidden" id="password" name="password"
-                                                            class="form-control text-center" value="{{ $req->password }}"
-                                                            required>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">Perbarui Data</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {!! Form::close() !!}
-                                    {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.user.destroy', $req->id], 'style' => 'display:inline']) }}
-                                    <button type="submit" class="btn icon btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
-                                    {{ Form::close() }}
+                                    </form>
+                                    <form action="{{ route('user.destroy', $req->id) }}" method="POST"
+                                        style="display: inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.user.destroy', $req->id], 'style' => 'display:inline']) }} --}}
+                                        <button type="submit" class="btn icon btn-danger btn-sm"><i
+                                                class="bi bi-trash3"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty

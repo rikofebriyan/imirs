@@ -104,10 +104,12 @@
                                         </div>
                                     </div>
                                     {!! Form::close() !!} --}}
-                                    {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.repair_kit.destroy', $req->id], 'style' => 'display:inline']) }}
-                                    <button type="submit" class="btn icon btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
-                                    {{ Form::close() }}
+                                    <form action="{{ route('repair_kit.destroy', $req->id) }}" method="POST"
+                                        style="display:inline">
+                                        {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.repair_kit.destroy', $req->id], 'style' => 'display:inline']) }} --}}
+                                        <button type="submit" class="btn icon btn-danger btn-sm"><i
+                                                class="bi bi-trash3"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty
@@ -119,36 +121,37 @@
     </div>
 
     <!-- Modal -->
-    {{ Form::open(['route' => 'matrix.repair_kit.store', 'method' => 'POST']) }}
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Section</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="form-group mt-2">
-                        <label for="master_spare_part_id">Spare Part</label>
-                        <select class="form-select form-select-isiotomatis2" id="isiotomatis2" name="master_spare_part_id"
-                            onchange="isi_otomatis_part()" required>
-                            <option value="" selected></option>
-                            @foreach ($tab2 as $tab)
-                                <option data-custom-properties="{{ $tab->item_code }}"
-                                    value="{{ $tab->code_item_description }}">
-                                    {{ $tab->item_code }} |
-                                    {{ $tab->item_name }} | {{ $tab->description }}
-                                </option>
-                            @endforeach
-                        </select>
+    <form action="{{ route('repair_kit.store') }}" method="POST">
+        {{-- {{ Form::open(['route' => 'matrix.repair_kit.store', 'method' => 'POST']) }} --}}
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Section</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="input-group">
-                        <input type="hidden" class="form-control bg-secondary text-white" id="item_id2"
-                            name="master_spare_part_id" placeholder="Item Name" readonly>
-                    </div>
+                    <div class="modal-body">
 
-                    {{-- <div class="form-group mt-2">
+                        <div class="form-group mt-2">
+                            <label for="master_spare_part_id">Spare Part</label>
+                            <select class="form-select form-select-isiotomatis2" id="isiotomatis2"
+                                name="master_spare_part_id" onchange="isi_otomatis_part()" required>
+                                <option value="" selected></option>
+                                @foreach ($tab2 as $tab)
+                                    <option data-custom-properties="{{ $tab->item_code }}"
+                                        value="{{ $tab->code_item_description }}">
+                                        {{ $tab->item_code }} |
+                                        {{ $tab->item_name }} | {{ $tab->description }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <input type="hidden" class="form-control bg-secondary text-white" id="item_id2"
+                                name="master_spare_part_id" placeholder="Item Name" readonly>
+                        </div>
+
+                        {{-- <div class="form-group mt-2">
                         <label for="master_spare_part_id">Master Spare Part ID</label>
                         <select name="master_spare_part_id" id="master_spare_part_id" class="form-control">
                             <option value="" disabled selected>
@@ -160,48 +163,49 @@
                             @endforeach
                         </select>
                     </div> --}}
-                    <div class="form-group mt-2">
-                        <label for="item_code">item_code</label>
-                        <input type="text" id="item_code2" name="item_code" class="form-control bg-secondary text-white"
-                            value="" required readonly>
-                    </div>
-                    <div class="form-group mt-2">
-                        <label for="item_name">item_name</label>
-                        <input type="text" id="item_name2" name="item_name" class="form-control bg-secondary text-white"
-                            value="" required readonly>
-                    </div>
-                    <div class="form-group mt-2">
-                        <label for="description">description</label>
-                        <input type="text" id="description2" name="description"
-                            class="form-control bg-secondary text-white" value="" required readonly>
-                    </div>
-                    <div class="form-group mt-2">
-                        <label for="maker">Maker</label>
-                        <select name="maker" id="maker" class="form-control choices">
-                            <option value="" disabled selected>
-                                choose
-                            </option>
-                            @foreach ($tab3 as $tabw)
-                                <option value="{{ $tabw->id }}">
-                                    {{ $tabw->name }}
+                        <div class="form-group mt-2">
+                            <label for="item_code">item_code</label>
+                            <input type="text" id="item_code2" name="item_code"
+                                class="form-control bg-secondary text-white" value="" required readonly>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="item_name">item_name</label>
+                            <input type="text" id="item_name2" name="item_name"
+                                class="form-control bg-secondary text-white" value="" required readonly>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="description">description</label>
+                            <input type="text" id="description2" name="description"
+                                class="form-control bg-secondary text-white" value="" required readonly>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="maker">Maker</label>
+                            <select name="maker" id="maker" class="form-control choices">
+                                <option value="" disabled selected>
+                                    choose
                                 </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group mt-2">
-                        <label for="qty">qty</label>
-                        <input type="text" id="qty" name="qty" class="form-control" value="" required>
-                    </div>
+                                @foreach ($tab3 as $tabw)
+                                    <option value="{{ $tabw->id }}">
+                                        {{ $tabw->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="qty">qty</label>
+                            <input type="text" id="qty" name="qty" class="form-control" value=""
+                                required>
+                        </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{ Form::close() }}
+    </form>
 @endsection
 
 @section('script')

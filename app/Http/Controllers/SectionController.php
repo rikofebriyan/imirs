@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Section;
+use App\Models\Section;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Http\Controllers\Controller;
 
 class SectionController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -51,7 +46,7 @@ class SectionController extends Controller
 
         // create new task
         Section::create($request->all());
-        return redirect()->route('matrix.section.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('section.index')->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -88,7 +83,7 @@ class SectionController extends Controller
             'name' => 'required',
         ]);
         Section::find($id)->update($request->all());
-        return redirect()->route('matrix.section.index')->with('success','Section updated successfully');
+        return redirect()->route('section.index')->with('success', 'Section updated successfully');
     }
 
     /**
@@ -100,6 +95,6 @@ class SectionController extends Controller
     public function destroy($id)
     {
         Section::find($id)->delete();
-        return redirect()->route('matrix.section.index')->with('success','Task removed successfully');
+        return redirect()->route('section.index')->with('success', 'Task removed successfully');
     }
 }

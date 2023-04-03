@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-
-use App\Waitingrepair;
-
 use App\Http\Requests;
+
+
+
+use Illuminate\Http\Request;
+use App\Models\Waitingrepair;
+use App\Http\Controllers\Controller;
 
 class RegisteredTicketController extends Controller
 {
-     /**
+    /**
      * Create a new controller instance.
      *
      */

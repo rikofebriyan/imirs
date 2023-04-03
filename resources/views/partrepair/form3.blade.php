@@ -37,152 +37,171 @@
                                     <div class="modal-content">
 
                                         <!-- form edit sealkit -->
-                                        {!! Form::model($req, ['method' => 'PATCH', 'route' => ['partrepair.progresspemakaian.update', $req->id]]) !!}
+                                        {{-- {!! Form::model($req, ['method' => 'PATCH', 'route' => ['partrepair.progresspemakaian.update', $req->id]]) !!} --}}
+                                        <form action="{{ route('partrepair.progresspemakaian.update', $req->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('PATCH')
 
-                                        <div class="container-fluid justify-content-center py-0">
-                                            <div class="container-fluid">
+                                            <div class="container-fluid justify-content-center py-0">
+                                                <div class="container-fluid">
 
-                                                <h4 class="modal-title text-center mt-2">Edit Seal Kit</h4>
-                                                <div class="row gx-3">
-                                                    <div class="col">
-                                                        <div class="p-3 m-3 border">
+                                                    <h4 class="modal-title text-center mt-2">Edit Seal Kit</h4>
+                                                    <div class="row gx-3">
+                                                        <div class="col">
+                                                            <div class="p-3 m-3 border">
 
-                                                            <input type="hidden" name="form_input_id"
-                                                                id="form_input_id" value="{{ $waitingrepair->id }}">
+                                                                <input type="hidden" name="form_input_id"
+                                                                    id="form_input_id" value="{{ $waitingrepair->id }}">
 
-                                                            <div class="mb-3 row">
-                                                                <label for="item_code"
-                                                                    class="col-sm-3 col-form-label">Spare
-                                                                    Part</label>
-                                                                <div class="col-sm-9">
-                                                                    <select class="form-select mb-3 choices"
-                                                                        onchange="isi_otomatis_part2()"
-                                                                        id="isiotomatis3" name="item_name"
-                                                                        data-live-search="true">
-                                                                        <option selected>{{ $req->item_code }}</option>
-                                                                        @foreach ($mastersparepart as $reqs)
-                                                                            <option
-                                                                                value="{{ $reqs->code_item_description }}">
-                                                                                {{ $reqs->item_code }} |
-                                                                                {{ $reqs->item_name }} |
-                                                                                {{ $reqs->description }}
+                                                                <div class="mb-3 row">
+                                                                    <label for="item_code"
+                                                                        class="col-sm-3 col-form-label">Spare
+                                                                        Part</label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-select mb-3 choices"
+                                                                            onchange="isi_otomatis_part2()"
+                                                                            id="isiotomatis3" name="item_name"
+                                                                            data-live-search="true">
+                                                                            <option selected>{{ $req->item_code }}
                                                                             </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    <div class="input-group">
-                                                                        <input type="text" class="form-control"
-                                                                            id="item_code3" name="item_code"
-                                                                            placeholder="Item Code"
-                                                                            value="{{ $req->item_code }}" readonly>
-                                                                        <input type="text" class="form-control"
-                                                                            id="item_name3" name="item_name"
-                                                                            placeholder="Item Name"
-                                                                            value="{{ $req->item_name }}" readonly>
-                                                                    </div>
-                                                                    <div class="input-group">
-                                                                        <input type="text" class="form-control"
-                                                                            id="description3" name="description"
-                                                                            placeholder="description"
-                                                                            value="{{ $req->description }}" readonly>
-                                                                    </div>
-
-                                                                    <div class="input-group">
-                                                                        <input type="text" class="form-control"
-                                                                            id="price3" name="price"
-                                                                            placeholder="Price"
-                                                                            value="{{ $req->price }}" readonly>
-                                                                    </div>
-
-                                                                    <div class="input-group">
-                                                                        <select class="form-control" id="maker"
-                                                                            name="maker">
-                                                                            <option value="{{ $req->maker }}"
-                                                                                selected disabled>
-                                                                                {{ $req->maker }}</option>
-                                                                            @foreach ($maker as $mak)
-                                                                                <option value="{{ $mak->name }}">
-                                                                                    {{ $mak->name }}
+                                                                            @foreach ($mastersparepart as $reqs)
+                                                                                <option
+                                                                                    value="{{ $reqs->code_item_description }}">
+                                                                                    {{ $reqs->item_code }} |
+                                                                                    {{ $reqs->item_name }} |
+                                                                                    {{ $reqs->description }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
+                                                                        <div class="input-group">
+                                                                            <input type="text" class="form-control"
+                                                                                id="item_code3" name="item_code"
+                                                                                placeholder="Item Code"
+                                                                                value="{{ $req->item_code }}" readonly>
+                                                                            <input type="text" class="form-control"
+                                                                                id="item_name3" name="item_name"
+                                                                                placeholder="Item Name"
+                                                                                value="{{ $req->item_name }}" readonly>
+                                                                        </div>
+                                                                        <div class="input-group">
+                                                                            <input type="text" class="form-control"
+                                                                                id="description3" name="description"
+                                                                                placeholder="description"
+                                                                                value="{{ $req->description }}"
+                                                                                readonly>
+                                                                        </div>
+
+                                                                        <div class="input-group">
+                                                                            <input type="text" class="form-control"
+                                                                                id="price3" name="price"
+                                                                                placeholder="Price"
+                                                                                value="{{ $req->price }}" readonly>
+                                                                        </div>
+
+                                                                        <div class="input-group">
+                                                                            <select class="form-control" id="maker"
+                                                                                name="maker">
+                                                                                <option value="{{ $req->maker }}"
+                                                                                    selected disabled>
+                                                                                    {{ $req->maker }}</option>
+                                                                                @foreach ($maker as $mak)
+                                                                                    <option
+                                                                                        value="{{ $mak->name }}">
+                                                                                        {{ $mak->name }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
 
-                                                            <div class="mb-3 row">
-                                                                <label for="qty"
-                                                                    class="col-sm-3 col-form-label">Qty</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="number" class="form-control"
-                                                                        id="qty3" name="qty"
-                                                                        value="{{ $req->qty }}">
+                                                                <div class="mb-3 row">
+                                                                    <label for="qty"
+                                                                        class="col-sm-3 col-form-label">Qty</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="number" class="form-control"
+                                                                            id="qty3" name="qty"
+                                                                            value="{{ $req->qty }}">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <div class="mb-3 row">
-                                                                <label for="total_price"
-                                                                    class="col-sm-3 col-form-label">Total Price</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control"
-                                                                        id="total_price2" name="total_price"
-                                                                        value="{{ $req->total_price }}">
+                                                                <div class="mb-3 row">
+                                                                    <label for="total_price"
+                                                                        class="col-sm-3 col-form-label">Total
+                                                                        Price</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control"
+                                                                            id="total_price2" name="total_price"
+                                                                            value="{{ $req->total_price }}">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col">
+                                                        <div class="col">
 
-                                                        <div class="p-3 m-3 border">
-                                                            <div class="mb-3 row">
-                                                                <label for="quotation"
-                                                                    class="col-sm-3 col-form-label">Status Part</label>
-                                                                <div class="col-sm-9">
-                                                                    <select class="form-control" id="status_partbaru2"
-                                                                        name="status_part">
-                                                                        <option value="" selected disabled>Choose
-                                                                            ...</option>
-                                                                        <option value="Ready"
-                                                                            @if ($req->status_part == 'Ready') selected @endif>
-                                                                            Ready</option>
-                                                                        <option value="Not Ready"
-                                                                            @if ($req->status_part == 'Not Ready') selected @endif>
-                                                                            Not Ready</option>
-                                                                    </select>
+                                                            <div class="p-3 m-3 border">
+                                                                <div class="mb-3 row">
+                                                                    <label for="quotation"
+                                                                        class="col-sm-3 col-form-label">Status
+                                                                        Part</label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control"
+                                                                            id="status_partbaru2" name="status_part">
+                                                                            <option value="" selected disabled>
+                                                                                Choose
+                                                                                ...</option>
+                                                                            <option value="Ready"
+                                                                                @if ($req->status_part == 'Ready') selected @endif>
+                                                                                Ready</option>
+                                                                            <option value="Not Ready"
+                                                                                @if ($req->status_part == 'Not Ready') selected @endif>
+                                                                                Not Ready</option>
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <div class="mb-3 row">
-                                                                <label for="estimasi_kedatangan"
-                                                                    class="col-sm-3 col-form-label">Estimasi
-                                                                    Datang</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="datetime-local" class="form-control"
-                                                                        id="estimasi_kedatangan"
-                                                                        name="estimasi_kedatangan"
-                                                                        value="{{ $req->estimasi_kedatangan }}">
+                                                                <div class="mb-3 row">
+                                                                    <label for="estimasi_kedatangan"
+                                                                        class="col-sm-3 col-form-label">Estimasi
+                                                                        Datang</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="datetime-local"
+                                                                            class="form-control"
+                                                                            id="estimasi_kedatangan"
+                                                                            name="estimasi_kedatangan"
+                                                                            value="{{ $req->estimasi_kedatangan }}">
+                                                                    </div>
                                                                 </div>
+
+
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Perbarui
+                                                                    Data</button>
                                                             </div>
-
-
-                                                            <button type="submit" class="btn btn-primary">Perbarui
-                                                                Data</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        {{ Form::close() }}
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            {{ Form::open(['method' => 'DELETE', 'route' => ['partrepair.progresspemakaian.destroy', $req->id], 'style' => 'display:inline']) }}
-                            {{ Form::submit('Delete', [
-                                'class' => 'btn btn-danger',
-                                'style' => '--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem',
-                            ]) }}
-                            {{ Form::close() }}
+                            {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['partrepair.progresspemakaian.destroy', $req->id], 'style' => 'display:inline']) }} --}}
+                            <form action="{{ route('partrepair.progresspemakaian.destroy', $req->id) }}"
+                                method="POST" style="display:inline">
+                                @csrf
+                                @method('DELETE')
+                                {{-- {{ Form::submit('Delete', [
+                                    'class' => 'btn btn-danger',
+                                    'style' => '--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem',
+                                ]) }} --}}
+                                <button type="submit" class="btn btn-danger"
+                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem"></button>
+                            </form>
+                            {{-- {{ Form::close() }} --}}
                         </td>
                         <td>{{ $req->item_code }}</td>
                         <td>{{ $req->item_name }}</td>
@@ -263,25 +282,27 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
 
-            {{ Form::open(['route' => 'partrepair.progresspemakaian.store', 'method' => 'POST']) }}
+            {{-- {{ Form::open(['route' => 'partrepair.progresspemakaian.store', 'method' => 'POST']) }} --}}
+            <form action="{{ route('partrepair.progresspemakaian.store') }}" method="POST">
+                @csrf
 
-            {{-- form input --}}
+                {{-- form input --}}
 
-            <div class="container-fluid justify-content-center py-0">
-                <div class="container-fluid">
+                <div class="container-fluid justify-content-center py-0">
+                    <div class="container-fluid">
 
-                    <h4 class="modal-title text-center mt-2">Add Seal Kit</h4>
-                    <div class="row gx-3">
-                        <div class="col">
-                            <div class="p-3 m-3 border">
+                        <h4 class="modal-title text-center mt-2">Add Seal Kit</h4>
+                        <div class="row gx-3">
+                            <div class="col">
+                                <div class="p-3 m-3 border">
 
-                                <input type="hidden" name="form_input_id" id="form_input_id"
-                                    value="{{ $waitingrepair->id }}">
+                                    <input type="hidden" name="form_input_id" id="form_input_id"
+                                        value="{{ $waitingrepair->id }}">
 
-                                <div class="mb-3 row">
-                                    <label for="item_code" class="col-sm-3 col-form-label">Spare Part</label>
-                                    <div class="col-sm-9">
-                                        {{-- <select class="form-select mb-3 choices" onchange="isi_otomatis_part()"
+                                    <div class="mb-3 row">
+                                        <label for="item_code" class="col-sm-3 col-form-label">Spare Part</label>
+                                        <div class="col-sm-9">
+                                            {{-- <select class="form-select mb-3 choices" onchange="isi_otomatis_part()"
                                             id="isiotomatis2" name="item_name" data-live-search="true">
                                             <option selected></option>
                                             @foreach ($mastersparepart as $reqm)
@@ -291,107 +312,110 @@
                                                 </option>
                                             @endforeach
                                         </select> --}}
-                                        <div class="mb-3">
-                                            <select class="form-select form-select-isiotomatis2"
-                                                onchange="isi_otomatis_part()" id="isiotomatis2" name="item_name"
+                                            <div class="mb-3">
+                                                <select class="form-select form-select-isiotomatis2"
+                                                    onchange="isi_otomatis_part()" id="isiotomatis2" name="item_name"
+                                                    required>
+                                                    <option value="" selected></option>
+                                                    @foreach ($mastersparepart as $reqm)
+                                                        <option data-custom-properties="{{ $reqm->item_code }}"
+                                                            value="{{ $reqm->code_item_description }}">
+                                                            {{ $reqm->item_code }} |
+                                                            {{ $reqm->item_name }} | {{ $reqm->description }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control bg-secondary text-white"
+                                                    id="item_code2" name="item_code" placeholder="Item Code"
+                                                    readonly>
+                                                <input type="text" class="form-control bg-secondary text-white"
+                                                    id="item_name2" name="item_name" placeholder="Item Name"
+                                                    readonly>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control bg-secondary text-white"
+                                                    id="description2" name="description" placeholder="description"
+                                                    readonly>
+                                            </div>
+
+                                            <div class="input-group">
+                                                <input type="text" class="form-control bg-secondary text-white"
+                                                    id="price2" name="price" placeholder="Price" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <label for="maker" class="col-sm-3 col-form-label">Maker</label>
+                                        <div class="col">
+                                            <select class="form-control choices" id="maker" name="maker"
                                                 required>
-                                                <option value="" selected></option>
-                                                @foreach ($mastersparepart as $reqm)
-                                                    <option data-custom-properties="{{ $reqm->item_code }}"
-                                                        value="{{ $reqm->code_item_description }}">
-                                                        {{ $reqm->item_code }} |
-                                                        {{ $reqm->item_name }} | {{ $reqm->description }}
+                                                <option selected disabled>Maker ...</option>
+                                                @foreach ($maker as $mak)
+                                                    <option value="{{ $mak->name }}">{{ $mak->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control bg-secondary text-white"
-                                                id="item_code2" name="item_code" placeholder="Item Code" readonly>
-                                            <input type="text" class="form-control bg-secondary text-white"
-                                                id="item_name2" name="item_name" placeholder="Item Name" readonly>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control bg-secondary text-white"
-                                                id="description2" name="description" placeholder="description"
-                                                readonly>
-                                        </div>
-
-                                        <div class="input-group">
-                                            <input type="text" class="form-control bg-secondary text-white"
-                                                id="price2" name="price" placeholder="Price" readonly>
-                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="mb-3 row">
-                                    <label for="maker" class="col-sm-3 col-form-label">Maker</label>
-                                    <div class="col">
-                                        <select class="form-control choices" id="maker" name="maker" required>
-                                            <option selected disabled>Maker ...</option>
-                                            @foreach ($maker as $mak)
-                                                <option value="{{ $mak->name }}">{{ $mak->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                                <div class="mb-3 row">
-                                    <label for="qty" class="col-sm-3 col-form-label">Qty</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="qty2" name="qty"
-                                            value="">
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 row">
-                                    <label for="total_price" class="col-sm-3 col-form-label">Total Price</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="total_price"
-                                            name="total_price" value="">
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col">
-
-                            <div class="p-3 m-3 border">
-                                <div class="mb-3 row">
-                                    <label for="quotation" class="col-sm-3 col-form-label">Status Part</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control" id="status_partbaru" name="status_part">
-                                            <option value="" selected disabled>Status Part ...</option>
-                                            <option value="Ready">Ready</option>
-                                            <option value="Not Ready">Not Ready</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div id="notready" style="display: none">
 
                                     <div class="mb-3 row">
-                                        <label for="estimasi_kedatangan" class="col-sm-3 col-form-label">Estimasi
-                                            Datang</label>
+                                        <label for="qty" class="col-sm-3 col-form-label">Qty</label>
                                         <div class="col-sm-9">
-                                            <input type="datetime-local" class="form-control"
-                                                id="estimasi_kedatangan" name="estimasi_kedatangan">
+                                            <input type="number" class="form-control" id="qty2" name="qty"
+                                                value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <label for="total_price" class="col-sm-3 col-form-label">Total Price</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="total_price"
+                                                name="total_price" value="">
                                         </div>
                                     </div>
 
                                 </div>
+                            </div>
+                            <div class="col">
 
-                                <button type="submit" class="btn btn-md btn-primary">Save</button>
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Close</button>
+                                <div class="p-3 m-3 border">
+                                    <div class="mb-3 row">
+                                        <label for="quotation" class="col-sm-3 col-form-label">Status Part</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="status_partbaru" name="status_part">
+                                                <option value="" selected disabled>Status Part ...</option>
+                                                <option value="Ready">Ready</option>
+                                                <option value="Not Ready">Not Ready</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div id="notready" style="display: none">
+
+                                        <div class="mb-3 row">
+                                            <label for="estimasi_kedatangan" class="col-sm-3 col-form-label">Estimasi
+                                                Datang</label>
+                                            <div class="col-sm-9">
+                                                <input type="datetime-local" class="form-control"
+                                                    id="estimasi_kedatangan" name="estimasi_kedatangan">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-md btn-primary">Save</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {{ Form::close() }}
+            </form>
         </div>
     </div>
 </div>

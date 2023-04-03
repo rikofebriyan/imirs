@@ -11,10 +11,6 @@ use App\Http\Controllers\Controller;
 
 class MachineController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -60,7 +56,7 @@ class MachineController extends Controller
 
         // create new task
         Machine::create($request->all());
-        return redirect()->route('matrix.machine.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('machine.index')->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -97,7 +93,7 @@ class MachineController extends Controller
             'name' => 'required',
         ]);
         Machine::find($id)->update($request->all());
-        return redirect()->route('matrix.machine.index')->with('success', 'Machine updated successfully');
+        return redirect()->route('machine.index')->with('success', 'Machine updated successfully');
     }
 
     /**
@@ -109,6 +105,6 @@ class MachineController extends Controller
     public function destroy($id)
     {
         Machine::find($id)->delete();
-        return redirect()->route('matrix.machine.index')->with('success', 'Task removed successfully');
+        return redirect()->route('machine.index')->with('success', 'Task removed successfully');
     }
 }

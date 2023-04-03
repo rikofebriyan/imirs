@@ -51,62 +51,70 @@
                                         data-bs-target="#asu{{ $req->id }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.subcont.update', $req->id]]) !!}
-                                    <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
-                                        aria-labelledby="modalUpdateBarang" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Update Barang</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-
-
-                                                    {{-- FORM COLUMN 1 --}}
-                                                    <div class="form-group mt-2">
-                                                        <label for="name">Name</label>
-                                                        <input type="text" id="name" name="name"
-                                                            class="form-control" value="{{ $req->name }}" required>
+                                    <form action="{{ route('subcont.update', $req->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        {{-- {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.subcont.update', $req->id]]) !!} --}}
+                                        <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
+                                            aria-labelledby="modalUpdateBarang" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Update Barang</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
+                                                    <div class="modal-body">
 
-                                                    {{-- FORM COLUMN 1 --}}
-                                                    <div class="form-group mt-2">
-                                                        <label for="alamat">Alamat</label>
-                                                        <input type="text" id="alamat" name="alamat"
-                                                            class="form-control" value="{{ $req->alamat }}" required>
+
+                                                        {{-- FORM COLUMN 1 --}}
+                                                        <div class="form-group mt-2">
+                                                            <label for="name">Name</label>
+                                                            <input type="text" id="name" name="name"
+                                                                class="form-control" value="{{ $req->name }}" required>
+                                                        </div>
+
+                                                        {{-- FORM COLUMN 1 --}}
+                                                        <div class="form-group mt-2">
+                                                            <label for="alamat">Alamat</label>
+                                                            <input type="text" id="alamat" name="alamat"
+                                                                class="form-control" value="{{ $req->alamat }}" required>
+                                                        </div>
+
+                                                        {{-- FORM COLUMN 1 --}}
+                                                        <div class="form-group mt-2">
+                                                            <label for="email">Email</label>
+                                                            <input type="email" id="email" name="email"
+                                                                class="form-control" value="{{ $req->email }}" required>
+                                                        </div>
+
+                                                        {{-- FORM COLUMN 1 --}}
+                                                        <div class="form-group mt-2">
+                                                            <label for="contact">Contact</label>
+                                                            <input type="text" id="contact" name="contact"
+                                                                class="form-control" value="{{ $req->contact }}" required>
+                                                        </div>
+
+
+
+                                                        <button type="submit" class="btn btn-primary">Perbarui
+                                                            Data</button>
+                                                        <!--END FORM UPDATE BARANG-->
                                                     </div>
-
-                                                    {{-- FORM COLUMN 1 --}}
-                                                    <div class="form-group mt-2">
-                                                        <label for="email">Email</label>
-                                                        <input type="email" id="email" name="email"
-                                                            class="form-control" value="{{ $req->email }}" required>
-                                                    </div>
-
-                                                    {{-- FORM COLUMN 1 --}}
-                                                    <div class="form-group mt-2">
-                                                        <label for="contact">Contact</label>
-                                                        <input type="text" id="contact" name="contact"
-                                                            class="form-control" value="{{ $req->contact }}" required>
-                                                    </div>
-
-
-
-                                                    <button type="submit" class="btn btn-primary">Perbarui Data</button>
-                                                    <!--END FORM UPDATE BARANG-->
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {!! Form::close() !!}
-                                    {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.subcont.destroy', $req->id], 'style' => 'display:inline']) }}
-                                    <button type="submit" class="btn icon btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
-                                    {{ Form::close() }}
+                                    </form>
+                                    <form action="{{ route('subcont.destroy', $req->id) }}" method="POST"
+                                        style="display: inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.subcont.destroy', $req->id], 'style' => 'display:inline']) }} --}}
+                                        <button type="submit" class="btn icon btn-danger btn-sm"><i
+                                                class="bi bi-trash3"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty
@@ -122,51 +130,53 @@
 
     <!-- Modal -->
 
-    {{ Form::open(['route' => 'matrix.subcont.store', 'method' => 'POST']) }}
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Sub Cont</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-
-                    {{-- FORM COLUMN 1 --}}
-                    <div class="form-group mt-2">
-                        <label for="name">Nama Subcont</label>
-                        <input type="text" id="name" name="name" class="form-control" required>
+    <form action="{{ route('subcont.store') }}" method="POST">
+        @csrf
+        {{-- {{ Form::open(['route' => 'matrix.subcont.store', 'method' => 'POST']) }} --}}
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Sub Cont</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body">
 
-                    {{-- FORM COLUMN 1 --}}
-                    <div class="form-group mt-2">
-                        <label for="alamat">Alamat</label>
-                        <input type="text" id="alamat" name="alamat" class="form-control" required>
+
+                        {{-- FORM COLUMN 1 --}}
+                        <div class="form-group mt-2">
+                            <label for="name">Nama Subcont</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+
+                        {{-- FORM COLUMN 1 --}}
+                        <div class="form-group mt-2">
+                            <label for="alamat">Alamat</label>
+                            <input type="text" id="alamat" name="alamat" class="form-control" required>
+                        </div>
+
+                        {{-- FORM COLUMN 1 --}}
+                        <div class="form-group mt-2">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+
+                        {{-- FORM COLUMN 1 --}}
+                        <div class="form-group mt-2">
+                            <label for="contact">Contact</label>
+                            <input type="text" id="contact" name="contact" class="form-control" required>
+                        </div>
+
+
                     </div>
-
-                    {{-- FORM COLUMN 1 --}}
-                    <div class="form-group mt-2">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
-
-                    {{-- FORM COLUMN 1 --}}
-                    <div class="form-group mt-2">
-                        <label for="contact">Contact</label>
-                        <input type="text" id="contact" name="contact" class="form-control" required>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
-    </div>
-    {{ Form::close() }}
+    </form>
 @endsection
 
 @section('script')

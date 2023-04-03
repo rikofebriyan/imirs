@@ -43,34 +43,42 @@
                                         data-bs-target="#asu{{ $req->id }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.maker.update', $req->id]]) !!}
-                                    <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
-                                        aria-labelledby="modalUpdateBarang" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Update Barang</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group mt-2">
-                                                        <label for="name">name</label>
-                                                        <input type="text" id="name" name="name"
-                                                            class="form-control" value="{{ $req->name }}" required>
+                                    <form action="{{ route('maker.update', $req->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        {{-- {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.maker.update', $req->id]]) !!}  --}}
+                                        <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
+                                            aria-labelledby="modalUpdateBarang" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Update Barang</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary">Perbarui Data</button>
+                                                    <div class="modal-body">
+                                                        <div class="form-group mt-2">
+                                                            <label for="name">name</label>
+                                                            <input type="text" id="name" name="name"
+                                                                class="form-control" value="{{ $req->name }}" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Perbarui
+                                                            Data</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {!! Form::close() !!}
-                                    {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.maker.destroy', $req->id], 'style' => 'display:inline']) }}
-                                    <button type="submit" class="btn icon btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
-                                    {{ Form::close() }}
+                                    </form>
+                                    <form action="{{ route('maker.destroy', $req->id) }}" method="POST"
+                                        style="display: inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.maker.destroy', $req->id], 'style' => 'display:inline']) }} --}}
+                                        <button type="submit" class="btn icon btn-danger btn-sm"><i
+                                                class="bi bi-trash3"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty
@@ -85,28 +93,30 @@
     </div>
 
     <!-- Modal -->
-    {{ Form::open(['route' => 'matrix.maker.store', 'method' => 'POST']) }}
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Maker</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group mt-2">
-                        <label for="name">Nama Maker</label>
-                        <input type="text" id="name" name="name" class="form-control" required>
+    <form action="{{ route('maker.store', $req->id) }}" method="POST">
+        @csrf
+        {{-- {{ Form::open(['route' => 'matrix.maker.store', 'method' => 'POST']) }} --}}
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Maker</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <div class="modal-body">
+                        <div class="form-group mt-2">
+                            <label for="name">Nama Maker</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{ Form::close() }}
+    </form>
 @endsection
 
 @section('script')

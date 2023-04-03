@@ -45,34 +45,41 @@
                                         data-bs-target="#asu{{ $req->id }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.item_standard.update', $req->id]]) !!}
-                                    <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
-                                        aria-labelledby="modalUpdateBarang" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Update Barang</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group mt-2">
-                                                        <label for="item_standard">item_standard</label>
-                                                        <input type="text" id="item_standard" name="item_standard"
-                                                            class="form-control" value="{{ $req->item_standard }}" required>
+                                    <form action="{{ route('item_standard.update', $req->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
+                                            aria-labelledby="modalUpdateBarang" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Update Barang</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary">Perbarui Data</button>
+                                                    <div class="modal-body">
+                                                        <div class="form-group mt-2">
+                                                            <label for="item_standard">item_standard</label>
+                                                            <input type="text" id="item_standard" name="item_standard"
+                                                                class="form-control" value="{{ $req->item_standard }}"
+                                                                required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Perbarui
+                                                            Data</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {!! Form::close() !!}
-                                    {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.item_standard.destroy', $req->id], 'style' => 'display:inline']) }}
-                                    <button type="submit" class="btn icon btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
-                                    {{ Form::close() }}
+                                    </form>
+                                    <form action="{{ route('item_standard.destroy', $req->id) }}" method="POST"
+                                        style="display: inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn icon btn-danger btn-sm"><i
+                                                class="bi bi-trash3"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty
@@ -85,30 +92,31 @@
 
     <!-- Modal -->
 
-    {{ Form::open(['route' => 'matrix.item_standard.store', 'method' => 'POST']) }}
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item Standard</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="form-group mt-2">
-                        <label for="item_standard">Item_standard</label>
-                        <input type="text" id="item_standard" name="item_standard" class="form-control" required>
+    <form action="{{ route('item_standard.store') }}" method="POST">
+        @csrf
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item Standard</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body">
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                        <div class="form-group mt-2">
+                            <label for="item_standard">Item_standard</label>
+                            <input type="text" id="item_standard" name="item_standard" class="form-control" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{ Form::close() }}
+    </form>
 @endsection
 
 @section('script')

@@ -47,49 +47,57 @@
                                         data-bs-target="#asu{{ $req->id }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.machine.update', $req->id]]) !!}
-                                    <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
-                                        aria-labelledby="modalUpdateBarang" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Update Barang</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group mt-2">
-                                                        <label for="line_id">Section ID</label>
-                                                        <select name="line_id" id="line_id" class="form-control choices">
-                                                            <option value="" disabled selected>
-                                                                choose
-                                                            </option>
-                                                            @foreach ($tab2 as $tab)
-                                                                <option value="{{ $tab->id }}"
-                                                                    @if ($req->line_id == $tab->id) selected @endif>
-                                                                    {{ $tab->name }}
+                                    <form action="{{ route('machine.update', $req->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        {{-- {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.machine.update', $req->id]]) !!} --}}
+                                        <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
+                                            aria-labelledby="modalUpdateBarang" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Update Barang</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group mt-2">
+                                                            <label for="line_id">Section ID</label>
+                                                            <select name="line_id" id="line_id"
+                                                                class="form-control choices">
+                                                                <option value="" disabled selected>
+                                                                    choose
                                                                 </option>
-                                                            @endforeach
-                                                        </select>
+                                                                @foreach ($tab2 as $tab)
+                                                                    <option value="{{ $tab->id }}"
+                                                                        @if ($req->line_id == $tab->id) selected @endif>
+                                                                        {{ $tab->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group mt-2">
+                                                            <label for="name">Nama Machine / POS</label>
+                                                            <input type="text" id="name" name="name"
+                                                                class="form-control text-center"
+                                                                value="{{ $req->name }}" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Perbarui
+                                                            Data</button>
                                                     </div>
-                                                    <div class="form-group mt-2">
-                                                        <label for="name">Nama Machine / POS</label>
-                                                        <input type="text" id="name" name="name"
-                                                            class="form-control text-center" value="{{ $req->name }}"
-                                                            required>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">Perbarui Data</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {!! Form::close() !!}
-                                    {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.machine.destroy', $req->id], 'style' => 'display:inline']) }}
-                                    <button type="submit" class="btn icon btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
-                                    {{ Form::close() }}
+                                    </form>
+                                    <form action="{{ route('machine.destroy', $req->id) }}" method="POST"
+                                        style="display:inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn icon btn-danger btn-sm"><i
+                                                class="bi bi-trash3"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty
@@ -104,45 +112,46 @@
     </div>
 
     <!-- Modal -->
-    {{ Form::open(['route' => 'matrix.machine.store', 'method' => 'POST']) }}
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Section</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+    <form action="{{ route('machine.store') }}" method="POST">
+        @csrf
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Section</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
-                    {{-- FORM COLUMN 1 --}}
-                    <div class="form-group mt-2">
-                        <label for="line_id">Section</label>
-                        <select name="line_id" id="line_id" class="form-control choices">
-                            <option value="" disabled selected>
-                                choose
-                            </option>
-                            @foreach ($tab2 as $tab)
-                                <option value="{{ $tab->id }}">{{ $tab->name }}
+                        {{-- FORM COLUMN 1 --}}
+                        <div class="form-group mt-2">
+                            <label for="line_id">Section</label>
+                            <select name="line_id" id="line_id" class="form-control choices">
+                                <option value="" disabled selected>
+                                    choose
                                 </option>
-                            @endforeach
-                        </select>
-                    </div>
+                                @foreach ($tab2 as $tab)
+                                    <option value="{{ $tab->id }}">{{ $tab->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                    {{-- FORM COLUMN 2 --}}
-                    <div class="form-group mt-2">
-                        <label for="name">Nama Machine / POS</label>
-                        <input type="text" id="name" name="name" class="form-control" required>
-                    </div>
+                        {{-- FORM COLUMN 2 --}}
+                        <div class="form-group mt-2">
+                            <label for="name">Nama Machine / POS</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{ Form::close() }}
+    </form>
 @endsection
 
 @section('script')

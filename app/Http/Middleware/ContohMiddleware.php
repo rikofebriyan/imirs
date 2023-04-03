@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class ADMIN
+class ContohMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +16,6 @@ class ADMIN
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->jabatan !== 'ADMIN') {
-            return redirect('home');
-        }
         return $next($request);
-        // dd($request);
     }
 }

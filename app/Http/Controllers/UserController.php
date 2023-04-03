@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
-// use App\Line;
-use App\User;
-use Illuminate\Http\Request;
+use App\Models\Line;
 
 use App\Http\Requests;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\User;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +51,7 @@ class UserController extends Controller
 
         // create new task
         User::create($request->all());
-        return redirect()->route('matrix.user.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('user.index')->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -92,7 +88,7 @@ class UserController extends Controller
             'name' => 'required',
         ]);
         User::find($id)->update($request->all());
-        return redirect()->route('matrix.user.index')->with('success','User updated successfully');
+        return redirect()->route('user.index')->with('success', 'User updated successfully');
     }
 
     /**
@@ -104,6 +100,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->route('matrix.user.index')->with('success','Task removed successfully');
+        return redirect()->route('user.index')->with('success', 'Task removed successfully');
     }
 }

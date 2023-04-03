@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-// use App\Line;
-use App\Subcont;
-use Illuminate\Http\Request;
+use App\Models\Line;
 
 use App\Http\Requests;
+use App\Models\Subcont;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SubcontController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +51,7 @@ class SubcontController extends Controller
 
         // create new task
         Subcont::create($request->all());
-        return redirect()->route('matrix.subcont.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('subcont.index')->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -91,7 +88,7 @@ class SubcontController extends Controller
             'name' => 'required',
         ]);
         Subcont::find($id)->update($request->all());
-        return redirect()->route('matrix.subcont.index')->with('success','Subcont updated successfully');
+        return redirect()->route('subcont.index')->with('success', 'Subcont updated successfully');
     }
 
     /**
@@ -103,6 +100,6 @@ class SubcontController extends Controller
     public function destroy($id)
     {
         Subcont::find($id)->delete();
-        return redirect()->route('matrix.subcont.index')->with('success','Task removed successfully');
+        return redirect()->route('subcont.index')->with('success', 'Task removed successfully');
     }
 }

@@ -53,7 +53,7 @@ class ItemstandardController extends Controller
 
         // create new task
         ItemStandard::create($request->all());
-        return redirect()->route('matrix.item_standard.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('item_standard.index')->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -90,7 +90,7 @@ class ItemstandardController extends Controller
             'item_standard' => 'required',
         ]);
         ItemStandard::find($id)->update($request->all());
-        return redirect()->route('matrix.item_standard.index')->with('success', 'ItemStandard updated successfully');
+        return redirect()->route('item_standard.index')->with('success', 'ItemStandard updated successfully');
     }
 
     /**
@@ -102,6 +102,6 @@ class ItemstandardController extends Controller
     public function destroy($id)
     {
         ItemStandard::find($id)->delete();
-        return redirect()->route('matrix.item_standard.index')->with('success', 'Task removed successfully');
+        return redirect()->route('item_standard.index')->with('success', 'Task removed successfully');
     }
 }
