@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Waitingrepair;
 use Illuminate\Http\Request;
+use App\Models\Waitingrepair;
+use App\Http\Controllers\Controller;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
