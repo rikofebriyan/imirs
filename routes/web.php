@@ -2,32 +2,32 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\HomeController;
-// use App\Http\Controllers\InfoController;
-// use App\Http\Controllers\LineController;
-// use App\Http\Controllers\UserController;
-// use App\Http\Controllers\MakerController;
-// use App\Http\Controllers\ExportController;
-// use App\Http\Controllers\MachineController;
-// use App\Http\Controllers\ProfileController;
-// use App\Http\Controllers\SectionController;
-// use App\Http\Controllers\SubcontController;
-// use App\Http\Controllers\StockoutController;
-// use App\Http\Controllers\RepairkitController;
-// use App\Http\Controllers\GanttchartController;
-// use App\Http\Controllers\PartrepairController;
-// use App\Http\Controllers\CategoryCodeController;
-// use App\Http\Controllers\FinishrepairController;
-// use App\Http\Controllers\ItemstandardController;
-// use App\Http\Controllers\ProgresstrialController;
-// use App\Http\Controllers\WaitingrepairController;
-// use App\Http\Controllers\CodepartrepairController;
-// use App\Http\Controllers\ProgressrepairController;
-// use App\Http\Controllers\MastersparepartController;
-// use App\Http\Controllers\WaitingApprovalController;
-// use App\Http\Controllers\RegisteredTicketController;
-// use App\Http\Controllers\ProgresspemakaianController;
-// use App\Http\Controllers\StandardpengecekanController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InfoController;
+use App\Http\Controllers\LineController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\MakerController;
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\MachineController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\SubcontController;
+use App\Http\Controllers\StockoutController;
+use App\Http\Controllers\RepairkitController;
+use App\Http\Controllers\GanttchartController;
+use App\Http\Controllers\PartrepairController;
+use App\Http\Controllers\CategoryCodeController;
+use App\Http\Controllers\FinishrepairController;
+use App\Http\Controllers\ItemstandardController;
+use App\Http\Controllers\ProgresstrialController;
+use App\Http\Controllers\WaitingrepairController;
+use App\Http\Controllers\CodepartrepairController;
+use App\Http\Controllers\ProgressrepairController;
+use App\Http\Controllers\MastersparepartController;
+use App\Http\Controllers\WaitingApprovalController;
+use App\Http\Controllers\RegisteredTicketController;
+use App\Http\Controllers\ProgresspemakaianController;
+use App\Http\Controllers\StandardpengecekanController;
 
 /*
 |--------------------------------------------------------------------------

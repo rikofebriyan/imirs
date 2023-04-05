@@ -3,14 +3,34 @@
 
 // Variables
 @import 'variables';
-// @import 'resources/css/main/app.css';
-// @import 'resources/css/mycss.css';
-// @import 'resources/css/mycss.css';
-// @import 'resources/css/mycss.css';
-// @import 'resources/css/mycss.css';
-// @import 'resources/css/mycss.css';
-// @import 'resources/css/mycss.css';
 
+
+// STYLES
+@import url('/assets/css/main/app.css');
+@import url('/assets/css/main/app-dark.css');
+@import url('/assets/css/shared/iconly.css');
+@import url('/datatables/datatables.min.css');
+@import url('/assets/extensions/toastify-js/src/toastify.css');
+@import url('/assets/extensions/choices.js/public/assets/styles/choices.min.css');
+@import url('/select2/dist/css/select2.min.css');
+@import url('/css/riko.css');
+
+
+// SCRIPT
+// @import url('/js/jquery-3.6.1.min.js');
+// @import url('/assets/js/app.js');
+// @import url('/assets/js/pages/horizontal-layout.js');
+// @import url('/assets/js/pages/dashboard.js');
+// @import url('/fontawesome/js/brands.min.js');
+// @import url('/fontawesome/js/solid.min.js');
+// @import url('/datatables/datatables.min.js');
+// @import url('/assets/extensions/choices.js/public/assets/scripts/choices.min.js');
+// @import url('/select2/dist/js/select2.min.js');
+// @import url('/assets/js/pages/form-element-select.js');
+// @import url('/fontawesome/js/fontawesome.min.js');
+// @import url('/js/jquery.number.js');
+// @import url('/assets/js/bootstrap.js');
+// @import url('/assets/extensions/toastify-js/src/toastify.js');
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
