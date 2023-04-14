@@ -1,8 +1,18 @@
 window._ = require('lodash');
+global.$ = global.jQuery = require('jquery');
+import Toastify from 'toastify-js';
+window.Toastify = Toastify;
+import Choices from 'choices.js';
+window.Choices = Choices;
 
-try {
-    require('bootstrap');
-} catch (e) {}
+require('../../public/assets/js/app');
+require('../../public/assets/js/pages/form-element-select');
+require('../../node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.mjs');
+require('../../node_modules/@fortawesome/fontawesome-free/js/all.js');
+require('../../node_modules/choices.js/public/assets/scripts/choices');
+require('../../node_modules/select2/dist/js/select2.js');
+
+
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -13,6 +23,11 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+
+
+
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -30,3 +45,5 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+

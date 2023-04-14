@@ -84,107 +84,106 @@
                                         </button>
                                     @endcan
 
-                                    {{ Form::open(['method' => 'PUT', 'route' => ['partrepair.waitingapprove.update', $req->id]]) }}
-                                    <div class="modal fade" id="modalapprove{{ $req->id }}" tabindex="-1"
-                                        aria-labelledby="modalapproveLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
+                                    {{-- {{ Form::open(['method' => 'PUT', 'route' => ['partrepair.waitingapprove.update', $req->id]]) }} --}}
+                                    <form action="{{ route('partrepair.waitingapprove.update'), $req->id }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <div class="modal fade" id="modalapprove{{ $req->id }}" tabindex="-1"
+                                            aria-labelledby="modalapproveLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
 
 
-                                                {{-- <input type="hidden" name="user" value="{{ Auth::user()->name }}"> --}}
+                                                    {{-- <input type="hidden" name="user" value="{{ Auth::user()->name }}"> --}}
 
-                                                <div class="modal-body">
-                                                    <h1 class="modal-title fs-5 mb-1" id="modalapproveLabel">Konfirmasi
-                                                        Approval
-                                                    </h1>
-                                                    <div class="form-group position-relative has-icon-left mb-4">
-                                                        <input type="text" id="approval" name="approval"
-                                                            class="form-control form-control-xl  @if ($errors->has('approval')) is-invalid @endif"
-                                                            placeholder="Tulis siapa yang approve"
-                                                            value="{{ old('approval') }}" required>
-                                                        <div class="form-control-icon">
+                                                    <div class="modal-body">
+                                                        <h1 class="modal-title fs-5 mb-1" id="modalapproveLabel">Konfirmasi
+                                                            Approval
+                                                        </h1>
+                                                        <div class="form-group position-relative has-icon-left mb-4">
+                                                            <input type="text" id="approval" name="approval"
+                                                                class="form-control form-control-xl  @if ($errors->has('approval')) is-invalid @endif"
+                                                                placeholder="Tulis siapa yang approve"
+                                                                value="{{ old('approval') }}" required>
+                                                            <div class="form-control-icon">
 
-                                                            @if ($errors->has('approval'))
-                                                                <span class="help-block">
-                                                                    <strong>{{ $errors->first('approval') }}</strong>
-                                                                </span>
-                                                            @endif
+                                                                @if ($errors->has('approval'))
+                                                                    <span class="help-block">
+                                                                        <strong>{{ $errors->first('approval') }}</strong>
+                                                                    </span>
+                                                                @endif
 
-                                                            <i class="bi bi-person-check"></i>
+                                                                <i class="bi bi-person-check"></i>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                    {{-- <button type="button" class="btn btn-secondary"
+                                                        {{-- <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button> --}}
-                                                    <button type="submit" class="btn btn-success">APPROVE</button>
-                                                    {{ Form::close() }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @can('Supervisor')
-                                        <button type="button" class="rounded-pill btn btn-danger btn-sm col-5"
-                                            data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
-                                            Reject
-                                        </button>
-                                    @endcan
-                                    @can('ADMIN')
-                                        <button type="button" class="rounded-pill btn btn-danger btn-sm col-5"
-                                            data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
-                                            Reject
-                                        </button>
-                                    @endcan
-                                    {{ Form::open(['method' => 'DELETE', 'route' => ['partrepair.waitingapprove.destroy', $req->id]]) }}
-                                    <div class="modal fade" id="modaldelete{{ $req->id }}" tabindex="-1"
-                                        aria-labelledby="modaldeleteLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="modaldeleteLabel">Alasan Reject?
-                                                    </h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    <input type="hidden" name="deleted_by"
-                                                        value="{{ Auth::user()->name }}">
-
-                                                    <div class="form-group position-relative has-icon-left mb-4">
-                                                        <input type="text" id="reason" name="reason"
-                                                            class="form-control form-control-xl"
-                                                            placeholder="Tulis alasan reject disini"
-                                                            value="{{ old('reason') }}">
-                                                        <div class="form-control-icon">
-
-                                                            @if ($errors->has('reason'))
-                                                                <span class="help-block">
-                                                                    <strong>{{ $errors->first('reason') }}</strong>
-                                                                </span>
-                                                            @endif
-
-                                                            <i class="bi bi-c-circle"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                    {{ Form::close() }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                        @empty
-                        @endforelse
-                    </tbody>
-                </table>
+                                                        <button type="submit" class="btn btn-success">APPROVE</button>
+                                    </form>
             </div>
         </div>
+    </div>
+    @can('Supervisor')
+        <button type="button" class="rounded-pill btn btn-danger btn-sm col-5" data-bs-toggle="modal"
+            data-bs-target="#modaldelete{{ $req->id }}">
+            Reject
+        </button>
+    @endcan
+    @can('ADMIN')
+        <button type="button" class="rounded-pill btn btn-danger btn-sm col-5" data-bs-toggle="modal"
+            data-bs-target="#modaldelete{{ $req->id }}">
+            Reject
+        </button>
+    @endcan
+    {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['partrepair.waitingapprove.destroy', $req->id]]) }} --}}
+    <form action="{{ route('partrepair.waitingapprove.destroy'), $req->id }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <div class="modal fade" id="modaldelete{{ $req->id }}" tabindex="-1" aria-labelledby="modaldeleteLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modaldeleteLabel">Alasan Reject?
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" name="deleted_by" value="{{ Auth::user()->name }}">
+
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" id="reason" name="reason" class="form-control form-control-xl"
+                                placeholder="Tulis alasan reject disini" value="{{ old('reason') }}">
+                            <div class="form-control-icon">
+
+                                @if ($errors->has('reason'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('reason') }}</strong>
+                                    </span>
+                                @endif
+
+                                <i class="bi bi-c-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    </td>
+    </tr>
+@empty
+    @endforelse
+    </tbody>
+    </table>
+    </div>
+    </div>
     </div>
 @endsection
 

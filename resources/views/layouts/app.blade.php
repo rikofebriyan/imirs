@@ -15,14 +15,6 @@
 
     <!-- STYLES -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{-- <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/shared/iconly.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('datatables/datatables.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/extensions/toastify-js/src/toastify.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.min.css') }}">
-    <link href="{{ asset('select2/dist/css/select2.min.css') }}" rel="stylesheet" />
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/riko.css') }}"> --}}
     @yield('css')
 
 </head>
@@ -302,21 +294,24 @@
 
 
 <!-- SCRIPT -->
-<script src="{{ asset('js/app.js') }}" defer></script>
-{{-- <script type="text/javascript" src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+{{-- <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('assets/js/pages/form-element-select.js') }}"></script> --}}
+
+{{-- <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('datatables/datatables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('fontawesome/js/brands.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('fontawesome/js/solid.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('fontawesome/js/fontawesome.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/app.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/pages/horizontal-layout.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
-<script type="text/javascript" src="{{ asset('fontawesome/js/brands.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('fontawesome/js/solid.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('datatables/datatables.min.js') }}"></script>
-<script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.min.js') }}"></script>
 <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
-<script src="{{ asset('assets/js/pages/form-element-select.js') }}"></script>
-<script type="text/javascript" src="{{ asset('fontawesome/js/fontawesome.min.js') }}"></script>
 <script src="{{ asset('js/jquery.number.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/bootstrap.js') }}"></script>
 <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script> --}}
+
 
 <script>
     $(document).ready(function() {

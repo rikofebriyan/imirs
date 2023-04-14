@@ -15,11 +15,25 @@ const mix = require('laravel-mix');
 //     .sass('resources/sass/app.scss', 'public/css')
 //     .sourceMaps();
 
-mix.js('resources/js/app.js', 'public/js')
+mix
+    .js([
+        'resources/js/app.js',
+        // 'public/assets/js/app.js',
+        // 'public/fontawesome/js/brands.min.js',
+        // 'public/fontawesome/js/solid.min.js',
+        // 'public/fontawesome/js/fontawesome.min.js',
+        // 'public/assets/js/pages/horizontal-layout.js',
+        // 'public/assets/js/pages/dashboard.js',
+        // 'public/assets/extensions/choices.js/public/assets/scripts/choices.min.js',
+        // 'public/select2/dist/js/select2.min.js',
+        // 'public/assets/js/pages/form-element-select.js',
+        // 'public/js/jquery.number.js',
+        // 'public/assets/extensions/toastify-js/src/toastify.js'
+    ], 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .sourceMaps()
-    .scripts([
-        'public/js/jquery-3.6.1.min.js',
-        'public/js/app.js'
-    ], 'public/js/app.js');
+    .sourceMaps();
 
+
+mix.autoload({
+    jquery: ['$', 'window.$', 'window.jQuery', 'jQuery']
+});
