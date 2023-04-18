@@ -223,13 +223,23 @@
                         </div>
                     </div>
 
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                        <button id="scrap" type="submit" class="btn btn-md btn-danger"
-                            style="display: none">Scrap</button>
-                        <button id="saveit" type="submit" class="btn btn-md btn-primary">Save</button>
-                        <a href="{{ route('partrepair.waitingtable.index') }}"
-                            class="btn btn-md btn-secondary">Back</a>
-                    </div>
+                    @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <button id="scrap" type="submit" class="btn btn-md btn-danger"
+                                style="display: none">Scrap</button>
+                            <button id="saveit" type="submit" class="btn btn-md btn-primary">Save</button>
+                            <a href="{{ route('partrepair.waitingtable.index') }}"
+                                class="btn btn-md btn-secondary">Back</a>
+                        </div>
+                    @else
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <a class="btn btn-md btn-secondary disabled" style="display: none">Scrap</a>
+                            <a class="btn btn-md btn-secondary disabled">Save</a>
+                            <a href="{{ route('partrepair.waitingtable.index') }}"
+                                class="btn btn-md btn-secondary">Back</a>
+                            <span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -7,8 +7,8 @@ use App\Http\Requests;
 // use App\Waitingrepair;
 
 use Illuminate\Http\Request;
-use App\Models\Waitingrepair;
 use App\Http\Controllers\Controller;
+use App\Models\Waitingrepair;
 
 class WaitingApprovalController extends Controller
 {

@@ -61,18 +61,24 @@
                     @endforelse
                 </tbody>
             </table>
-
-            <button id="judgeok" type="submit" class="btn btn-md btn-primary">Save</button>
+            @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+                <button id="judgeok" type="submit" class="btn btn-md btn-primary">Save</button>
+            @else
+                <button id="/" type="button" class="btn btn-md btn-secondary disabled">Save</button>
+                <span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span>
+            @endif
         </form>
     </div>
 </div>
 <div class="row">
     <div class="col-9"></div>
     <div class="col d-grid gap-2 px-3">
-        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal"
-            data-bs-target="#modalAddPengecekan">
-            ADD STANDARD PENGECEKAN
-        </button>
+        @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+            <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal"
+                data-bs-target="#modalAddPengecekan">
+                ADD STANDARD PENGECEKAN
+            </button>
+        @endif
     </div>
 </div>
 <!-- Modal -->
@@ -158,10 +164,17 @@
                     </div>
 
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+                @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                @else
+                    <div class="modal-footer">
+                        <a class="btn btn-secondary disabled" data-bs-dismiss="modal">Close</a>
+                        <a class="btn btn-secondary disabled">Save</a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

@@ -245,15 +245,32 @@
                 </center>
             </div>
         </div>
-        <div class="d-grid gap-2 col">
-            <button id="fieldsealkit" class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
-        </div>
-        <div class="d-grid gap-2 col @if ($countid == 0) d-block @else d-none @endif" id="fieldrepair">
-            <button href="{{ route('partrepair.progresspemakaian.show', $waitingrepair->id) }}"
-                class="btn btn-success">REPAIR & TRIAL
-                >>></button>
-        </div>
+
+
+        @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+            <div class="d-grid gap-2 col">
+                <button id="fieldsealkit" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
+            </div>
+            <div class="d-grid gap-2 col @if ($countid == 0) d-block @else d-none @endif"
+                id="fieldrepair">
+                <button href="{{ route('partrepair.progresspemakaian.show', $waitingrepair->id) }}"
+                    class="btn btn-success">REPAIR & TRIAL
+                    >>></button>
+            </div>
+        @else
+            <div class="d-grid gap-2 col">
+                <button id="" class="btn btn-primary disabled" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
+            </div>
+            <div class="d-grid gap-2 col @if ($countid == 0) d-block @else d-none @endif"
+                id="fieldrepair">
+                <button href="/" class="btn btn-secondary disabled">REPAIR & TRIAL
+                    >>></button>
+            </div>
+            <center><span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span></center>
+        @endif
+
 
         @if ($countid == 0)
         @elseif ($countid > $ready)

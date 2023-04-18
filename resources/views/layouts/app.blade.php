@@ -109,24 +109,15 @@
                                 <span><i class="bi bi-stack"></i> Create Repair Ticket</span>
                             </a>
                         </li>
-                        @can('ADMIN')
-                            <li class="menu-item  ">
-                                <a href="{{ route('partrepair.waitingapprove.index') }}" class='menu-link'>
-                                    <span><i class="fas fa-file-signature"></i> Waiting Approval</span>
-                                    @if ($waiting_approve > 0)
-                                        <span
-                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $waiting_approve }}</span>
-                                    @endif
-                                </a>
-                            </li>
-                        @endcan
-                        @can('Supervisor')
-                            <li class="menu-item  ">
-                                <a href="{{ route('partrepair.waitingapprove.index') }}" class='menu-link'>
-                                    <span><i class="bi bi-stack"></i> Waiting Approval</span>
-                                </a>
-                            </li>
-                        @endcan
+                        <li class="menu-item  ">
+                            <a href="{{ route('partrepair.waitingapprove.index') }}" class='menu-link'>
+                                <span><i class="fas fa-file-signature"></i> Waiting Approval</span>
+                                @if ($waiting_approve > 0)
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $waiting_approve }}</span>
+                                @endif
+                            </a>
+                        </li>
                         <li class="menu-item  has-sub">
                             <a href="#" class='menu-link'>
                                 <span><i class="bi bi-table"></i>Ticket Repair Table</span>
@@ -185,7 +176,7 @@
                                 <div class="submenu-group-wrapper">
                                     <ul class="submenu-group">
 
-                                        @can('ADMIN')
+                                        @can('AdminSupervisor')
                                             <li class="submenu-item  ">
                                                 <a class="list-group-item list-group-item-action list-group-item-light"
                                                     href="{{ route('user.index') }}" class='submenu-link'>User</a>

@@ -32,9 +32,8 @@
                                 <div class="mb-3 row">
                                     <label for="tanggal" class="col-sm-3 col-form-label">Date Created</label>
                                     <div class="col-sm-9">
-                                        <input type="datetime-local" class="form-control bg-secondary text-white"
-                                            id="tanggal" name="date" value="{{ Carbon\Carbon::now() }}" readonly
-                                            required>
+                                        <input type="datetime-local" class="form-control disabledriko" id="tanggal"
+                                            name="date" value="{{ Carbon\Carbon::now() }}" readonly required>
                                     </div>
                                 </div>
 
@@ -100,23 +99,21 @@
                                         <div class="input-group">
 
                                             <input type="hidden" class="form-control" name="item_id" id="item_id">
-                                            <input type="text" class="form-control bg-secondary text-white"
-                                                id="item_code" name="item_code" placeholder="Item Code" readonly required>
-                                            <input type="text" class="form-control bg-secondary text-white"
-                                                id="item_name" name="item_name" placeholder="Item Name" readonly required>
+                                            <input type="text" class="form-control disabledriko" id="item_code"
+                                                name="item_code" placeholder="Item Code" readonly required>
+                                            <input type="text" class="form-control disabledriko" id="item_name"
+                                                name="item_name" placeholder="Item Name" readonly required>
                                         </div>
                                         <div class="input-group">
-                                            <input type="text" class="form-control bg-secondary text-white"
-                                                id="description" name="item_type" placeholder="Item Type" readonly
-                                                required>
+                                            <input type="text" class="form-control disabledriko" id="description"
+                                                name="item_type" placeholder="Item Type" readonly required>
                                         </div>
 
                                         <div class="input-group">
-                                            <input type="text" class="form-control number bg-secondary text-white"
-                                                id="price" name="price" placeholder="Price" readonly required>
-                                            <input type="text" class="form-control bg-secondary text-white"
-                                                id="qty" name="stock_spare_part" placeholder="Stock" readonly
-                                                required>
+                                            <input type="text" class="form-control number disabledriko" id="price"
+                                                name="price" placeholder="Price" readonly required>
+                                            <input type="text" class="form-control disabledriko" id="qty"
+                                                name="stock_spare_part" placeholder="Stock" readonly required>
                                         </div>
                                     </div>
 
@@ -223,7 +220,7 @@
                                 <div class="mb-3 row">
                                     <label for="reg_sp" class="col-sm-3 col-form-label">Ticket Number</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control bg-secondary text-white" id="reg_sp"
+                                        <input type="text" class="form-control disabledriko" id="reg_sp"
                                             name="reg_sp" value="{{ $ticket }}" readonly required>
                                     </div>
                                 </div>
@@ -231,7 +228,7 @@
                                 <div class="mb-3 row">
                                     <label for="progress" class="col-sm-3 col-form-label">Progress</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control bg-secondary text-white" id="progress"
+                                        <input type="text" class="form-control disabledriko" id="progress"
                                             name="progress" value="Waiting" readonly required>
                                     </div>
                                 </div>

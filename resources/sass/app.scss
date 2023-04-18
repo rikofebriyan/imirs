@@ -15,22 +15,67 @@
 @import url('/select2/dist/css/select2.min.css');
 @import url('/css/riko.css');
 
+.choices__inner {
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    color: #607080;
+    font-size: 1rem;
+    padding: 0.375rem 0.75rem 0.375rem 0.75rem;
+}
 
-// SCRIPT
-// @import url('/js/jquery-3.6.1.min.js');
-// @import url('/assets/js/app.js');
-// @import url('/assets/js/pages/horizontal-layout.js');
-// @import url('/assets/js/pages/dashboard.js');
-// @import url('/fontawesome/js/brands.min.js');
-// @import url('/fontawesome/js/solid.min.js');
-// @import url('/datatables/datatables.min.js');
-// @import url('/assets/extensions/choices.js/public/assets/scripts/choices.min.js');
-// @import url('/select2/dist/js/select2.min.js');
-// @import url('/assets/js/pages/form-element-select.js');
-// @import url('/fontawesome/js/fontawesome.min.js');
-// @import url('/js/jquery.number.js');
-// @import url('/assets/js/bootstrap.js');
-// @import url('/assets/extensions/toastify-js/src/toastify.js');
+.choices__list--single {
+    padding: initial;
+}
 
-// Bootstrap
-// @import '~bootstrap/scss/bootstrap';
+.select2-container--default {
+    background-color: #ffffff;
+    border: 1px solid #607080;
+    border-radius: 0.25rem;
+    color: #607080;
+    height: 36px;
+}
+
+body.theme-dark .select2-container--default {
+    background-color: #000000;
+    border: 1px solid #607080;
+    border-radius: 0.25rem;
+    color: #607080;
+    height: 36px;
+}
+
+.select2-selection--single {
+    background-color: #ffffff;
+    border: 1px solid #607080;
+    border-radius: 0.25rem;
+    color: #607080;
+    height: 36px;
+}
+
+.disabledriko {
+    background-color: #e9ecef;
+    border: 1px solid #607080;
+    opacity: 1;
+    margin-bottom: 1px;
+}
+
+// .form-select {
+//     -moz-padding-start: calc(.75rem - 3px);
+//     -webkit-appearance: none;
+//     -moz-appearance: none;
+//     appearance: none;
+//     background-color: #fff;
+//     background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E);
+//     background-position: right 0.75rem center;
+//     background-repeat: no-repeat;
+//     background-size: 16px 12px;
+//     border: 1px solid #dce7f1;
+//     border-radius: 0.25rem;
+//     color: #607080;
+//     display: block;
+//     font-size: 1rem;
+//     font-weight: 400;
+//     line-height: 1.5;
+//     padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+//     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+//     width: 100%;
+// }

@@ -99,35 +99,31 @@
                                     @endif
 
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center" style="min-width: 130px;">
 
-                                    @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
-                                        @if ($req->progress == 'Waiting')
-                                            <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                                href="{{ route('partrepair.waitingtable.show', $req->id) }}">To Ticket</a>
-                                        @elseif($req->progress == 'On Progress')
-                                            <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                                href="{{ route('partrepair.waitingtable.show.form2', $req->id) }}">To
-                                                Progress</a>
-                                        @elseif($req->progress == 'Seal Kit')
-                                            <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                                href="{{ route('partrepair.waitingtable.show.form3', $req->id) }}">To Seal
-                                                Kit</a>
-                                        @elseif($req->progress == 'Trial')
-                                            <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                                href="{{ route('partrepair.waitingtable.show.form4', $req->id) }}">To
-                                                Trial</a>
-                                        @elseif($req->progress == 'Finish')
-                                            <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                                href="{{ route('partrepair.waitingtable.show.form5', $req->id) }}">To
-                                                Finish</a>
-                                        @endif
-                                    @else
-                                        {{ 'No Action Available' }}
+                                    @if ($req->progress == 'Waiting')
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
+                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}">To Ticket</a>
+                                    @elseif($req->progress == 'On Progress')
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
+                                            href="{{ route('partrepair.waitingtable.show.form2', $req->id) }}">To
+                                            Progress</a>
+                                    @elseif($req->progress == 'Seal Kit')
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
+                                            href="{{ route('partrepair.waitingtable.show.form3', $req->id) }}">To Seal
+                                            Kit</a>
+                                    @elseif($req->progress == 'Trial')
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
+                                            href="{{ route('partrepair.waitingtable.show.form4', $req->id) }}">To
+                                            Trial</a>
+                                    @elseif($req->progress == 'Finish')
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
+                                            href="{{ route('partrepair.waitingtable.show.form5', $req->id) }}">To
+                                            Finish</a>
                                     @endif
 
 
-                                    @if (Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'RepairMan')
+                                    @if (Auth::user()->jabatan == 'Admin')
                                         <button type="button" class="rounded-pill btn btn-danger btn-sm"
                                             data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
                                             Delete

@@ -242,8 +242,15 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-md btn-primary">Update</button>
-                    <a href="{{ route('partrepair.waitingtable.index') }}" class="btn btn-md btn-secondary">Back</a>
+                    @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+                        <button type="submit" class="btn btn-md btn-primary">Update</button>
+                        <a href="{{ route('partrepair.waitingtable.index') }}"
+                            class="btn btn-md btn-secondary">Back</a>
+                    @else
+                        <a class="btn btn-md btn-secondary disabled">Update</a>
+                        <a href="/" class="btn btn-md btn-secondary">Back</a>
+                        <span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span>
+                    @endif
                 </div>
             </div>
         </div>

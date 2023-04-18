@@ -7,10 +7,12 @@ window.Choices = Choices;
 
 require('../../public/assets/js/app');
 require('../../public/assets/js/pages/form-element-select');
+require('../../public/js/jquery.number');
 require('../../node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.mjs');
 require('../../node_modules/@fortawesome/fontawesome-free/js/all.js');
 require('../../node_modules/choices.js/public/assets/scripts/choices');
 require('../../node_modules/select2/dist/js/select2.js');
+require('../../node_modules/bootstrap/dist/js/bootstrap');
 
 
 
