@@ -78,11 +78,14 @@ class PartrepairController extends Controller
 
         $maker = Maker::all();
         $user = User::all();
-        // $machine = Machine::all();
         $section = Section::all();
-        // $line = Line::all();
-        // $line = Line::all()->where('section_id', $request->get('id'));
-        $partr = MasterSparePart::all()->sortByDesc('id');
+
+
+        // $partr = MasterSparePart::all()->sortByDesc('id');
+        $json = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        $partr = collect($json['data'])->all();
+        // dd($partr);
+
         return view('partrepair.request', [
             'reqtzy' => $partr,
             'section' => $section,

@@ -58,6 +58,17 @@ class WaitingrepairController extends Controller
     public function index(Request $request)
     {
         // $partr = Waitingrepair::all()->sortByDesc('id');
+
+        // $json = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        // $jsondata = collect($json['data'])->where('ItemCode', 'ABW010001')->all();
+        // dd($jsondata);
+
+
+
+
+
+
+
         $partr = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
             ->where('deleted', null)

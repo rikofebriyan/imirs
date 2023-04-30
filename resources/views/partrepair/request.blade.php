@@ -87,10 +87,18 @@
                                             <select class="form-select" onchange="isi_otomatis()" id="isiotomatis"
                                                 name="item_name" required>
                                                 <option value="" selected></option>
-                                                @foreach ($reqtzy as $req)
+                                                {{-- @foreach ($reqtzy as $req)
                                                     <option data-custom-properties="{{ $req->item_code }}"
                                                         value="{{ $req->code_item_description }}">{{ $req->item_code }} |
                                                         {{ $req->item_name }} | {{ $req->description }}
+                                                    </option>
+                                                @endforeach --}}
+
+                                                @foreach ($reqtzy as $req)
+                                                    <option data-custom-properties="{{ $req['ItemCode'] }}"
+                                                        value="{{ $req['description'] }}">{{ $req['ItemCode'] }} |
+                                                        {{ $req['itemName'] }} | {{ $req['description'] }} | Stock:
+                                                        {{ $req['Stock'] }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -259,16 +267,16 @@
                 type: 'GET',
                 url: "{{ route('ajax') }}",
                 data: {
-                    // item_name: $('#isiotomatis').val(),
                     item_name: $('#isiotomatis').find(':selected').data('custom-properties')
                 },
                 dataType: 'JSON',
                 success: function(data) {
+                    console.log(data);
                     $('#item_id').val(data.id);
-                    $('#item_name').val(data.item_name);
-                    $('#item_code').val(data.item_code);
+                    $('#item_name').val(data.itemName);
+                    $('#item_code').val(data.ItemCode);
                     $('#description').val(data.description);
-                    $('#qty').val(data.qty);
+                    $('#qty').val(data.Stock);
                     $('#price').val(data.price);
 
                     if (data.qty == 0) {

@@ -45,7 +45,13 @@ class InfoController extends Controller
         // echo $withoutbrackets;
 
         // $data = MasterSparePart::where('code_item_description', $request->item_name)->first();
-        $data = MasterSparePart::where('item_code', $request->item_name)->first();
+
+
+
+
+        // $data = MasterSparePart::where('item_code', $request->item_name)->first();
+        $json = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        $data = collect($json['data'])->where('ItemCode', $request->item_name)->first();
         return response()->json($data);
     }
 
