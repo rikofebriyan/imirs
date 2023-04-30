@@ -82,7 +82,7 @@ class PartrepairController extends Controller
 
 
         // $partr = MasterSparePart::all()->sortByDesc('id');
-        $json = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        $json = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs-trial/public/json.json'), true);
         $partr = collect($json['data'])->all();
         // dd($partr);
 
