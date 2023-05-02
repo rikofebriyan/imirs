@@ -437,7 +437,9 @@ class WaitingrepairController extends Controller
         // form 3
         $waitingrepair = Waitingrepair::find($id);
         $progresspemakaian = Progresspemakaian::where('form_input_id', $waitingrepair->id)->get();
-        $mastersparepart = MasterSparePart::all();
+        // $mastersparepart = MasterSparePart::all();
+        $mastersparepart = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
+        // dd($mastersparepart);
         $maker = Maker::all();
         $ready = Progresspemakaian::where('status_part', '=', 'Ready')
             ->where('form_input_id', $waitingrepair->id)

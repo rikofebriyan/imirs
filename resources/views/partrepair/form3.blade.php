@@ -334,13 +334,13 @@
                                                     onchange="isi_otomatis_part()" id="isiotomatis2" name="item_name"
                                                     required>
                                                     <option value="" selected></option>
-                                                    @foreach ($mastersparepart as $reqm)
-                                                        <option data-custom-properties="{{ $reqm->item_code }}"
-                                                            value="{{ $reqm->code_item_description }}">
-                                                            {{ $reqm->item_code }} |
-                                                            {{ $reqm->item_name }} | {{ $reqm->description }}
-                                                        </option>
-                                                    @endforeach
+                                                    @foreach ($mastersparepart as $req)
+                                                    <option data-custom-properties="{{ $req['item_code'] }}"
+                                                        value="{{ $req['description'] }}">{{ $req['item_code'] }} |
+                                                        {{ $req['item_name'] }} | {{ $req['description'] }} | Stock:
+                                                        {{ $req['stock'] }}
+                                                    </option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                             <div class="input-group">
