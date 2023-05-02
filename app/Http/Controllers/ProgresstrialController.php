@@ -98,6 +98,8 @@ class ProgresstrialController extends Controller
 
         $itemstandard = ItemStandard::all();
         $mastersparepart = MasterSparePart::all();
+        // $mastersparepart = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
+        // dd($mastersparepart);
         $maker = Maker::all();
         $subcont = Subcont::all();
         $user = User::all();

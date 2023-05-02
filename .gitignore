@@ -13,4 +13,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/public/css/app.css
+public/css/app.css
+public/js/app.js
+app/Http/Controllers/InfoController.php
+app/Http/Controllers/PartrepairController.php
+public/assets/public/js/app.js

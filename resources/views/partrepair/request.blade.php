@@ -95,10 +95,10 @@
                                                 @endforeach --}}
 
                                                 @foreach ($reqtzy as $req)
-                                                    <option data-custom-properties="{{ $req['ItemCode'] }}"
-                                                        value="{{ $req['description'] }}">{{ $req['ItemCode'] }} |
-                                                        {{ $req['itemName'] }} | {{ $req['description'] }} | Stock:
-                                                        {{ $req['Stock'] }}
+                                                    <option data-custom-properties="{{ $req['item_code'] }}"
+                                                        value="{{ $req['description'] }}">{{ $req['item_code'] }} |
+                                                        {{ $req['item_name'] }} | {{ $req['description'] }} | Stock:
+                                                        {{ $req['stock'] }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -273,10 +273,10 @@
                 success: function(data) {
                     console.log(data);
                     $('#item_id').val(data.id);
-                    $('#item_name').val(data.itemName);
-                    $('#item_code').val(data.ItemCode);
+                    $('#item_name').val(data.item_name);
+                    $('#item_code').val(data.item_code);
                     $('#description').val(data.description);
-                    $('#qty').val(data.Stock);
+                    $('#qty').val(data.stock);
                     $('#price').val(data.price);
 
                     if (data.qty == 0) {

@@ -82,7 +82,8 @@ class PartrepairController extends Controller
 
 
         // $partr = MasterSparePart::all()->sortByDesc('id');
-        $json = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        // $json = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs-trial/public/json.json'), true);
+        $json = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
         $partr = collect($json['data'])->all();
         // dd($partr);
 

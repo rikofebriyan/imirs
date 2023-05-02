@@ -157,6 +157,7 @@ class ProgressrepairController extends Controller
             ->count();
         $countid = Progresspemakaian::where('form_input_id', $id)->count();
         $mastersparepart = MasterSparePart::all();
+        // $mastersparepart = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
         $maker = Maker::all();
         $subcont = Subcont::all();
         $user = User::all();
