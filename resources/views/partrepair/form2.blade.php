@@ -202,7 +202,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-3 row">
+                        {{-- <div class="mb-3 row">
                             <label for="actual_start_repair_subcont" class="col-sm-3 col-form-label">Actual Start
                                 Repair</label>
                             <div class="col-sm-9">
@@ -220,7 +220,7 @@
                                     name="actual_finish_repair_subcont"
                                     value="{{ $progressrepair2->actual_finish_repair }}">
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')

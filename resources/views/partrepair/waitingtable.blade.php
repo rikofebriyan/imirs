@@ -43,62 +43,22 @@
                 <table id="myTable" class="table table-striped nowrap overflow-auto display">
                     <thead>
                         <tr>
+                            <th class="text-center" scope="col">Action</th>
+                            <th class="text-center" scope="col">Progress</th>
                             <th scope="col">Ticket No</th>
                             <th scope="col">Plan Start</th>
                             <th scope="col">Plan Finish</th>
                             <th scope="col">Spare Part</th>
-                            <th scope="col">Item Code</th>
+                            <th scope="col">Item Type</th>
+                            <th scope="col">Place Repair</th>
                             <th scope="col">Problem</th>
                             <th class="text-center" scope="col">Status Repair</th>
-                            <th class="text-center" scope="col">Progress</th>
-                            <th class="text-center" scope="col">Action</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($reqtzy as $req)
                             <tr>
-                                <td>{{ $req->reg_sp }}</td>
-                                <td>
-                                    @if ($req->plan_start_repair == null)
-                                        Belum Input
-                                    @else
-                                        {{ \Carbon\Carbon::parse($req->plan_start_repair)->format('d-M-Y') }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($req->plan_finish_repair == null)
-                                        Belum Input
-                                    @else
-                                        {{ \Carbon\Carbon::parse($req->plan_finish_repair)->format('d-M-Y') }}
-                                    @endif
-                                </td>
-                                <td>{{ $req->item_name }}</td>
-                                <td>{{ $req->item_code }}</td>
-                                <td>{{ $req->problem }}</td>
-                                <td class="text-center"><span
-                                        class="@if ($req->status_repair == 'Urgent') bg-danger text-white px-3 py-2 rounded-pill @endif">{{ $req->status_repair }}</span>
-                                </td>
-                                <td>
-                                    @if ($req->progress == 'Waiting')
-                                        <div class="rounded-pill bg-secondary text-white text-center px-2 bg-opacity-50">
-                                            {{ $req->progress }}</div>
-                                    @elseif ($req->progress == 'On Progress')
-                                        <div class="rounded-pill bg-warning text-white text-center px-2 bg-opacity-50">
-                                            {{ $req->progress }}
-                                        </div>
-                                    @elseif ($req->progress == 'Seal Kit')
-                                        <div class="rounded-pill bg-info text-white text-center px-2 bg-opacity-50">
-                                            {{ $req->progress }}
-                                        </div>
-                                    @elseif ($req->progress == 'Trial')
-                                        <div class="rounded-pill bg-primary text-white text-center px-2 bg-opacity-50">
-                                            {{ $req->progress }}</div>
-                                    @elseif ($req->progress == 'Finish')
-                                        <div class="rounded-pill bg-success text-white text-center px-2 bg-opacity-50">
-                                            {{ $req->progress }}</div>
-                                    @endif
-
-                                </td>
                                 <td class="text-center" style="min-width: 130px;">
 
                                     @if ($req->progress == 'Waiting')
@@ -123,7 +83,7 @@
                                     @endif
 
 
-                                    @if (Auth::user()->jabatan == 'Admin')
+                                    @if (Auth::user()->jabatan == 'ADMIN')
                                         <button type="button" class="rounded-pill btn btn-danger btn-sm"
                                             data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
                                             Delete
@@ -176,6 +136,51 @@
                                         </div>
                                     </form>
                                 </td>
+                                <td>
+                                    @if ($req->progress == 'Waiting')
+                                        <div class="rounded-pill bg-secondary text-white text-center px-2 bg-opacity-50">
+                                            {{ $req->progress }}</div>
+                                    @elseif ($req->progress == 'On Progress')
+                                        <div class="rounded-pill bg-warning text-white text-center px-2 bg-opacity-50">
+                                            {{ $req->progress }}
+                                        </div>
+                                    @elseif ($req->progress == 'Seal Kit')
+                                        <div class="rounded-pill bg-info text-white text-center px-2 bg-opacity-50">
+                                            {{ $req->progress }}
+                                        </div>
+                                    @elseif ($req->progress == 'Trial')
+                                        <div class="rounded-pill bg-primary text-white text-center px-2 bg-opacity-50">
+                                            {{ $req->progress }}</div>
+                                    @elseif ($req->progress == 'Finish')
+                                        <div class="rounded-pill bg-success text-white text-center px-2 bg-opacity-50">
+                                            {{ $req->progress }}</div>
+                                    @endif
+
+                                </td>
+
+                                <td>{{ $req->reg_sp }}</td>
+                                <td>
+                                    @if ($req->plan_start_repair == null)
+                                        Belum Input
+                                    @else
+                                        {{ \Carbon\Carbon::parse($req->plan_start_repair)->format('d-M-Y') }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($req->plan_finish_repair == null)
+                                        Belum Input
+                                    @else
+                                        {{ \Carbon\Carbon::parse($req->plan_finish_repair)->format('d-M-Y') }}
+                                    @endif
+                                </td>
+                                <td>{{ $req->item_name }}</td>
+                                <td>{{ $req->item_type }}</td>
+                                <td>{{ $req->place_of_repair }}</td>
+                                <td>{{ $req->problem }}</td>
+                                <td class="text-center"><span
+                                        class="@if ($req->status_repair == 'Urgent') bg-danger text-white px-3 py-2 rounded-pill @endif">{{ $req->status_repair }}</span>
+                                </td>
+
                             </tr>
                         @empty
                             <tr>
@@ -238,22 +243,22 @@
             var table = $('#myTable').DataTable();
 
             $('#allinput').click(function() {
-                table.column(7).search('').draw();
+                table.column(1).search('').draw();
             });
             $('#waiting').click(function() {
-                table.column(7).search('waiting').draw();
+                table.column(1).search('waiting').draw();
             });
             $('#progress').click(function() {
-                table.column(7).search('progress').draw();
+                table.column(1).search('progress').draw();
             });
             $('#sealkit').click(function() {
-                table.column(7).search('Seal Kit').draw();
+                table.column(1).search('Seal Kit').draw();
             });
             $('#trial').click(function() {
-                table.column(7).search('Trial').draw();
+                table.column(1).search('Trial').draw();
             });
             $('#finish').click(function() {
-                table.column(7).search('Finish').draw();
+                table.column(1).search('Finish').draw();
             });
 
             var waiting = "{{ $progress }}";
@@ -261,7 +266,7 @@
                 $('#waiting').click();
             }
             if (waiting == "progress") {
-                table.column(7).search('^((?!waiting).)*$', true, false).draw();
+                table.column(1).search('^((?!waiting).)*$', true, false).draw();
             }
 
         });

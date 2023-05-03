@@ -70,7 +70,7 @@ class WaitingrepairController extends Controller
 
 
         $partr = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
-            ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
+            ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair', 'progressrepairs.place_of_repair')
             ->where('deleted', null)
             ->where('progress', '<>', 'finish')
             ->where('progress', '<>', 'Scrap')

@@ -95,10 +95,10 @@
                                                 @endforeach --}}
 
                                                 @foreach ($reqtzy as $req)
-                                                    <option data-custom-properties="{{ $req['item_code'] }}"
-                                                        value="{{ $req['description'] }}">{{ $req['item_code'] }} |
-                                                        {{ $req['item_name'] }} | {{ $req['description'] }} | Stock:
-                                                        {{ $req['stock'] }}
+                                                    <option data-custom-properties="{{ $req['ItemCode'] }}"
+                                                        value="{{ $req['description'] }}">{{ $req['ItemCode'] }} |
+                                                        {{ $req['itemName'] }} | {{ $req['description'] }} | Stock:
+                                                        {{ $req['Stock'] }}
                                                     </option>
                                                 @endforeach
                                             </select>
