@@ -59,6 +59,7 @@
             }
         });
 
+
         $(document).on('select2:open', () => {
             document.querySelector('.select2-search__field').focus();
         });
@@ -91,8 +92,8 @@
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    $('#item_name2').val(data.item_name);
-                    $('#item_code2').val(data.item_code);
+                    $('#item_name2').val(data.itemName);
+                    $('#item_code2').val(data.ItemCode);
                     $('#description2').val(data.description);
                     $('#price2').val(data.price);
                 }
@@ -106,8 +107,8 @@
                 url: "{{ route('ajax') }}" + '/?item_name=' + item_name,
                 dataType: 'JSON',
                 success: function(data) {
-                    $('#item_name3').val(data.item_name);
-                    $('#item_code3').val(data.item_code);
+                    $('#item_name3').val(data.itemName);
+                    $('#item_code3').val(data.ItemCode);
                     $('#description3').val(data.description);
                     $('#price3').val(data.price);
                 }

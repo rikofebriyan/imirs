@@ -28,7 +28,7 @@
                                 data-bs-target="#asu{{ $req->id }}"
                                 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size:
                                 .75rem">
-                                Edit
+                                Update
                             </button>
 
                             <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
@@ -58,14 +58,16 @@
                                                                     <label for="item_code"
                                                                         class="col-sm-3 col-form-label">Spare
                                                                         Part</label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-select mb-3 choices"
-                                                                            onchange="isi_otomatis_part2()"
-                                                                            id="isiotomatis3" name="item_name"
-                                                                            data-live-search="true">
-                                                                            <option selected>{{ $req->item_code }}
-                                                                            </option>
-                                                                            @foreach ($mastersparepart as $reqs)
+
+
+
+                                                                    {{-- <div class="mb-3">
+                                                                        <select
+                                                                            class="form-select form-select-isiotomatis2"
+                                                                            onchange="isi_otomatis_part()"
+                                                                            id="isiotomatis2" name="item_name" required>
+                                                                            <option value="" selected></option>
+                                                                            @foreach ($mastersparepart as $req)
                                                                                 <option
                                                                                     data-custom-properties="{{ $req['ItemCode'] }}"
                                                                                     value="{{ $req['description'] }}">
@@ -78,18 +80,28 @@
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
+                                                                    </div> --}}
+
+
+
+
+                                                                    <div class="col-sm-9">
+
                                                                         <div class="input-group">
-                                                                            <input type="text" class="form-control"
+                                                                            <input type="text"
+                                                                                class="form-control disabledriko"
                                                                                 id="item_code3" name="item_code"
                                                                                 placeholder="Item Code"
                                                                                 value="{{ $req->item_code }}" readonly>
-                                                                            <input type="text" class="form-control"
+                                                                            <input type="text"
+                                                                                class="form-control disabledriko"
                                                                                 id="item_name3" name="item_name"
                                                                                 placeholder="Item Name"
                                                                                 value="{{ $req->item_name }}" readonly>
                                                                         </div>
                                                                         <div class="input-group">
-                                                                            <input type="text" class="form-control"
+                                                                            <input type="text"
+                                                                                class="form-control disabledriko"
                                                                                 id="description3" name="description"
                                                                                 placeholder="description"
                                                                                 value="{{ $req->description }}"
@@ -97,15 +109,17 @@
                                                                         </div>
 
                                                                         <div class="input-group">
-                                                                            <input type="text" class="form-control"
+                                                                            <input type="text"
+                                                                                class="form-control disabledriko"
                                                                                 id="price3" name="price"
                                                                                 placeholder="Price"
                                                                                 value="{{ $req->price }}" readonly>
                                                                         </div>
 
+
                                                                         <div class="input-group">
-                                                                            <select class="form-control" id="maker"
-                                                                                name="maker">
+                                                                            <select class="form-control disabledriko"
+                                                                                id="maker" name="maker">
                                                                                 <option value="{{ $req->maker }}"
                                                                                     selected disabled>
                                                                                     {{ $req->maker }}</option>
@@ -125,9 +139,10 @@
                                                                     <label for="qty"
                                                                         class="col-sm-3 col-form-label">Qty</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="number" class="form-control"
+                                                                        <input type="number"
+                                                                            class="form-control disabledriko"
                                                                             id="qty3" name="qty"
-                                                                            value="{{ $req->qty }}">
+                                                                            value="{{ $req->qty }}" readonly>
                                                                     </div>
                                                                 </div>
 
@@ -136,7 +151,8 @@
                                                                         class="col-sm-3 col-form-label">Total
                                                                         Price</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="text"
+                                                                            class="form-control disabledriko"
                                                                             id="total_price2" name="total_price"
                                                                             value="{{ $req->total_price }}">
                                                                     </div>
@@ -147,6 +163,7 @@
                                                         <div class="col">
 
                                                             <div class="p-3 m-3 border">
+
                                                                 <div class="mb-3 row">
                                                                     <label for="quotation"
                                                                         class="col-sm-3 col-form-label">Status
@@ -203,7 +220,7 @@
                                     'style' => '--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem',
                                 ]) }} --}}
                                 <button type="submit" class="btn btn-danger"
-                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem"></button>
+                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem">Delete</button>
                             </form>
                             {{-- {{ Form::close() }} --}}
                         </td>
@@ -229,7 +246,8 @@
 
     <div class="row">
         <div class="col-6">
-            <div class="alert alert-primary fw-bold m-0 @if ($progresspemakaian->count() > 0) d-none @endif">
+            <div class="alert fw-bold m-0 @if ($progresspemakaian->count() > 0) d-none @endif"
+                style="background-color: #8fffd8">
                 <center>APAKAH PART REPAIR BUTUH ORDER SEAL KIT?</center>
                 <center>
                     <div class="form-check-inline">
@@ -258,9 +276,8 @@
             </div>
             <div class="d-grid gap-2 col @if ($countid == 0) d-block @else d-none @endif"
                 id="fieldrepair">
-                <button href="{{ route('partrepair.progresspemakaian.show', $waitingrepair->id) }}"
-                    class="btn btn-success">REPAIR & TRIAL
-                    >>></button>
+                <a href="{{ route('partrepair.progresspemakaian.show', $waitingrepair->id) }}"
+                    class="btn btn-success d-flex justify-content-center align-items-center">SELESAI</a>
             </div>
         @else
             <div class="d-grid gap-2 col">
@@ -269,8 +286,7 @@
             </div>
             <div class="d-grid gap-2 col @if ($countid == 0) d-block @else d-none @endif"
                 id="fieldrepair">
-                <button href="/" class="btn btn-secondary disabled">REPAIR & TRIAL
-                    >>></button>
+                <button href="/" class="btn btn-secondary disabled">TIDAK BUTUH SEALKIT</button>
             </div>
             <center><span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span></center>
         @endif
@@ -279,14 +295,12 @@
         @if ($countid == 0)
         @elseif ($countid > $ready)
             <div class="d-grid gap-2 col">
-                <button class="btn btn-primary disabled text-center">REPAIR & TRIAL
-                    >>></button>
+                <button class="btn btn-primary disabled text-center">PART BELUM READY</button>
             </div>
         @elseif ($countid == $ready)
             <div class="d-grid gap-2 col">
                 <a href="{{ route('partrepair.progresspemakaian.show', $waitingrepair->id) }}"
-                    class="btn btn-success">REPAIR & TRIAL
-                    >>></a>
+                    class="btn btn-success">SELESAI</a>
             </div>
         @endif
     </div>
@@ -350,21 +364,21 @@
                                                 </select>
                                             </div>
                                             <div class="input-group">
-                                                <input type="text" class="form-control bg-secondary text-white"
+                                                <input type="text" class="form-control disabledriko"
                                                     id="item_code2" name="item_code" placeholder="Item Code"
                                                     readonly>
-                                                <input type="text" class="form-control bg-secondary text-white"
+                                                <input type="text" class="form-control disabledriko"
                                                     id="item_name2" name="item_name" placeholder="Item Name"
                                                     readonly>
                                             </div>
                                             <div class="input-group">
-                                                <input type="text" class="form-control bg-secondary text-white"
+                                                <input type="text" class="form-control disabledriko"
                                                     id="description2" name="description" placeholder="description"
                                                     readonly>
                                             </div>
 
                                             <div class="input-group">
-                                                <input type="text" class="form-control bg-secondary text-white"
+                                                <input type="text" class="form-control disabledriko"
                                                     id="price2" name="price" placeholder="Price" readonly>
                                             </div>
                                         </div>

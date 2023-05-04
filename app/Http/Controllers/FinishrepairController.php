@@ -83,7 +83,7 @@ class FinishrepairController extends Controller
         $request2->save();
 
         $query = Finishrepair::where('code_part_repair', $request->code_part_repair)->first();
-        // dd($query);
+
         if ($query = null) {
             $request3 = new CodePartRepair;
             $request3->category = $request->category;
@@ -92,7 +92,7 @@ class FinishrepairController extends Controller
             $request3->save();
         }
 
-        return redirect()->route('partrepair.waitingtable.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('partrepair.finishrepair.index')->with('success', 'Your task added successfully!');
     }
 
     /**

@@ -123,7 +123,7 @@
                             <label for="total_time_repair" class="col-sm-3 col-form-label">Actual Time
                                 Repair</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control bg-secondary text-white" id="selisih"
+                                <input type="text" class="form-control disabledriko" id="selisih"
                                     name="total_time_repair" placeholder="Hours"
                                     value="{{ $progressrepair2->total_time_repair }}" readonly>
                             </div>
@@ -134,8 +134,8 @@
                                 <label for="labour_cost" class="col-form-label">Labour Cost</label>
                             </div>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control number bg-secondary text-white"
-                                    id="labour_cost" name="labour_cost" value="{{ $progressrepair2->labour_cost }}"
+                                <input type="text" class="form-control number disabledriko" id="labour_cost"
+                                    name="labour_cost" value="{{ $progressrepair2->labour_cost }}"
                                     placeholder="Labour Cost" readonly>
                             </div>
                         </div>

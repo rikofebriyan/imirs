@@ -3,23 +3,19 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Carbon\Carbon;
-
-use App\ItemStandard;
-use App\StandardPengecekan;
-use App\User;
-use App\Maker;
-use App\Subcont;
 use App\Line;
-use App\Section;
-use App\Waitingrepair;
-use App\Progressrepair;
-use App\Progresspemakaian;
-use App\MasterSparePart;
-use App\Progresstrial;
-use Illuminate\Http\Request;
 
-use App\Http\Requests;
+use App\Models\Maker;
+use App\Models\Subcont;
+use App\Models\ItemStandard;
+use Illuminate\Http\Request;
+use App\Models\Progresstrial;
+use App\Models\Waitingrepair;
+use App\Models\MasterSparePart;
+use App\Models\Progresspemakaian;
+use App\Models\StandardPengecekan;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 
 class ProgresstrialController extends Controller

@@ -50,12 +50,12 @@ class InfoController extends Controller
 
 
         // $data = MasterSparePart::where('item_code', $request->item_name)->first();
-        // $json1 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        // $json2 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        // $json3 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
-        $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
-        $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
+        $json1 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        $json2 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        $json3 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        // $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
+        // $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
+        // $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
 
         $mergedJson = array_merge($json3['data'], $json2['data'], $json1['data']);
         // $mergedJson = $json1['data'] + $json2['data'] + $json3['data'];

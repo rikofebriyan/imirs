@@ -211,7 +211,7 @@
         $(document).ready(function() {
             $('#myTable').DataTable({
                 order: [
-                    [0, 'desc']
+                    [2, 'desc']
                 ],
 
                 "createdRow": function(row, data, dataIndex) {

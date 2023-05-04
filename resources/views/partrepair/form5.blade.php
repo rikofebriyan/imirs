@@ -1,5 +1,6 @@
 {{-- {{ Form::open(['route' => 'partrepair.finishrepair.store', 'method' => 'POST']) }} --}}
 <form action="{{ route('partrepair.finishrepair.store') }}" method="POST">
+    @csrf
     <div class="container-fluid justify-content-center py-0">
         <div class="row">
             <div class="card col border mx-2">

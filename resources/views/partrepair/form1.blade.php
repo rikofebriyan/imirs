@@ -1,5 +1,5 @@
 {{-- {{ Form::open(['route' => 'partrepair.waitingtable.store', 'method' => 'POST']) }} --}}
-<form action="{{ route('partrepair.waitingapprove.store') }}" method="POST">
+<form action="{{ route('partrepair.waitingtable.store') }}" method="POST">
     @csrf
     <div class="container-fluid justify-content-center p-0">
         <div class="row gx-3">
@@ -229,16 +229,16 @@
                         <label for="reg_sp" class="col-sm-3 col-form-label">Ticket
                             Number</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control bg-secondary text-white" id="reg_sp"
-                                name="reg_sp" value="{{ $waitingrepair->reg_sp }}" readonly>
+                            <input type="text" class="form-control disabledriko" id="reg_sp" name="reg_sp"
+                                value="{{ $waitingrepair->reg_sp }}" readonly>
                         </div>
                     </div>
 
                     <div class="mb-3 row">
                         <label for="progress" class="col-sm-3 col-form-label">Progress</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control bg-secondary text-white" id="progres"
-                                name="progress" value="{{ $waitingrepair->progress }}" readonly>
+                            <input type="text" class="form-control disabledriko" id="progres" name="progress"
+                                value="{{ $waitingrepair->progress }}" readonly>
                         </div>
                     </div>
 
