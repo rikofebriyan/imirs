@@ -69,9 +69,8 @@
                                             id="code_part_repair" name="code_part_repair">
 
                                         <div class="input-group">
-                                            <input type="text" class="form-control bg-secondary text-white"
-                                                id="number_of_repair" name="number_of_repair" placeholder="Number of Repair"
-                                                readonly>
+                                            <input type="text" class="form-control disabledriko" id="number_of_repair"
+                                                name="number_of_repair" placeholder="Number of Repair" readonly>
                                             <label for="number_of_repair" class="col-sm-3 col-form-label ms-3">Times</label>
                                             <div id="number_of_repairFeedback" class="invalid-feedback">
                                                 Part Has Been Repaired Over 5 Times. Please Scrap!
@@ -256,13 +255,19 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-        $('#isiotomatis').select2()
+        $('#isiotomatis').select2({
+            minimumInputLength: 2,
+            language: {
+                inputTooShort: function() {
+                    return "Masukkan keyword item";
+                }
+            }
+        });
         $(document).on('select2:open', () => {
             document.querySelector('.select2-search__field').focus();
         });
 
         function isi_otomatis() {
-            // alert($('#isiotomatis').find(':selected').data('custom-properties'))
             $.ajax({
                 type: 'GET',
                 url: "{{ route('ajax') }}",
@@ -273,10 +278,10 @@
                 success: function(data) {
                     console.log(data);
                     $('#item_id').val(data.id);
-                    $('#item_name').val(data.item_name);
-                    $('#item_code').val(data.item_code);
+                    $('#item_name').val(data.itemName);
+                    $('#item_code').val(data.ItemCode);
                     $('#description').val(data.description);
-                    $('#qty').val(data.stock);
+                    $('#qty').val(data.Stock);
                     $('#price').val(data.price);
 
                     if (data.qty == 0) {

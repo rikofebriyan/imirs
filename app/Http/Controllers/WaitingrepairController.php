@@ -438,8 +438,19 @@ class WaitingrepairController extends Controller
         $waitingrepair = Waitingrepair::find($id);
         $progresspemakaian = Progresspemakaian::where('form_input_id', $waitingrepair->id)->get();
         // $mastersparepart = MasterSparePart::all();
-        $json = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
-        $mastersparepart = collect($json['data'])->all();
+
+
+        // $json = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
+        $json1 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        $json2 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        $json3 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        // $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
+        // $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=TLR'), true);
+        // $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=TLC'), true);
+        $mergedJson = array_merge($json1, $json2, $json3);
+        $mastersparepart = collect($mergedJson['data'])->all();
+
+
         // dd($mastersparepart);
         $maker = Maker::all();
         $ready = Progresspemakaian::where('status_part', '=', 'Ready')

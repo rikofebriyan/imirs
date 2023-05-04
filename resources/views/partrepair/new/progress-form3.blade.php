@@ -51,6 +51,12 @@
         $('#isiotomatis2').select2({
             dropdownParent: $('#exampleModal'),
             width: '100%',
+            minimumInputLength: 2,
+            language: {
+                inputTooShort: function() {
+                    return "Masukkan keyword item";
+                }
+            }
         });
 
         $(document).on('select2:open', () => {

@@ -50,9 +50,15 @@ class InfoController extends Controller
 
 
         // $data = MasterSparePart::where('item_code', $request->item_name)->first();
-        // $json = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs-trial/public/json.json'), true);
-        $json = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
-        $data = collect($json['data'])->where('item_code', $request->item_name)->first();
+        $json1 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        $json2 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        $json3 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
+        // $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
+        // $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=TLR'), true);
+        // $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=TLC'), true);
+
+        $mergedJson = array_merge($json1, $json2, $json3);
+        $data = collect($mergedJson['data'])->where('ItemCode', $request->item_name)->first();
         return response()->json($data);
     }
 

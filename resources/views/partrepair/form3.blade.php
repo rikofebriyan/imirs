@@ -67,10 +67,14 @@
                                                                             </option>
                                                                             @foreach ($mastersparepart as $reqs)
                                                                                 <option
-                                                                                    value="{{ $reqs->code_item_description }}">
-                                                                                    {{ $reqs->item_code }} |
-                                                                                    {{ $reqs->item_name }} |
-                                                                                    {{ $reqs->description }}
+                                                                                    data-custom-properties="{{ $req['ItemCode'] }}"
+                                                                                    value="{{ $req['description'] }}">
+                                                                                    {{ $req['ItemCode'] }}
+                                                                                    |
+                                                                                    {{ $req['itemName'] }} |
+                                                                                    {{ $req['description'] }} |
+                                                                                    Stock:
+                                                                                    {{ $req['Stock'] }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -335,12 +339,14 @@
                                                     required>
                                                     <option value="" selected></option>
                                                     @foreach ($mastersparepart as $req)
-                                                    <option data-custom-properties="{{ $req['item_code'] }}"
-                                                        value="{{ $req['description'] }}">{{ $req['item_code'] }} |
-                                                        {{ $req['item_name'] }} | {{ $req['description'] }} | Stock:
-                                                        {{ $req['stock'] }}
-                                                    </option>
-                                                @endforeach
+                                                        <option data-custom-properties="{{ $req['ItemCode'] }}"
+                                                            value="{{ $req['description'] }}">{{ $req['ItemCode'] }}
+                                                            |
+                                                            {{ $req['itemName'] }} | {{ $req['description'] }} |
+                                                            Stock:
+                                                            {{ $req['Stock'] }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="input-group">
