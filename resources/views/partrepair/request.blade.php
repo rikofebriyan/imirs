@@ -32,7 +32,7 @@
                                 <div class="mb-3 row">
                                     <label for="tanggal" class="col-sm-3 col-form-label">Date Created</label>
                                     <div class="col-sm-9">
-                                        <input type="datetime-local" class="form-control disabledriko" id="tanggal"
+                                        <input type="datetime" class="form-control disabledriko" id="tanggal"
                                             name="date" value="{{ Carbon\Carbon::now() }}" readonly required>
                                     </div>
                                 </div>
@@ -276,7 +276,7 @@
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#item_id').val(data.id);
                     $('#item_name').val(data.itemName);
                     $('#item_code').val(data.ItemCode);
