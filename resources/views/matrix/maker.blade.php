@@ -82,9 +82,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr>
-                                <td class="text-center text-mute" colspan="4">Data post tidak tersedia</td>
-                            </tr>
+                            
                         @endforelse
                     </tbody>
                 </table>
@@ -93,7 +91,7 @@
     </div>
 
     <!-- Modal -->
-    <form action="{{ route('maker.store', $req->id) }}" method="POST">
+    <form action="{{ route('maker.store') }}" method="POST">
         @csrf
         {{-- {{ Form::open(['route' => 'matrix.maker.store', 'method' => 'POST']) }} --}}
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

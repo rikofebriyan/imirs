@@ -39,9 +39,6 @@
 
                             </tr>
                         @empty
-                            <tr>
-                                <td class="text-center text-mute" colspan="4">Data post tidak tersedia</td>
-                            </tr>
                         @endforelse
                     </tbody>
                 </table>
