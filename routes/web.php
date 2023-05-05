@@ -43,26 +43,13 @@ use App\Http\Controllers\StandardpengecekanController;
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
-});
-
-
-// Route::middleware(['auth', 'userauthority'])->group(function () {
-//     Route::get('matrix/user', function () {
-//         return view('/home');
-//     });
-// });
-
-
+Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::middleware(['auth'])->group(function () {
     Route::get('/partrepair', [PartrepairController::class, 'index'])->name('partrepair');
     Route::get('/partrepair/request', [PartrepairController::class, 'request'])->name('request');
     Route::get('/partrepair/ganttchart', [GanttchartController::class, 'index'])->name('ganttchart');
     Route::get('/partrepair/deletedtable', [WaitingrepairController::class, 'deleted'])->name('deletedtable');
     Route::get('/partrepair/finishtable', [WaitingrepairController::class, 'finish'])->name('finishtable');
-
     Route::prefix('partrepair')->name('partrepair.')->group(function () {
         Route::get('/waitingtable', [WaitingrepairController::class, 'index'])->name('waitingtable.index');
         Route::get('/registeredticket', [RegisteredTicketController::class, 'index'])->name('registeredticket.index');

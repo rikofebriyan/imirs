@@ -10,6 +10,7 @@ use App\Models\Progresstrial;
 use App\Models\Waitingrepair;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -79,7 +80,6 @@ class HomeController extends Controller
             'data' => $data,
         ]);
     }
-
     public function reportHome(Request $request)
     {
         if ($request->bulan == null) {

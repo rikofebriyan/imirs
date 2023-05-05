@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class Maintenance
 {
@@ -15,7 +16,7 @@ class Maintenance
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->jabatan !== 'Maintenance' ) {
+        if (Auth::user()->jabatan !== 'Maintenance') {
             return redirect('home');
         }
         return $next($request);
