@@ -15,7 +15,7 @@ class Supervisor
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->jabatan !== 'Supervisor' || 'Admin') {
+        if (Auth::user()->jabatan !== 'Supervisor' || 'ADMIN') {
             return redirect()->back()->with('error', 'Halaman Waiting Approval Hanya bisa diakses Role Supervisor up');
         }
         return $next($request);

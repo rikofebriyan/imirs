@@ -44,7 +44,6 @@ use App\Http\Controllers\StandardpengecekanController;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::middleware(['auth'])->group(function () {
     Route::get('/partrepair', [PartrepairController::class, 'index'])->name('partrepair');
     Route::get('/partrepair/request', [PartrepairController::class, 'request'])->name('request');
     Route::get('/partrepair/ganttchart', [GanttchartController::class, 'index'])->name('ganttchart');
@@ -71,7 +70,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-    Route::resource('matrix/user', UserController::class)->middleware('adminsupervisor');
+    Route::resource('matrix/user', UserController::class);
     Route::resource('matrix/section', SectionController::class);
     Route::resource('matrix/line', LineController::class);
     Route::resource('matrix/machine', MachineController::class);
@@ -102,4 +101,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mymodelrevision', [InfoController::class, 'mymodelrevision'])->name('mymodelrevision');
     Route::patch('/updatemodel/{id}', [InfoController::class, 'updatemodel']);
     Route::post('/export', [ExportController::class, 'export'])->name('export');
-});

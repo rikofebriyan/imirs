@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryCode;
-use App\Http\Requests\StoreCategoryCodeRequest;
-use App\Http\Requests\UpdateCategoryCodeRequest;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CategoryCodeController extends Controller
 {
@@ -36,19 +36,13 @@ class CategoryCodeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCategoryCodeRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategoryCodeRequest $request)
+    public function store(Request $request)
     {
-        // validated input request
-        // $this->validate($request, [
-        //     'category' => 'required',
-        // ]);
-
-        // create new task
         CategoryCode::create($request->all());
-        return redirect()->route('category_code.index')->with('success', 'Your task added successfully!');
+        return redirect()->back()->with('success', 'Your task added successfully!');
     }
 
     /**

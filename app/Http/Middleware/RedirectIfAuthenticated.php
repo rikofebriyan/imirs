@@ -17,12 +17,24 @@ class RedirectIfAuthenticated
      * @param  string|null  ...$guards
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
+    // public function handle(Request $request, Closure $next, $guard = null)
+    // {
+        
+    //     if (Auth::user()->jabatan !== 'null' ) {
+    //         return redirect('home');
+    //     }
+        
+
+    //     return $next($request);
+    // }
+
     public function handle(Request $request, Closure $next, ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                // dd($guard);
                 return redirect(RouteServiceProvider::HOME);
             }
         }
