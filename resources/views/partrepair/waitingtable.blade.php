@@ -83,7 +83,7 @@
                                     @endif
 
 
-                                    @if (Auth::user()->jabatan == 'ADMIN')
+                                    @if (Auth::user()->jabatan == 'ADMIN' || 'Supervisor')
                                         <button type="button" class="rounded-pill btn btn-danger btn-sm"
                                             data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
                                             Delete

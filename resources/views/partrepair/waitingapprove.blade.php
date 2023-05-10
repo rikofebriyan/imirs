@@ -16,8 +16,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Ticket No</th>
-                            <th scope="col">Plan Start</th>
-                            <th scope="col">Plan Finish</th>
+                            <th scope="col">Nama Requester</th>
                             <th scope="col">Spare Part</th>
                             <th scope="col">Problem</th>
                             <th class="text-center" scope="col">Status Repair</th>
@@ -29,20 +28,7 @@
                         @forelse ($reqtzy as $req)
                             <tr>
                                 <td>{{ $req->reg_sp }}</td>
-                                <td>
-                                    @if ($req->plan_start_repair == null)
-                                        Belum Input
-                                    @else
-                                        {{ \Carbon\Carbon::parse($req->plan_start_repair)->format('d-M-Y') }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($req->plan_finish_repair == null)
-                                        Belum Input
-                                    @else
-                                        {{ \Carbon\Carbon::parse($req->plan_finish_repair)->format('d-M-Y') }}
-                                    @endif
-                                </td>
+                                <td>{{ $req->nama_pic . ' ( ' . $req->jabatan . ' )' }}</td>
                                 <td>{{ $req->item_name }}</td>
                                 <td>{{ $req->problem }}</td>
                                 <td class="text-center"><span
