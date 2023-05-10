@@ -70,7 +70,7 @@ Route::prefix('partrepair')->name('partrepair.')->group(function () {
 });
 
 
-Route::resource('matrix/user', UserController::class)->middleware('auth');
+Route::resource('matrix/user', UserController::class)->middleware('adminsupervisor');
 Route::resource('matrix/section', SectionController::class)->middleware('auth');
 Route::resource('matrix/line', LineController::class)->middleware('auth');
 Route::resource('matrix/machine', MachineController::class)->middleware('auth');

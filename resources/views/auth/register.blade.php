@@ -89,6 +89,8 @@
                                     Maintenance</option>
                                 <option value="RepairMan" @if ($errors->first('jabatan') == 'RepairMan') selected @endif>RepairMan
                                 </option>
+                                <option value="Supervisor" @if ($errors->first('jabatan') == 'Supervisor') selected @endif>Supervisor
+                                </option>
                             </select>
                             <div class="form-control-icon">
                                 <i class="bi bi-c-circle"></i>

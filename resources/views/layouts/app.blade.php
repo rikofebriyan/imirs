@@ -168,6 +168,7 @@
                                 <span><i class="fas fa-calendar-alt"></i> Schedule Chart</span>
                             </a>
                         </li>
+                        @if (Auth::user()->jabatan == 'ADMIN')
                         <li class="menu-item  has-sub">
                             <a href="#" class='menu-link'>
                                 <span><i class="bi bi-table"></i> Master Data</span>
@@ -235,6 +236,7 @@
                                 </div>
                             </div>
                         </li>
+                        @endif
 
                         <li class="menu-item  ">
                             <a href="{{ route('report') }}" class='menu-link'>
