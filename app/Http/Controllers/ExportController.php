@@ -112,7 +112,8 @@ class ExportController extends Controller
                 'nama_pic',
                 'price',
                 'status_repair',
-                'progress'
+                'progress',
+                'approval'
             )
             ->get();
 
@@ -135,7 +136,8 @@ class ExportController extends Controller
             'Nama PIC',
             'Price',
             'Status Repair',
-            'Progress'
+            'Progress',
+            'Approval'
         );
 
         $spreadsheet = IOFactory::load(public_path('Ticket Approval.xlsx'));
