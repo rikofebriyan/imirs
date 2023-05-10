@@ -101,3 +101,4 @@ Route::get('/mymodel', [InfoController::class, 'mymodel'])->name('mymodel');
 Route::get('/mymodelrevision', [InfoController::class, 'mymodelrevision'])->name('mymodelrevision');
 Route::patch('/updatemodel/{id}', [InfoController::class, 'updatemodel']);
 Route::post('/export', [ExportController::class, 'export'])->name('export');
+Route::post('/ticket', [ExportController::class, 'ticket'])->name('ticket');

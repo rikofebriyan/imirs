@@ -45,6 +45,14 @@
                                         <span class="rounded-pill bg-danger text-white text-center px-2 bg-opacity-50"> Not
                                             Authorized</span>
                                     @endcan
+                                    <form action="{{ route('ticket', $req->reg_sp) }}" method="POST"
+                                        style="display:inline">
+                                        @csrf
+                                        <input type="hidden" name="reg_sp" value="{{ $req->reg_sp }}">
+                                        <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2">Cetak
+                                            Tiket</button>
+                                    </form>
+
                                     <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
@@ -77,6 +85,10 @@
                                                         {{-- <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button> --}}
                                                         <button type="submit" class="btn btn-success">APPROVE</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </form>
             </div>
         </div>
