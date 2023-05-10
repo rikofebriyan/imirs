@@ -20,8 +20,8 @@ class WaitingApprovalController extends Controller
     public function index()
     {
         // $partr = Waitingrepair::all()->sortByDesc('id');
-        $partr = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
-            ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
+        $partr = Waitingrepair::leftJoin('users', 'users.name', '=', 'waitingrepairs.nama_pic')
+            ->select('waitingrepairs.*', 'users.jabatan')
             ->where('deleted', null)
             ->where('progress', '<>', 'finish')
             ->where('progress', '<>', 'Scrap')

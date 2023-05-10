@@ -205,9 +205,11 @@
                                         <select class="form-control choices" id="nama_pic" name="nama_pic" required>
                                             <option value="" selected disabled>Pilih ...</option>
                                             @foreach ($user as $us)
-                                                <option value="{{ $us->name }}">{{ $us->name }} |
-                                                    {{ $us->NPK }}
-                                                </option>
+                                                @if ($us->jabatan != 'ADMIN' && 'Supervisor')
+                                                    <option value="{{ $us->name }}">{{ $us->name }} |
+                                                        {{ $us->NPK }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
