@@ -25,7 +25,7 @@ class FinishrepairController extends Controller
     public function index()
     {
         $partr = Finishrepair::all()->sortByDesc('id');
-        return view('partrepair.finishrepairtable', [
+        return view('partrepair.waitingtablefinish', [
             'reqtzy' => $partr,
         ]);
     }
@@ -92,7 +92,7 @@ class FinishrepairController extends Controller
             $request3->save();
         }
 
-        return redirect()->route('partrepair.finishrepair.index')->with('success', 'Your task added successfully!');
+        return redirect()->route('finishtable')->with('success', 'Your task added successfully!');
     }
 
     /**
