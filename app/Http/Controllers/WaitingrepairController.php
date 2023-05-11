@@ -57,18 +57,6 @@ class WaitingrepairController extends Controller
      */
     public function index(Request $request)
     {
-        // $partr = Waitingrepair::all()->sortByDesc('id');
-
-        // $json = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        // $jsondata = collect($json['data'])->where('ItemCode', 'ABW010001')->all();
-        // dd($jsondata);
-
-
-
-
-
-
-
         $partr = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair', 'progressrepairs.place_of_repair')
             ->where('deleted', null)
@@ -78,6 +66,9 @@ class WaitingrepairController extends Controller
             ->orderBy('id')
             ->get();
         // dd($partr);
+
+
+
         return view('partrepair.waitingtable', [
             'reqtzy' => $partr,
             'progress' => $request->progress,
@@ -149,7 +140,7 @@ class WaitingrepairController extends Controller
         }
 
 
-        return redirect()->back()->with('success', 'Your task added successfully!');
+        return redirect()->route('partrepair.waitingapprove.index')->with('success', 'Your task added successfully!');
         // return redirect()->route('partrepair.waitingtable.index')->with('success', 'Your task added successfully!');
     }
 

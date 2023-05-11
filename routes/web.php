@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\LineController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\MakerController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\MachineController;
@@ -102,3 +103,4 @@ Route::get('/mymodelrevision', [InfoController::class, 'mymodelrevision'])->name
 Route::patch('/updatemodel/{id}', [InfoController::class, 'updatemodel']);
 Route::post('/export', [ExportController::class, 'export'])->name('export');
 Route::post('/ticket', [ExportController::class, 'ticket'])->name('ticket');
+Route::post('/sendemail', [EmailController::class, 'sendEmail'])->name('sendemail');

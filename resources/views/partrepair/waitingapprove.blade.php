@@ -52,8 +52,20 @@
                                         <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2">Cetak
                                             Tiket</button>
                                     </form>
+                                    <button type="button" class="btn btn-sm btn-primary rounded-pill mx-2"
+                                        data-bs-toggle="modal" data-bs-target="#modalemail{{ $req->id }}">
+                                        Send Email
+                                    </button>
+                                    {{-- <form action="{{ route('sendemail', $req->reg_sp) }}" method="POST"
+                                        style="display:inline">
+                                        @csrf
+                                        <input type="hidden" name="reg_sp" value="{{ $req->reg_sp }}">
+                                        <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2">Cetak
+                                            Tiket</button>
+                                    </form> --}}
 
-                                    <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}" method="POST">
+                                    <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}"
+                                        method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <div class="modal fade" id="modalapprove{{ $req->id }}" tabindex="-1"
@@ -145,6 +157,56 @@
             </div>
         </div>
     </form>
+
+    <form action="{{ route('sendemail', $req->id) }}" method="POST">
+        @csrf
+        <div class="modal fade" id="modalemail{{ $req->id }}" tabindex="-1" aria-labelledby="modalemailLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <h1 class="modal-title fs-5 mb-1" id="modalemailLabel">Alamat Tujuan Email
+                        </h1>
+                        <div class="form-group position-relative has-icon-left mb-4">
+
+                            <input type="hidden" name="reg_sp" value="{{ $req->reg_sp }}">
+                            <input type="hidden" name="nama_requester" value="{{ $req->nama_pic }}">
+                            <input type="hidden" name="spare_part" value="{{ $req->item_name }}">
+                            <input type="hidden" name="problem" value="{{ $req->problem }}">
+                            <input type="hidden" name="section" value="{{ $req->section }}">
+
+                            <select class="form-control choices" id="email" name="email" required>
+                                <option value="" selected disabled>Pilih ...</option>
+                                @foreach ($user as $us)
+                                    @if ($us->jabatan = 'ADMIN' && 'Supervisor')
+                                        <option value="{{ $us->email }}">{{ $us->name }} |
+                                            {{ $us->email }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <div class="form-control-icon">
+
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+
+                                <i class="bi bi-person-check"></i>
+                            </div>
+                        </div>
+                        <input type="hidden" name="reg_sp" value="{{ $req->reg_sp }}">
+                        <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2">Send Email</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
     </td>
     </tr>
 @empty

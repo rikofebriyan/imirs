@@ -7,8 +7,9 @@ use App\Http\Requests;
 // use App\Waitingrepair;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Waitingrepair;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\User;
 
 class WaitingApprovalController extends Controller
 {
@@ -28,8 +29,12 @@ class WaitingApprovalController extends Controller
             ->where('approval', null)
             ->get();
         // dd($partr);
+
+        $user = User::all();
+
         return view('partrepair.waitingapprove', [
             'reqtzy' => $partr,
+            'user' => $user,
         ]);
     }
 
