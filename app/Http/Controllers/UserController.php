@@ -6,7 +6,7 @@ use App\Models\Line;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\User;
+use App\Models\User;
 
 class UserController extends Controller
 {

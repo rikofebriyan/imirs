@@ -49,7 +49,6 @@
                                     <form action="{{ route('user.update', $req->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        {{-- {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.user.update', $req->id]]) !!} --}}
                                         <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
                                             aria-labelledby="modalUpdateBarang" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -79,8 +78,8 @@
                                                             <select class="form-control choices" id="jabatan"
                                                                 name="jabatan" required>
 
-                                                                <option value="Admin"
-                                                                    @if ($req->jabatan == 'Admin') selected @endif>Admin
+                                                                <option value="ADMIN"
+                                                                    @if ($req->jabatan == 'ADMIN') selected @endif>ADMIN
                                                                 </option>
                                                                 <option value="Maintenance"
                                                                     @if ($req->jabatan == 'Maintenance') selected @endif>
