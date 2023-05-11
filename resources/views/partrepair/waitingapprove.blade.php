@@ -35,7 +35,7 @@
                                         class="@if ($req->status_repair == 'Urgent') bg-danger text-white px-3 py-2 rounded-pill @endif">{{ $req->status_repair }}</span>
                                 </td>
                                 <td>{{ $req->section }}</td>
-                                <td class="text-center d-flex d-inline justify-content-center">
+                                <td class="d-flex d-inline justify-content-center">
                                     @can('AdminSupervisor')
                                         <button type="button" class="btn btn-sm btn-success rounded-pill mx-2"
                                             data-bs-toggle="modal" data-bs-target="#modalapprove{{ $req->id }}">
@@ -179,7 +179,7 @@
                             <select class="form-control choices" id="email" name="email" required>
                                 <option value="" selected disabled>Pilih ...</option>
                                 @foreach ($user as $us)
-                                    @if ($us->jabatan = 'ADMIN' && 'Supervisor')
+                                    @if ($us->jabatan = 'ADMIN' || 'Supervisor')
                                         <option value="{{ $us->email }}">{{ $us->name }} |
                                             {{ $us->email }}
                                         </option>
