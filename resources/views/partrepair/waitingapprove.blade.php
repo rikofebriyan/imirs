@@ -162,7 +162,7 @@
         @csrf
         <div class="modal fade" id="modalemail{{ $req->id }}" tabindex="-1" aria-labelledby="modalemailLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog">
                 <div class="modal-content">
 
                     <div class="modal-body">
@@ -186,16 +186,13 @@
                                     @endif
                                 @endforeach
                             </select>
-                            <div class="form-control-icon">
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
 
-                                <i class="bi bi-person-check"></i>
-                            </div>
                         </div>
                         <input type="hidden" name="reg_sp" value="{{ $req->reg_sp }}">
                         <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2">Send Email</button>
