@@ -7,6 +7,7 @@ use App\Models\Waitingrepair;
 use App\Http\Controllers\Controller;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use DB;
 
 
 class ExportController extends Controller
@@ -17,34 +18,66 @@ class ExportController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        $users = Waitingrepair::whereBetween('created_at', [$start_date, $end_date])
-            ->where('deleted', null)
+        // $users = Waitingrepair::whereBetween('created_at', [$start_date, $end_date])
+        //     ->where('deleted', null)
+        //     ->select(
+        //         'date as tanggal',
+        //         'part_from',
+        //         'code_part_repair',
+        //         'number_of_repair',
+        //         'reg_sp',
+        //         'section',
+        //         'line',
+        //         'machine',
+        //         'item_id',
+        //         'item_code',
+        //         'item_name',
+        //         'item_type',
+        //         'maker',
+        //         'serial_number',
+        //         'problem',
+        //         'nama_pic',
+        //         'price',
+        //         'status_repair',
+        //         'progress'
+        //     )
+        //     ->get();
+
+        // revisi 23 mei 2023
+        $users = DB::table('waitingrepairs')
+            ->leftJoin('progressrepairs', 'waitingrepairs.id', '=', 'progressrepairs.form_input_id')
+            ->whereBetween('waitingrepairs.created_at', [$start_date, $end_date])
+            ->where('waitingrepairs.deleted', null)
             ->select(
-                'date as tanggal',
-                'part_from',
-                'code_part_repair',
-                'number_of_repair',
-                'reg_sp',
-                'section',
-                'line',
-                'machine',
-                'item_id',
-                'item_code',
-                'item_name',
-                'item_type',
-                'maker',
-                'serial_number',
-                'problem',
-                'nama_pic',
-                'price',
-                'status_repair',
-                'progress'
+                'waitingrepairs.date as tanggal',
+                'waitingrepairs.part_from',
+                'progressrepairs.plan_finish_repair',
+                'progressrepairs.actual_finish_repair',
+                'waitingrepairs.code_part_repair',
+                'waitingrepairs.number_of_repair',
+                'waitingrepairs.reg_sp',
+                'waitingrepairs.section',
+                'waitingrepairs.line',
+                'waitingrepairs.machine',
+                'waitingrepairs.item_id',
+                'waitingrepairs.item_code',
+                'waitingrepairs.item_name',
+                'waitingrepairs.item_type',
+                'waitingrepairs.maker',
+                'waitingrepairs.serial_number',
+                'waitingrepairs.problem',
+                'waitingrepairs.nama_pic',
+                'waitingrepairs.price',
+                'waitingrepairs.status_repair',
+                'waitingrepairs.progress',
             )
-            ->get();
+            ->get()->toArray();
 
         $header = array(
             'Tanggal',
             'Part From',
+            'Plan Finish Repair',
+            'Actual Finish Repair',
             'Code Part Repair',
             'Number of Repair',
             'Reg SP',
@@ -61,7 +94,7 @@ class ExportController extends Controller
             'Nama PIC',
             'Price',
             'Status Repair',
-            'Progress'
+            'Progress',
         );
 
         $spreadsheet = IOFactory::load(public_path('I-Mirs Export.xlsx'));
@@ -72,7 +105,8 @@ class ExportController extends Controller
         }
 
         $sheet->fromArray([$header], null, 'A1');
-        $sheet->fromArray($users->toArray(), null, 'A2');
+        // $sheet->fromArray($users->toArray(), null, 'A2');
+        $sheet->fromArray(json_decode(json_encode($users), true), null, 'A2');
 
         $start_date_formatted = date("d-m-y", strtotime($start_date));
         $end_date_formatted = date("d-m-y", strtotime($end_date));
