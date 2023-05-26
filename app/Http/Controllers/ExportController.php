@@ -160,4 +160,82 @@ class ExportController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
         ]);
     }
+
+
+    public function export_finish(Request $request)
+    {
+        // dd($request);
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $users = Waitingrepair::whereBetween('created_at', [$start_date, $end_date])
+            ->where('deleted', null)
+            ->where('progress', 'finish')
+            ->select(
+                'date as tanggal',
+                'part_from',
+                'code_part_repair',
+                'number_of_repair',
+                'reg_sp',
+                'section',
+                'line',
+                'machine',
+                'item_id',
+                'item_code',
+                'item_name',
+                'item_type',
+                'maker',
+                'serial_number',
+                'problem',
+                'nama_pic',
+                'price',
+                'status_repair',
+                'progress'
+            )
+            ->get();
+
+        $header = array(
+            'Tanggal',
+            'Part From',
+            'Code Part Repair',
+            'Number of Repair',
+            'Reg SP',
+            'Section',
+            'Line',
+            'Machine',
+            'Item ID',
+            'Item Code',
+            'Item Name',
+            'Item Type',
+            'Maker',
+            'Serial Number',
+            'Problem',
+            'Nama PIC',
+            'Price',
+            'Status Repair',
+            'Progress'
+        );
+
+        $spreadsheet = IOFactory::load(public_path('I-Mirs Export_Finish.xlsx'));
+        $sheet = $spreadsheet->getSheetByName('Sheet Export');
+        if ($sheet == null) {
+            $sheet = new Worksheet($spreadsheet, 'Sheet Export');
+            $spreadsheet->addSheet($sheet);
+        }
+
+        $sheet->fromArray([$header], null, 'A1');
+        $sheet->fromArray($users->toArray(), null, 'A2');
+
+        $start_date_formatted = date("d-m-y", strtotime($start_date));
+        $end_date_formatted = date("d-m-y", strtotime($end_date));
+        $fileName = "I-Mirs Export Finish " . $start_date_formatted . " sampai " . $end_date_formatted . ".xlsx";
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        return response()->stream(function () use ($writer) {
+            $writer->save('php://output');
+        }, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+        ]);
+    }
 }
