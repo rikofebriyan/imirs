@@ -13,7 +13,7 @@
                         <div class="col-6 col-lg-12 col-md-6">
                             <div class="card">
                                 <div class="card-body px-4 py-4-5">
-                                    <form action="/report" method="get">
+                                    <form action="{{ route('report') }}" method="get">
                                         <div class="mb-3">
                                             <h6>Group By</h6>
                                             <fieldset class="form-group">

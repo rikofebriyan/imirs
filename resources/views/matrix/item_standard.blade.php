@@ -120,17 +120,7 @@
 @endsection
 
 @section('script')
-    <!-- Main Script -->
-    <script type="text/javascript" src="{{ asset('assets/js/bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('fontawesome/js/brands.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('fontawesome/js/solid.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('fontawesome/js/fontawesome.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
-    <!-- Scripts for Table Page -->
-    <script type="text/javascript" src="{{ asset('datatables/datatables.min.js') }}"></script>
-    <!-- Scripts for Table Page -->
+
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
