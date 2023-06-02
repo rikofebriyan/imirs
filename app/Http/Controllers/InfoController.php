@@ -58,9 +58,10 @@ class InfoController extends Controller
         $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
 
         $mergedJson = array_merge($json3['data'], $json2['data'], $json1['data']);
-        // $mergedJson = $json1['data'] + $json2['data'] + $json3['data'];
-        // dd($mergedJson);
-        $data = collect($mergedJson)->where('ItemCode', $request->item_name)->first();
+        $mergedJsonFiltered = array_filter($mergedJson, function ($var) {
+            return $var['StatusBarang'] == 'NE';
+        });
+        $data = collect($mergedJsonFiltered)->where('ItemCode', $request->item_name)->first();
         return response()->json($data);
     }
 

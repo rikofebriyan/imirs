@@ -95,7 +95,7 @@
                     $('#item_name2').val(data.itemName);
                     $('#item_code2').val(data.ItemCode);
                     $('#description2').val(data.description);
-                    $('#price2').val(data.price);
+                    $('#price2').val(data.Price).number(true);
                 }
             });
         }
@@ -110,7 +110,7 @@
                     $('#item_name3').val(data.itemName);
                     $('#item_code3').val(data.ItemCode);
                     $('#description3').val(data.description);
-                    $('#price3').val(data.price);
+                    $('#price3').val(data.Price);
                 }
             });
         }

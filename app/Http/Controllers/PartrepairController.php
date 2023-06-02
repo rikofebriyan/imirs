@@ -89,8 +89,10 @@ class PartrepairController extends Controller
 
         // $mergedJson = array_merge($json1, $json2, $json3);
         $mergedJson = array_merge($json3['data'], $json2['data'], $json1['data']);
-        $partr = collect($mergedJson)->all();
-        // dd($partr);
+        $mergedJsonFiltered = array_filter($mergedJson, function ($var) {
+            return $var['StatusBarang'] == 'NE';
+        });
+        $partr = collect($mergedJsonFiltered)->all();
 
         return view('partrepair.request', [
             'reqtzy' => $partr,

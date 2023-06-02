@@ -284,9 +284,9 @@
                     $('#item_code').val(data.ItemCode);
                     $('#description').val(data.description);
                     $('#qty').val(data.Stock);
-                    $('#price').val(data.price);
+                    $('#price').val(data.Price);
 
-                    if (data.qty == 0) {
+                    if (data.Stock == 0) {
                         $('#status_repair').empty()
                         $('#status_repair').append(`
                             <option disabled>Pilih ...</option>
