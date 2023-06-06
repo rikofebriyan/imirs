@@ -119,6 +119,12 @@ class HomeController extends Controller
             $year[] = $i;
         }
 
+        $placeOfRepair = [
+            'subcont' => 'Subcont',
+            'in_house' => 'In House',
+            'trade_in' => 'Trade In'
+        ];
+
         if ($request->groupBy == 'Week' || $request->groupBy == null) {
             foreach ($stepProgress as $step) {
                 $counting[$step] = 0;
@@ -146,6 +152,16 @@ class HomeController extends Controller
                         ->sum('f_total_cost_saving') / 1000000; // dibagi 1jt untuk scale
 
                     $costSaving['target']['W' . $w] = (float) 1300000000 / 5 / 1000000; // dibagi 1jt untuk scale
+
+                    foreach ($placeOfRepair as $indexPlace => $place) {
+                        $costSaving[$place]['W' . $w] = DB::table('finishrepairs')
+                            ->whereMonth('f_date', '=', $dateNowMonth)
+                            ->whereYear('f_date', '=', $dateNowYear)
+                            ->where('f_place_of_repair', $place)
+                            ->whereBetween('f_date', [Carbon::parse($dateNowYear . '-' . $dateNowMonth . '-' . $start)->format('Y-m-d'), Carbon::parse($dateNowYear . '-' . $dateNowMonth . '-' . $finish)->format('Y-m-d')])
+                            ->sum('f_total_cost_saving') / 1000000; // dibagi 1jt untuk scale
+                    }
+
                     $w++;
                 }
             }
@@ -173,6 +189,14 @@ class HomeController extends Controller
                         ->sum('f_total_cost_saving') / 1000000; // dibagi 1jt untuk scale
 
                     $costSaving['target'][$mo] = (float) 1300000000 / 1000000; // dibagi 1jt untuk scale
+
+                    foreach ($placeOfRepair as $indexPlace => $place) {
+                        $costSaving[$place][$mo] = DB::table('finishrepairs')
+                            ->whereMonth('f_date', '=', $index)
+                            ->whereYear('f_date', '=', $dateNowYear)
+                            ->where('f_place_of_repair', $place)
+                            ->sum('f_total_cost_saving') / 1000000; // dibagi 1jt untuk scale
+                    }
                 }
             }
 
@@ -193,6 +217,7 @@ class HomeController extends Controller
             'year' => $year,
             'dateNowMonth' => $dateNowMonth,
             'dateNowYear' => $dateNowYear,
+            'placeOfRepair' => $placeOfRepair
         ]);
     }
 }
