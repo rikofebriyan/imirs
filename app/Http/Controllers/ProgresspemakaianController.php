@@ -50,6 +50,8 @@ class ProgresspemakaianController extends Controller
 
         // create new task
         $data = $request->all();
+        $data['price'] = str_replace(',', '', $data['price']);
+        $data['total_price'] = str_replace(',', '', $data['total_price']);
 
         if ($request->estimasi_kedatangan != null) {
             $data['estimasi_kedatangan'] = Carbon::parse($request->estimasi_kedatangan)->format('Y-m-d H:i:s');
