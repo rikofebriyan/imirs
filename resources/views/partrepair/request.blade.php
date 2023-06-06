@@ -32,8 +32,8 @@
                                 <div class="mb-3 row">
                                     <label for="tanggal" class="col-sm-3 col-form-label">Date Created</label>
                                     <div class="col-sm-9">
-                                        <input type="datetime" class="form-control disabledriko" id="tanggal"
-                                            name="date" value="{{ Carbon\Carbon::now() }}" readonly required>
+                                        <input type="datetime-local" class="form-control" id="tanggal"
+                                            name="date" value="{{ Carbon\Carbon::now() }}" required>
                                     </div>
                                 </div>
 
