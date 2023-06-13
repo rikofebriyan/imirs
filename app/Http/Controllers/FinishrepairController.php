@@ -71,6 +71,10 @@ class FinishrepairController extends Controller
             'pic_delivery' => $request->pic_delivery,
         ];
 
+        if ($request->f_place_of_repair == 'Trade In') {
+            $data['code_part_repair'] = 'N/A';
+        }
+
         $finish = Finishrepair::where('form_input_id', $request->form_input_id)->first();
         if ($finish == null) {
             Finishrepair::create($data);

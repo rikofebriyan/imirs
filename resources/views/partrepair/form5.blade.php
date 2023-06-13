@@ -184,8 +184,8 @@
                 <input type="hidden" name="progressrepair_id" id="progressrepair_id"
                     value="{{ $formFinish_progressrepair->id }}">
 
-                <div id="finishForm" @if ($progressrepair2->place_of_repair == 'Trade In') style="display:none;" @endif>
-                    <div class="mb-3 row">
+                <div id="finishForm">
+                    <div class="mb-3 row" @if ($progressrepair2->place_of_repair == 'Trade In') style="display:none;" @endif>
                         <div class="col-sm-3">
                             <label for="category" class="col-form-label">Category</label>
                         </div>
@@ -204,7 +204,7 @@
 
                     <input type="hidden" name="number" id="number">
 
-                    <div class="mb-3 row">
+                    <div class="mb-3 row" @if ($progressrepair2->place_of_repair == 'Trade In') style="display:none;" @endif>
                         <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
                             Repair</label>
                         <div class="col-sm-9">

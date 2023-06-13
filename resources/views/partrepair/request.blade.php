@@ -279,7 +279,7 @@
                 dataType: 'JSON',
                 success: function(data) {
                     // console.log(data);
-                    $('#item_id').val(data.id);
+                    $('#item_id').val(data.No);
                     $('#item_name').val(data.itemName);
                     $('#item_code').val(data.ItemCode);
                     $('#description').val(data.description);
