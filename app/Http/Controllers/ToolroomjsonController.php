@@ -20,7 +20,7 @@ class ToolroomjsonController extends Controller
             $item->save();
         }
 
-        $items = DB::table('items')->get();
+        $items = DB::table('sparepartrepair.dbo.items')->get();
 
         return view('home', compact('items'));
     }

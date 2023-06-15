@@ -82,12 +82,13 @@
                                             Finish</a>
                                     @endif
 
-
-                                    @if (Auth::user()->jabatan == 'ADMIN' || 'Supervisor')
-                                        <button type="button" class="rounded-pill btn btn-danger btn-sm"
-                                            data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
-                                            Delete
-                                        </button>
+                                    @if (Auth::user())
+                                        @if (Auth::user()->jabatan == 'ADMIN' || 'Supervisor')
+                                            <button type="button" class="rounded-pill btn btn-danger btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
+                                                Delete
+                                            </button>
+                                        @endif
                                     @endif
                                     <form action="{{ route('partrepair.waitingtable.destroy', $req->id) }}" method="POST">
                                         @csrf
@@ -107,7 +108,7 @@
                                                     <div class="modal-body">
 
                                                         <input type="hidden" name="deleted_by"
-                                                            value="{{ Auth::user()->name }}">
+                                                            value="{{ Auth::user() ? Auth::user()->name : '' }}">
 
                                                         <div class="form-group position-relative has-icon-left mb-4">
                                                             <input type="text" id="reason" name="reason"

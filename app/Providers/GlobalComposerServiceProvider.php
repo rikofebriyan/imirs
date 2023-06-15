@@ -17,7 +17,8 @@ class GlobalComposerServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
 
             // share data with all views
-            $notif = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+            $notif = DB::table('sparepartrepair.dbo.waitingrepairs')
+                ->leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
                 ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
                 ->where('progress', '<>', 'finish')
                 ->where('progress', '<>', 'Scrap')
@@ -25,7 +26,8 @@ class GlobalComposerServiceProvider extends ServiceProvider
                 ->where('plan_finish_repair', '<=', Carbon::now()->subDays(0))
                 ->get();
 
-            $notifcount = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+            $notifcount = DB::table('sparepartrepair.dbo.waitingrepairs')
+                ->leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
                 ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
                 ->where('progress', '<>', 'finish')
                 ->where('progress', '<>', 'Scrap')
@@ -33,13 +35,13 @@ class GlobalComposerServiceProvider extends ServiceProvider
                 ->where('plan_finish_repair', '<=', Carbon::now()->subDays(0))
                 ->count();
 
-            $waiting_approve = Waitingrepair::all()
+            $waiting_approve = DB::table('sparepartrepair.dbo.waitingrepairs')
                 ->where('progress', 'Waiting')
                 ->where('approval', null)
                 ->where('deleted', null)
                 ->count();
 
-            $allprogress = DB::table('waitingrepairs')
+            $allprogress = DB::table('sparepartrepair.dbo.waitingrepairs')
                 ->where('progress', '<>', 'Finish')
                 ->whereNotNull('approval')
                 ->where('deleted', null)

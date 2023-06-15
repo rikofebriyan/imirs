@@ -45,8 +45,8 @@ class ExportController extends Controller
         //     ->get();
 
         // revisi 23 mei 2023
-        $users = DB::table('waitingrepairs')
-            ->leftJoin('progressrepairs', 'waitingrepairs.id', '=', 'progressrepairs.form_input_id')
+        $users = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->leftJoin('sparepartrepair.dbo.progressrepairs', 'waitingrepairs.id', '=', 'progressrepairs.form_input_id')
             ->whereBetween('waitingrepairs.created_at', [$start_date, $end_date])
             ->where('waitingrepairs.deleted', null)
             ->select(

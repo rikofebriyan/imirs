@@ -20,8 +20,8 @@ class RepairkitController extends Controller
     public function index()
     {
 
-        $join = RepairKit::join('makers', 'repair_kits.maker', '=', 'makers.id')
-            ->join('master_spare_parts', 'repair_kits.master_spare_part_id', '=', 'master_spare_parts.id')
+        $join = RepairKit::join('sparepartrepair.dbo.makers', 'repair_kits.maker', '=', 'makers.id')
+            ->join('sparepartrepair.dbo.master_spare_parts', 'repair_kits.master_spare_part_id', '=', 'master_spare_parts.id')
             ->select('repair_kits.*', 'makers.name as maker_name', 'master_spare_parts.item_name as sparepart_name')
             ->get();
         // dd($join);

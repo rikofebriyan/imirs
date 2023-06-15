@@ -55,7 +55,7 @@ class HomeController extends Controller
             ->where('deleted', null)
             ->count();
 
-        $data['total_Waiting_Progress'] = DB::table('waitingrepairs')
+        $data['total_Waiting_Progress'] = DB::table('sparepartrepair.dbo.waitingrepairs')
             ->where('progress', 'Waiting')
             ->whereNotNull('approval')
             ->where('deleted', null)
@@ -130,14 +130,14 @@ class HomeController extends Controller
                 $counting[$step] = 0;
                 $w = 1;
                 foreach ($week as $start => $finish) {
-                    $qty[$step]['W' . $w] = DB::table('waitingrepairs')
+                    $qty[$step]['W' . $w] = DB::table('sparepartrepair.dbo.waitingrepairs')
                         ->whereMonth('date', '=', $dateNowMonth)
                         ->whereYear('date', '=', $dateNowYear)
                         ->where('progress', $step)
                         ->whereBetween('date', [Carbon::parse($dateNowYear . '-' . $dateNowMonth . '-' . $start)->format('Y-m-d'), Carbon::parse($dateNowYear . '-' . $dateNowMonth . '-' . $finish)->format('Y-m-d')])
                         ->count();
 
-                    $qty['total']['W' . $w] = DB::table('waitingrepairs')
+                    $qty['total']['W' . $w] = DB::table('sparepartrepair.dbo.waitingrepairs')
                         ->whereMonth('date', '=', $dateNowMonth)
                         ->whereYear('date', '=', $dateNowYear)
                         ->whereBetween('date', [Carbon::parse($dateNowYear . '-' . $dateNowMonth . '-' . $start)->format('Y-m-d'), Carbon::parse($dateNowYear . '-' . $dateNowMonth . '-' . $finish)->format('Y-m-d')])
@@ -145,7 +145,7 @@ class HomeController extends Controller
 
                     $counting[$step] = $counting[$step] + $qty[$step]['W' . $w];
 
-                    $costSaving['actual']['W' . $w] = DB::table('finishrepairs')
+                    $costSaving['actual']['W' . $w] = DB::table('sparepartrepair.dbo.finishrepairs')
                         ->whereMonth('f_date', '=', $dateNowMonth)
                         ->whereYear('f_date', '=', $dateNowYear)
                         ->whereBetween('f_date', [Carbon::parse($dateNowYear . '-' . $dateNowMonth . '-' . $start)->format('Y-m-d'), Carbon::parse($dateNowYear . '-' . $dateNowMonth . '-' . $finish)->format('Y-m-d')])
@@ -154,7 +154,7 @@ class HomeController extends Controller
                     $costSaving['target']['W' . $w] = (float) 1300000000 / 5 / 1000000; // dibagi 1jt untuk scale
 
                     foreach ($placeOfRepair as $indexPlace => $place) {
-                        $costSaving[$place]['W' . $w] = DB::table('finishrepairs')
+                        $costSaving[$place]['W' . $w] = DB::table('sparepartrepair.dbo.finishrepairs')
                             ->whereMonth('f_date', '=', $dateNowMonth)
                             ->whereYear('f_date', '=', $dateNowYear)
                             ->where('f_place_of_repair', $place)
@@ -172,18 +172,18 @@ class HomeController extends Controller
         } else if ($request->groupBy == 'Month') {
             foreach ($stepProgress as $step) {
                 foreach ($month as $index => $mo) {
-                    $qty[$step][$mo] = DB::table('waitingrepairs')
+                    $qty[$step][$mo] = DB::table('sparepartrepair.dbo.waitingrepairs')
                         ->whereMonth('date', '=', $index)
                         ->whereYear('date', '=', $dateNowYear)
                         ->where('progress', $step)
                         ->count();
 
-                    $qty['total'][$mo] = DB::table('waitingrepairs')
+                    $qty['total'][$mo] = DB::table('sparepartrepair.dbo.waitingrepairs')
                         ->whereMonth('date', '=', $index)
                         ->whereYear('date', '=', $dateNowYear)
                         ->count();
 
-                    $costSaving['actual'][$mo] = DB::table('finishrepairs')
+                    $costSaving['actual'][$mo] = DB::table('sparepartrepair.dbo.finishrepairs')
                         ->whereMonth('f_date', '=', $index)
                         ->whereYear('f_date', '=', $dateNowYear)
                         ->sum('f_total_cost_saving') / 1000000; // dibagi 1jt untuk scale
@@ -191,7 +191,7 @@ class HomeController extends Controller
                     $costSaving['target'][$mo] = (float) 1300000000 / 1000000; // dibagi 1jt untuk scale
 
                     foreach ($placeOfRepair as $indexPlace => $place) {
-                        $costSaving[$place][$mo] = DB::table('finishrepairs')
+                        $costSaving[$place][$mo] = DB::table('sparepartrepair.dbo.finishrepairs')
                             ->whereMonth('f_date', '=', $index)
                             ->whereYear('f_date', '=', $dateNowYear)
                             ->where('f_place_of_repair', $place)

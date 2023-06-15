@@ -19,6 +19,7 @@ use App\Models\Progresspemakaian;
 use App\Models\StandardPengecekan;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\DB;
 
 // use App\Auth;
 // use App\Finishrepair;
@@ -57,7 +58,15 @@ class WaitingrepairController extends Controller
      */
     public function index(Request $request)
     {
-        $partr = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+        // $partr = Waitingrepair::leftJoin('dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+        //     ->select('dbo.waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair', 'progressrepairs.place_of_repair')
+        //     ->where('deleted', null)
+        //     ->where('progress', '<>', 'finish')
+        //     ->where('progress', '<>', 'Scrap')
+        //     ->where('approval', '<>', null)
+        //     ->orderBy('id')
+        //     ->get();
+        $partr = DB::table('sparepartrepair.dbo.waitingrepairs')->leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair', 'progressrepairs.place_of_repair')
             ->where('deleted', null)
             ->where('progress', '<>', 'finish')
@@ -78,7 +87,7 @@ class WaitingrepairController extends Controller
     public function deleted(Request $request)
     {
         // $partr = Waitingrepair::all()->sortByDesc('id');
-        $partr = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+        $partr = Waitingrepair::leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
             ->where('deleted', 1)
             ->get();
@@ -91,7 +100,14 @@ class WaitingrepairController extends Controller
     public function finish(Request $request)
     {
         // $partr = Waitingrepair::all()->sortByDesc('id');
-        $partr = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+        // $partr = Waitingrepair::leftJoin('dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+        //     ->select('dbo.waitingrepairs.id', 'dbo.waitingrepairs.reg_sp', 'dbo.waitingrepairs.problem', 'dbo.waitingrepairs.status_repair', 'dbo.waitingrepairs.progress', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
+        //     ->where('deleted', null)
+        //     ->where('progress', 'finish')
+        //     ->orWhere('progress', 'Scrap')
+        //     ->get()->take(10);
+        $partr = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
             ->where('deleted', null)
             ->where('progress', 'finish')
@@ -229,7 +245,7 @@ class WaitingrepairController extends Controller
         $formFinish_waitingrepair = Waitingrepair::where('id', $id)->first();
         $formFinish_progressrepair = Progressrepair::where('form_input_id', $formFinish_waitingrepair->id)->first();
         $formFinish_progresspemakaian = Progresspemakaian::where('form_input_id', $formFinish_waitingrepair->id)->get();
-        $formFinish_progresstrial = Progresstrial::join('item_standards', 'progresstrials.item_check_id', '=', 'item_standards.id')
+        $formFinish_progresstrial = Progresstrial::join('dbo.item_standards', 'progresstrials.item_check_id', '=', 'item_standards.id')
             ->where('form_input_id', $formFinish_waitingrepair->id)
             ->select('progresstrials.*', 'item_standards.item_standard')
             ->get();

@@ -28,7 +28,7 @@ class RegisteredTicketController extends Controller
     public function index(Request $request)
     {
         // $partr = Waitingrepair::all()->sortByDesc('id');
-        $partr = Waitingrepair::leftJoin('progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+        $partr = Waitingrepair::leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
             ->where('deleted', null)
             ->get();

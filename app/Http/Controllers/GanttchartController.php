@@ -21,8 +21,8 @@ class GanttchartController extends Controller
      */
     public function index(Request $request)
     {
-        $join = DB::table('waitingrepairs')
-            ->join('progressrepairs', 'waitingrepairs.id', '=', 'progressrepairs.form_input_id')
+        $join = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->join('sparepartrepair.dbo.progressrepairs', 'waitingrepairs.id', '=', 'progressrepairs.form_input_id')
             ->select('waitingrepairs.*', 'progressrepairs.place_of_repair', 'progressrepairs.analisa', 'progressrepairs.action', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair', 'progressrepairs.actual_start_repair', 'progressrepairs.actual_finish_repair', 'progressrepairs.plan_start_revision', 'progressrepairs.plan_finish_revision', 'progressrepairs.reason_revision', 'progressrepairs.id as progressid', 'progressrepairs.reason_delay')
             ->where('progress', '<>', 'finish')
             ->where('progress', '<>', 'Scrap')
