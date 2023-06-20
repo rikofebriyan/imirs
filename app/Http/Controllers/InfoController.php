@@ -51,6 +51,42 @@ class InfoController extends Controller
         return response()->json($line);
     }
 
+    public function getstorage(Request $request)
+    {
+        $storageId = $request->input('storageId');
+        $itemName = $request->input('itemName'); // Mendapatkan nilai pencarian item name dari permintaan POST
+
+        $item = [];
+        if ($storageId == '1') {
+            $item = json_decode(file_get_contents(public_path('json/stockonhandlistMTC.json')), true);
+        } elseif ($storageId == '2') {
+            $item = json_decode(file_get_contents(public_path('json/stockonhandlistTLC.json')), true);
+        } elseif ($storageId == '3') {
+            $item = json_decode(file_get_contents(public_path('json/stockonhandlistTLR.json')), true);
+        }
+
+        $filteredItems = [];
+        foreach ($item['data'] as $data) {
+            if (
+                strpos(strtolower($data['itemName']), strtolower($itemName)) !== false ||
+                strpos(strtolower($data['ItemCode']), strtolower($itemName)) !== false ||
+                strpos(strtolower($data['description']), strtolower($itemName)) !== false
+            ) {
+                $filteredItems[] = $data;
+            }
+        }
+
+        return response()->json($filteredItems);
+    }
+
+
+
+
+
+
+
+
+
 
     public function getmachine(Request $request)
     {

@@ -88,6 +88,7 @@ Route::resource('Auth/profile', ProfileController::class)->middleware('auth');
 
 Route::get('/ajax', [InfoController::class, 'index'])->name('ajax');
 Route::get('/getline', [InfoController::class, 'getline'])->name('get-line');
+Route::get('/getstorage', [InfoController::class, 'getstorage'])->name('get-storage');
 Route::get('/getmachine', [InfoController::class, 'getmachine'])->name('get-machine');
 Route::get('/getlabour', [InfoController::class, 'getlabour'])->name('get-labour');
 Route::get('/get-number-of-repair', [InfoController::class, 'getNumberOfRepair'])->name('get-number-of-repair');

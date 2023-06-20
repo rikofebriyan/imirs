@@ -60,6 +60,31 @@
                                     </div>
                                 </div>
 
+                                {{-- <div class="form-group">
+                                    <label for="select2">Pilih Opsi:</label>
+                                    <select class="form-control select2" id="select2" name="opsi" style="width: 100%;">
+                                        <option value="">Pilih Opsi</option>
+                                    </select>
+                                </div> --}}
+
+
+
+                                {{-- Pemilihan Storage Item --}}
+                                <div class="mb-3 row">
+                                    <label for="storage" class="col-sm-3 col-form-label">Warehouse <sup
+                                            class="text-danger">*</sup></label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select" id="storage" name="storage" required>
+                                            <option selected disabled>Pilih ...</option>
+                                            <option value="1">Maintenance Spare Part</option>
+                                            <option value="2">Tool Center</option>
+                                            <option value="3">Tool Room</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="mb-3 row" id="field2" style="display: none">
                                     <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
                                         Repair <sup class="text-danger">*</sup></label>
@@ -82,10 +107,14 @@
                                     <label for="item_code" class="col-sm-3 col-form-label">Spare Part</label>
                                     <div class="col-sm-9">
                                         <div id="field3" class="mb-3 d-flex">
-                                            <select class="form-select" id="isiotomatis" name="item_name">
-                                                <option value="" selected></option>
+                                            <select class="form-control select2" id="isiotomatis" name="item_name">
+                                                <option value="">Pilih Spare Part</option>
+                                            </select>
 
-                                                @foreach ($reqtzy as $req)
+                                            {{-- <select class="form-select" id="isiotomatis" name="item_name">
+                                                <option value="" selected></option> --}}
+
+                                            {{-- @foreach ($reqtzy as $req)
                                                     <option data-custom-properties="{{ $req['ItemCode'] }}"
                                                         data-no="{{ $req['No'] }}"
                                                         data-item-name="{{ $req['itemName'] }}"
@@ -95,8 +124,8 @@
                                                         {{ $req['itemName'] }} | {{ $req['description'] }} | Stock:
                                                         {{ $req['Stock'] }}
                                                     </option>
-                                                @endforeach
-                                            </select>
+                                                @endforeach --}}
+                                            {{-- </select> --}}
 
                                             <button id="btnAutoMan" type="button"
                                                 class="btn btn-primary ms-1">Auto</button>
@@ -285,54 +314,6 @@
     </div>
 @endsection
 @section('script')
-    <script type="text/javascript">
-        $('#isiotomatis').select2({
-            // minimumInputLength: 2,
-            language: {
-                inputTooShort: function() {
-                    return "Masukkan keyword item";
-                }
-            }
-        });
-        $(document).on('select2:open', () => {
-            document.querySelector('.select2-search__field').focus();
-        });
-
-        // function isi_otomatis() {
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: "{{ route('ajax') }}",
-        //         data: {
-        //             item_name: $('#isiotomatis').find(':selected').data('custom-properties')
-        //         },
-        //         dataType: 'JSON',
-        //         success: function(data) {
-        //             $('#item_id').val(data.No);
-        //             $('#item_name').val(data.itemName);
-        //             $('#item_code').val(data.ItemCode);
-        //             $('#description').val(data.description);
-        //             $('#qty').val(data.Stock);
-        //             $('#price').val(data.Price);
-
-        //             if (data.Stock == 0) {
-        //                 $('#status_repair').empty()
-        //                 $('#status_repair').append(`
-    //                     <option disabled>Pilih ...</option>
-    //                     <option value="Normal">Normal</option>
-    //                     <option value="Urgent" selected>Urgent</option>
-    //                 `)
-        //             } else {
-        //                 $('#status_repair').empty()
-        //                 $('#status_repair').append(`
-    //                     <option disabled>Pilih ...</option>
-    //                     <option value="Normal" selected>Normal</option>
-    //                     <option value="Urgent">Urgent</option>
-    //                 `)
-        //             }
-        //         }
-        //     });
-        // }
-    </script>
     <script>
         function formChoice(x) {
             if (x == 0) {
@@ -421,22 +402,66 @@
                 });
             });
 
-            $('#isiotomatis').on('change', function() {
-                var item_code = $('#isiotomatis').find(':selected').data('custom-properties')
-                var no = $('#isiotomatis').find(':selected').data('no')
-                var item_name = $('#isiotomatis').find(':selected').data('item-name')
-                var description = $('#isiotomatis').find(':selected').data('description')
-                var price = $('#isiotomatis').find(':selected').data('price')
-                var stock = $('#isiotomatis').find(':selected').data('stock')
+            $('#storage').on('change', function() {
+                // Mengosongkan nilai select2 dan input fields
+                $('#isiotomatis').val(null).trigger('change');
+                $('#item_name').val('');
+                $('#item_code').val('');
+                $('#description').val('');
+                $('#price').val('');
+                $('#qty').val('');
+                $('#status_repair').empty();
+            });
 
-                $('#item_id').val(no);
-                $('#item_name').val(item_name);
-                $('#item_code').val(item_code);
-                $('#description').val(description);
-                $('#qty').val(stock);
-                $('#price').val(price);
+            // Javascript select2 via ajax
+            $('#isiotomatis').select2({
+                placeholder: 'Cari Spare Part',
+                allowClear: true,
+                ajax: {
+                    url: "{{ route('get-storage') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        var idstorage = $('#storage option:selected').val();
+                        return {
+                            storageId: idstorage,
+                            itemName: params
+                                .term // Mengirim nilai pencarian ke endpoint controller sebagai itemName
+                        };
+                    },
+                    processResults: function(data) {
+                        var options = data.map(function(item) {
+                            var combinedText = item.itemName + ' | ' + item.ItemCode + ' | ' +
+                                item.description;
+                            return {
+                                id: item.itemName,
+                                item_code: item.ItemCode,
+                                description: item.description,
+                                price: item.Price,
+                                stock: item.Stock,
+                                text: combinedText
+                            };
+                        });
 
-                if (stock == 0) {
+                        return {
+                            results: options
+                        };
+                    },
+
+                    cache: true
+                },
+                minimumInputLength: 2
+            }).on('select2:select', function(e) {
+                var selectedItem = e.params.data;
+                console.log(selectedItem)
+
+                $('#item_name').val(selectedItem.id);
+                $('#item_code').val(selectedItem.item_code);
+                $('#description').val(selectedItem.description);
+                $('#price').val(selectedItem.price);
+                $('#qty').val(selectedItem.stock);
+
+                if (selectedItem.stock == 0) {
                     $('#status_repair').empty()
                     $('#status_repair').append(`
                             <option disabled>Pilih ...</option>
@@ -451,7 +476,10 @@
                             <option value="Urgent">Urgent</option>
                         `)
                 }
+
             });
+
+
         });
     </script>
 
