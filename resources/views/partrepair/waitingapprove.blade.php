@@ -37,10 +37,13 @@
                                 <td>{{ $req->section }}</td>
                                 <td class="d-flex d-inline justify-content-center">
                                     @can('AdminSupervisor')
-                                        <button type="button" class="btn btn-sm btn-success rounded-pill mx-2"
-                                            data-bs-toggle="modal" data-bs-target="#modalapprove{{ $req->id }}">
-                                            Approve
-                                        </button>
+                                        <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" id="approval" name="approval" value="{{ $currentUser }}">
+                                            <button type="submit" class="btn btn-sm btn-success rounded-pill mx-2">Approve</button>
+                                        </form>
                                     @else
                                         <span class="rounded-pill bg-danger text-white text-center px-2 bg-opacity-50"> Not
                                             Authorized</span>
@@ -56,52 +59,6 @@
                                         data-bs-toggle="modal" data-bs-target="#modalemail{{ $req->id }}">
                                         Send Email
                                     </button>
-                                    {{-- <form action="{{ route('sendemail', $req->reg_sp) }}" method="POST"
-                                        style="display:inline">
-                                        @csrf
-                                        <input type="hidden" name="reg_sp" value="{{ $req->reg_sp }}">
-                                        <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2">Cetak
-                                            Tiket</button>
-                                    </form> --}}
-
-                                    <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <div class="modal fade" id="modalapprove{{ $req->id }}" tabindex="-1"
-                                            aria-labelledby="modalapproveLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-
-                                                    <div class="modal-body">
-                                                        <h1 class="modal-title fs-5 mb-1" id="modalapproveLabel">Konfirmasi
-                                                            Approval
-                                                        </h1>
-                                                        <div class="form-group position-relative has-icon-left mb-4">
-                                                            <input type="text" id="approval" name="approval"
-                                                                class="form-control form-control-xl  @if ($errors->has('approval')) is-invalid @endif"
-                                                                placeholder="Tulis siapa yang approve"
-                                                                value="{{ old('approval') }}" required>
-                                                            <div class="form-control-icon">
-
-                                                                @if ($errors->has('approval'))
-                                                                    <span class="help-block">
-                                                                        <strong>{{ $errors->first('approval') }}</strong>
-                                                                    </span>
-                                                                @endif
-
-                                                                <i class="bi bi-person-check"></i>
-                                                            </div>
-                                                        </div>
-
-                                                        {{-- <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button> --}}
-                                                        <button type="submit" class="btn btn-success">APPROVE</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
             </div>
         </div>
     </div>
@@ -117,7 +74,6 @@
             Reject
         </button>
     @endcan
-    {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['partrepair.waitingapprove.destroy', $req->id]]) }} --}}
     <form action="{{ route('partrepair.waitingapprove.destroy', $req->id) }}" method="POST">
         @csrf
         @method('DELETE')
@@ -132,7 +88,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <input type="hidden" name="deleted_by" value="{{ Auth::user()->name }}">
+                        <input type="hidden" name="deleted_by" value="{{ $loginUser->name }}">
 
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="text" id="reason" name="reason" class="form-control form-control-xl"
@@ -202,8 +158,6 @@
         </div>
     </form>
 
-
-
     </td>
     </tr>
 @empty
@@ -231,7 +185,9 @@
 
     <script>
         $(document).ready(function() {
-            var table = $('#myTable').DataTable();
+            var table = $('#myTable').DataTable({
+                order: [[0, 'desc']],
+            });
 
             $('#allinput').click(function() {
                 table.column(6).search('').draw();

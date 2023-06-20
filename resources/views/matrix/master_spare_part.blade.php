@@ -46,7 +46,6 @@
     </div>
 
     <!-- Modal -->
-    {{-- {{ Form::open(['route' => 'matrix.master_spare_part.store', 'method' => 'POST']) }} --}}
     <form action="{{ route('master_spare_part.store') }}" method="POST">
         @csrf
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -240,7 +239,6 @@
             modal.find('form').attr('action', "{{ route('master_spare_part.store') }}/" + id);
 
             // Populate the form with the model 's data
-            // axios.get('/mymodel/' + id).then(function(response) {
             axios.get("{{ route('mymodel') }}/?id=" + id).then(function(response) {
                 modal.find('form').find('input[name="id"]').val(response.data.id);
                 modal.find('form').find('input[name="item_code"]').val(response.data.item_code);
@@ -266,7 +264,6 @@
             $('#myTable').DataTable({
                 processing: true,
                 serverSide: true,
-                // "pageLength": 30,
                 ajax: "{{ route('get-master') }}",
 
                 columns: [{

@@ -7,17 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use App\Http\Controllers\Controller;
 
-// use App\Http\Requests;
-// use Carbon\Carbon;
-// use App\Maker;
-// use App\User;
-// use App\Machine;
-// use App\Line;
-// use App\Section;
-// use App\Waitingrepair;
-// use App\MasterSparePart;
-// use App\Stockout;
-
 class StockoutController extends Controller
 {
     /**
@@ -27,14 +16,13 @@ class StockoutController extends Controller
      */
     public function index()
     {
-        // $partr = Waitingrepair::all()->sortByDesc('id');
         $partr = Waitingrepair::leftjoin('sparepartrepair.dbo.stockouts', 'waitingrepairs.id', '=', 'stockouts.form_input_id')
             ->select('waitingrepairs.id as waitingrepairid', 'waitingrepairs.*', 'stockouts.*')
             ->where('deleted', null)
             ->where('progress', 'finish')
             ->where('form_input_id', null)
             ->get();
-        // dd($partr);
+
         return view('partrepair.stockout', [
             'reqtzy' => $partr,
         ]);
@@ -58,14 +46,9 @@ class StockoutController extends Controller
      */
     public function store(Request $request)
     {
-        // validated input request
-        // $this->validate($request, [
-        //     'form_input_id' => 'required',
-        // ]);
-
         // create new task
         Stockout::create($request->all());
-        // dd($request);
+
         return redirect()->back()->with('success', 'Your task added successfully!');
     }
 

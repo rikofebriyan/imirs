@@ -46,67 +46,8 @@
                                 <td>{{ $req->created_at->format('d-m-Y H:i:s') }}</td>
                                 <td>{{ $req->updated_at->format('d-m-Y H:i:s') }}</td>
                                 <td class="text-center d-flex d-inline">
-                                    <!-- Button trigger modal -->
-                                    {{-- <button type="button" class="btn icon btn-primary btn-sm me-1" data-bs-toggle="modal"
-                                        data-bs-target="#asu{{ $req->id }}">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.repair_kit.update', $req->id]]) !!}
-                                    <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
-                                        aria-labelledby="modalUpdateBarang" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Update Barang</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group mt-2">
-                                                        <label for="item_code">item_code</label>
-                                                        <input type="text" id="item_code" name="item_code"
-                                                            class="form-control" value="{{ $req->item_code }}" required>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <label for="item_name">item_name</label>
-                                                        <input type="text" id="item_name" name="item_name"
-                                                            class="form-control" value="{{ $req->item_name }}" required>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <label for="description">description</label>
-                                                        <input type="text" id="description" name="description"
-                                                            class="form-control" value="{{ $req->description }}" required>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <label for="master_spare_part_id">Master Spare Part ID</label>
-                                                        <select name="master_spare_part_id" id="master_spare_part_id"
-                                                            class="form-control">
-                                                            <option value="" disabled selected>
-                                                                choose
-                                                            </option>
-                                                            @foreach ($tab3 as $tabw)
-                                                                <option value="{{ $tabw->id }}">{{ $tabw->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <label for="qty">qty</label>
-                                                        <input type="text" id="qty" name="qty"
-                                                            class="form-control" value="{{ $req->qty }}" required>
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-primary">Perbarui Data</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {!! Form::close() !!} --}}
                                     <form action="{{ route('repair_kit.destroy', $req->id) }}" method="POST"
                                         style="display:inline">
-                                        {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.repair_kit.destroy', $req->id], 'style' => 'display:inline']) }} --}}
                                         <button type="submit" class="btn icon btn-danger btn-sm"><i
                                                 class="bi bi-trash3"></i></button>
                                     </form>
@@ -122,7 +63,6 @@
 
     <!-- Modal -->
     <form action="{{ route('repair_kit.store') }}" method="POST">
-        {{-- {{ Form::open(['route' => 'matrix.repair_kit.store', 'method' => 'POST']) }} --}}
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -146,23 +86,12 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="input-group">
                             <input type="hidden" class="form-control bg-secondary text-white" id="item_id2"
                                 name="master_spare_part_id" placeholder="Item Name" readonly>
                         </div>
 
-                        {{-- <div class="form-group mt-2">
-                        <label for="master_spare_part_id">Master Spare Part ID</label>
-                        <select name="master_spare_part_id" id="master_spare_part_id" class="form-control">
-                            <option value="" disabled selected>
-                                choose
-                            </option>
-                            @foreach ($tab2 as $tab)
-                                <option value="{{ $tab->id }}">{{ $tab->item_name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div> --}}
                         <div class="form-group mt-2">
                             <label for="item_code">item_code</label>
                             <input type="text" id="item_code2" name="item_code"
@@ -220,7 +149,6 @@
         });
 
         function isi_otomatis_part() {
-            // var item_name = $("#isiotomatis2").val();
             $.ajax({
                 type: 'GET',
                 url: "{{ route('ajax') }}",

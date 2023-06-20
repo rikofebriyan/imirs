@@ -1,4 +1,3 @@
-{{-- {{ Form::open(['route' => 'partrepair.waitingtable.store', 'method' => 'POST']) }} --}}
 <form action="{{ route('partrepair.waitingtable.store') }}" method="POST">
     @csrf
     <div class="container-fluid justify-content-center p-0">
@@ -42,18 +41,6 @@
                         </div>
                     </div>
 
-                    {{-- <div class="mb-3 row" id="field2">
-                    <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
-                        Repair</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control mb-3 bg-secondary text-white" placeholder="Input Kode Part Repair" readonly>
-
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-secondary text-white" id="number_of_repair"
-                                placeholder="Number of Repair" readonly>
-                        </div>
-                    </div>
-                </div> --}}
                     <div class="mb-3 row" id="field2" @if ($waitingrepair->part_from == 'Belum Pernah Repair') style="display:none;" @endif>
                         <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
                             Repair</label>
@@ -242,7 +229,7 @@
                         </div>
                     </div>
 
-                    @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+                    @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                         <button type="submit" class="btn btn-md btn-primary">Update</button>
                         <a href="{{ route('partrepair.waitingtable.index') }}"
                             class="btn btn-md btn-secondary">Back</a>

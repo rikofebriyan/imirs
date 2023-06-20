@@ -240,7 +240,6 @@
         var options = {
             series: [{
                     name: "Cost Saving",
-                    // data: [450, 520, 380, 240, 330, 260, 210, 200, 600, 800, 150, 100]
                     data: [
                         @foreach ($costSaving['actual'] as $index => $key)
                             {{ $key }},
@@ -249,7 +248,6 @@
                 },
                 {
                     name: 'Target',
-                    // data: [1300, 1300, 1300, 1300, 1300, 1300, 1300, 1300, 1300, 1300, 1300, 1300]
                     data: [
                         @foreach ($costSaving['target'] as $index => $key)
                             {{ $key }},
@@ -288,7 +286,6 @@
                 }
             },
             xaxis: {
-                // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct', 'Nov', 'Dec'],
                 categories: [
                     @foreach ($costSaving['xAxis'] as $key)
                         '{{ $key }}',

@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Line;
-
-use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -17,12 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        // $this->authorize('Admin');
-        // $tabel2 = Line::all();
         $partr = User::all()->sortByDesc('id');
         return view('matrix.user', [
             'reqtzy' => $partr,
-            // 'tab2' => $tabel2,
         ]);
     }
 

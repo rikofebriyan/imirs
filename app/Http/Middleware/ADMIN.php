@@ -21,6 +21,5 @@ class ADMIN
             return redirect('home');
         }
         return $next($request);
-        // dd($request);
     }
 }

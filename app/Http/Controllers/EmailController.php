@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-
-use App\Mail\KirimEmail;
 use Illuminate\Http\Request;
-use App\Mail\YourMailClassName;
 use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
     public function sendEmail(Request $request)
     {
-        // dd($request);
         $email = $request->email;
         $data = [
             'reg_sp' => $request->reg_sp,

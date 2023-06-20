@@ -37,7 +37,6 @@
                                     <div class="modal-content">
 
                                         <!-- form edit sealkit -->
-                                        {{-- {!! Form::model($req, ['method' => 'PATCH', 'route' => ['partrepair.progresspemakaian.update', $req->id]]) !!} --}}
                                         <form action="{{ route('partrepair.progresspemakaian.update', $req->id) }}"
                                             method="POST">
                                             @csrf
@@ -58,32 +57,6 @@
                                                                     <label for="item_code"
                                                                         class="col-sm-3 col-form-label">Spare
                                                                         Part</label>
-
-
-
-                                                                    {{-- <div class="mb-3">
-                                                                        <select
-                                                                            class="form-select form-select-isiotomatis2"
-                                                                            onchange="isi_otomatis_part()"
-                                                                            id="isiotomatis2" name="item_name" required>
-                                                                            <option value="" selected></option>
-                                                                            @foreach ($mastersparepart as $req)
-                                                                                <option
-                                                                                    data-custom-properties="{{ $req['ItemCode'] }}"
-                                                                                    value="{{ $req['description'] }}">
-                                                                                    {{ $req['ItemCode'] }}
-                                                                                    |
-                                                                                    {{ $req['itemName'] }} |
-                                                                                    {{ $req['description'] }} |
-                                                                                    Stock:
-                                                                                    {{ $req['Stock'] }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div> --}}
-
-
-
 
                                                                     <div class="col-sm-9">
 
@@ -210,19 +183,16 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['partrepair.progresspemakaian.destroy', $req->id], 'style' => 'display:inline']) }} --}}
+
                             <form action="{{ route('partrepair.progresspemakaian.destroy', $req->id) }}"
                                 method="POST" style="display:inline">
                                 @csrf
                                 @method('DELETE')
-                                {{-- {{ Form::submit('Delete', [
-                                    'class' => 'btn btn-danger',
-                                    'style' => '--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem',
-                                ]) }} --}}
+
                                 <button type="submit" class="btn btn-danger"
                                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem">Delete</button>
                             </form>
-                            {{-- {{ Form::close() }} --}}
+
                         </td>
                         <td>{{ $req->item_code }}</td>
                         <td>{{ $req->item_name }}</td>
@@ -269,7 +239,7 @@
         </div>
 
 
-        @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
             <div class="d-grid gap-2 col">
                 <button id="fieldsealkit" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
@@ -316,12 +286,8 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-
-            {{-- {{ Form::open(['route' => 'partrepair.progresspemakaian.store', 'method' => 'POST']) }} --}}
             <form action="{{ route('partrepair.progresspemakaian.store') }}" method="POST">
                 @csrf
-
-                {{-- form input --}}
 
                 <div class="container-fluid justify-content-center py-0">
                     <div class="container-fluid">
@@ -337,16 +303,7 @@
                                     <div class="mb-3 row">
                                         <label for="item_code" class="col-sm-3 col-form-label">Spare Part</label>
                                         <div class="col-sm-9">
-                                            {{-- <select class="form-select mb-3 choices" onchange="isi_otomatis_part()"
-                                            id="isiotomatis2" name="item_name" data-live-search="true">
-                                            <option selected></option>
-                                            @foreach ($mastersparepart as $reqm)
-                                                <option value="{{ $reqm->code_item_description }}">
-                                                    {{ $reqm->item_code }} |
-                                                    {{ $reqm->item_name }} | {{ $reqm->description }}
-                                                </option>
-                                            @endforeach
-                                        </select> --}}
+
                                             <div class="mb-3">
                                                 <select class="form-select form-select-isiotomatis2"
                                                     onchange="isi_otomatis_part()" id="isiotomatis2" name="item_name"

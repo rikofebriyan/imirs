@@ -46,7 +46,7 @@
                                     <form action="{{ route('maker.update', $req->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        {{-- {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.maker.update', $req->id]]) !!}  --}}
+
                                         <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
                                             aria-labelledby="modalUpdateBarang" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -75,14 +75,14 @@
                                         style="display: inline">
                                         @csrf
                                         @method('DELETE')
-                                        {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.maker.destroy', $req->id], 'style' => 'display:inline']) }} --}}
+
                                         <button type="submit" class="btn icon btn-danger btn-sm"><i
                                                 class="bi bi-trash3"></i></button>
                                     </form>
                                 </td>
                             </tr>
                         @empty
-                            
+
                         @endforelse
                     </tbody>
                 </table>
@@ -93,7 +93,7 @@
     <!-- Modal -->
     <form action="{{ route('maker.store') }}" method="POST">
         @csrf
-        {{-- {{ Form::open(['route' => 'matrix.maker.store', 'method' => 'POST']) }} --}}
+
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -118,7 +118,7 @@
 @endsection
 
 @section('script')
-  
+
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({

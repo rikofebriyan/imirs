@@ -1,7 +1,6 @@
 <div class="container-fluid justify-content-center py-0">
 
     <div class="table-responsive-sm card border mb-2 p-3">
-        {{-- {{ Form::open(['route' => 'partrepair.progresstrial.store', 'method' => 'POST']) }} --}}
         <form action="{{ route('partrepair.progresstrial.store') }}" method="POST">
             @csrf
             <input type="hidden" name="form_input_id" value="{{ $waitingrepair->id }}">
@@ -61,7 +60,7 @@
                     @endforelse
                 </tbody>
             </table>
-            @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+            @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                 <button id="judgeok" type="submit" class="btn btn-md btn-primary">Save</button>
             @else
                 <button id="/" type="button" class="btn btn-md btn-secondary disabled">Save</button>
@@ -73,7 +72,7 @@
 <div class="row">
     <div class="col-9"></div>
     <div class="col d-grid gap-2 px-3">
-        @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
             <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal"
                 data-bs-target="#modalAddPengecekan">
                 ADD STANDARD PENGECEKAN
@@ -81,9 +80,8 @@
         @endif
     </div>
 </div>
-<!-- Modal -->
 
-{{-- {{ Form::open(['route' => 'matrix.standard_pengecekan.store', 'method' => 'POST']) }} --}}
+<!-- Modal -->
 <form action="{{ route('standard_pengecekan.store') }}" method="POST">
     @csrf
     <div class="modal fade" id="modalAddPengecekan" tabindex="-1" aria-labelledby="modalAddPengecekanLabel"
@@ -164,7 +162,7 @@
                     </div>
 
                 </div>
-                @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+                @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save</button>

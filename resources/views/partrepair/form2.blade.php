@@ -1,4 +1,3 @@
-{{-- {{ Form::open(['route' => 'partrepair.progresstable.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }} --}}
 <form action="{{ route('partrepair.progresstable.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="container-fluid justify-content-center p-0">
@@ -223,7 +222,7 @@
                         </div> --}}
                     </div>
 
-                    @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+                    @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                             <button id="scrap" type="submit" class="btn btn-md btn-danger"
                                 style="display: none">Scrap</button>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -30,8 +29,6 @@ class GanttchartController extends Controller
             ->orderBy('reg_sp', 'desc')
             ->get();
         $count = count(collect($join));
-        // dd($count);
-
 
         if ($join != null) {
             foreach ($join as $index => $value) {

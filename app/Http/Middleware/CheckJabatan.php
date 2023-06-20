@@ -16,7 +16,6 @@ class CheckJabatan
     public function handle($request, Closure $next, ...$jabatans)
 {
     if (! $request->user()->hasAnyJabatan($jabatans)) {
-        // dd($request);
         return redirect()->route('unauthorized');
     }
 

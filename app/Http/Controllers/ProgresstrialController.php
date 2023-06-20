@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use App\Line;
-
 use App\Models\Maker;
 use App\Models\Subcont;
 use App\Models\ItemStandard;
@@ -16,7 +13,6 @@ use App\Models\Progresspemakaian;
 use App\Models\StandardPengecekan;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\Auth;
 
 class ProgresstrialController extends Controller
 {
@@ -94,8 +90,6 @@ class ProgresstrialController extends Controller
 
         $itemstandard = ItemStandard::all();
         $mastersparepart = MasterSparePart::all();
-        // $mastersparepart = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
-        // dd($mastersparepart);
         $maker = Maker::all();
         $subcont = Subcont::all();
         $user = User::all();

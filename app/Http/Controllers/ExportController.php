@@ -8,43 +8,16 @@ use App\Models\Finishrepair;
 use App\Http\Controllers\Controller;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 
 class ExportController extends Controller
 {
     public function export(Request $request)
     {
-        // dd($request);
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        // $users = Waitingrepair::whereBetween('created_at', [$start_date, $end_date])
-        //     ->where('deleted', null)
-        //     ->select(
-        //         'date as tanggal',
-        //         'part_from',
-        //         'code_part_repair',
-        //         'number_of_repair',
-        //         'reg_sp',
-        //         'section',
-        //         'line',
-        //         'machine',
-        //         'item_id',
-        //         'item_code',
-        //         'item_name',
-        //         'item_type',
-        //         'maker',
-        //         'serial_number',
-        //         'problem',
-        //         'nama_pic',
-        //         'price',
-        //         'status_repair',
-        //         'progress'
-        //     )
-        //     ->get();
-
-        // revisi 23 mei 2023
         $users = DB::table('sparepartrepair.dbo.waitingrepairs')
             ->leftJoin('sparepartrepair.dbo.progressrepairs', 'waitingrepairs.id', '=', 'progressrepairs.form_input_id')
             ->whereBetween('waitingrepairs.created_at', [$start_date, $end_date])
@@ -106,7 +79,6 @@ class ExportController extends Controller
         }
 
         $sheet->fromArray([$header], null, 'A1');
-        // $sheet->fromArray($users->toArray(), null, 'A2');
         $sheet->fromArray(json_decode(json_encode($users), true), null, 'A2');
 
         $start_date_formatted = date("d-m-y", strtotime($start_date));
@@ -124,7 +96,6 @@ class ExportController extends Controller
 
     public function ticket(Request $request)
     {
-        // dd($request);
         $reg_sp = $request->reg_sp;
 
         $users = Waitingrepair::where('reg_sp', $reg_sp)
@@ -199,7 +170,6 @@ class ExportController extends Controller
 
     public function export_finish(Request $request)
     {
-        // dd($request);
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 

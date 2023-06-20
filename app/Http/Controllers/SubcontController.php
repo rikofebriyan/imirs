@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Line;
 use App\Models\Subcont;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,11 +15,9 @@ class SubcontController extends Controller
      */
     public function index()
     {
-        // $tabel2 = Line::all();
         $partr = Subcont::all()->sortByDesc('id');
         return view('matrix.subcont', [
             'reqtzy' => $partr,
-            // 'tab2' => $tabel2,
         ]);
     }
 

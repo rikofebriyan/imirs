@@ -15,11 +15,9 @@ class CategoryCodeController extends Controller
      */
     public function index()
     {
-        // $tabel2 = Line::all();
         $partr = CategoryCode::all()->sortByDesc('id');
         return view('matrix.category_code', [
             'reqtzy' => $partr,
-            // 'tab2' => $tabel2,
         ]);
     }
 

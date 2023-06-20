@@ -19,10 +19,7 @@ class ProgressrepairController extends Controller
      * Create a new controller instance.
      *
      */
-    // public function __construct()
-    // {
-    // $this->middleware('auth');
-    // }
+
     /**
      * Display a listing of the resource.
      *
@@ -157,7 +154,6 @@ class ProgressrepairController extends Controller
             ->count();
         $countid = Progresspemakaian::where('form_input_id', $id)->count();
         $mastersparepart = MasterSparePart::all();
-        // $mastersparepart = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
         $maker = Maker::all();
         $subcont = Subcont::all();
         $user = User::all();
@@ -230,8 +226,7 @@ class ProgressrepairController extends Controller
         $data['reason_revision'] = $request->reason_revision;
         $data['plan_start_revision'] = Carbon::parse($request->plan_start_revision)->format('Y-m-d H:i:s');
         $data['plan_finish_revision'] = Carbon::parse($request->plan_finish_revision)->format('Y-m-d H:i:s');
-        // dd($request->id);
-        // Progressrepair::find($request->id)->update($data);
+
         progressrepair::where('form_input_id', $id)->first()->update($data);
 
 
@@ -245,7 +240,7 @@ class ProgressrepairController extends Controller
             'reason_delay' => 'required',
         ]);
         $data['reason_delay'] = $request->reason_delay;
-        // dd($data);
+
         progressrepair::where('form_input_id', $id)->first()->update($data);
 
 

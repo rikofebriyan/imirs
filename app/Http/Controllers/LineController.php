@@ -25,7 +25,6 @@ class LineController extends Controller
         $sectionr = Section::all();
         $partr = Line::all()->sortByDesc('id');
 
-        // dd($join);
         return view('matrix.line', [
             'reqtzy' => $partr,
             'sectzy' => $sectionr,

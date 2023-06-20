@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Finishrepair;
-use App\Http\Requests;
 use App\Models\Progresspemakaian;
 use App\Models\Progressrepair;
 use App\Models\Progresstrial;
 use App\Models\Waitingrepair;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller

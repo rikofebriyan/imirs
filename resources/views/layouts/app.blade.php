@@ -6,9 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
-
     <title>I-Mirs</title>
 
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/Logo Taci White.png') }}" type="image/png">
@@ -18,7 +15,7 @@
     @yield('css')
 
 </head>
-<script src="{{ asset('assets/js/initTheme.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/initTheme.js') }}"></script> --}}
 
 <body id="app">
 
@@ -64,10 +61,15 @@
                                 <div class="avatar avatar-md2">
                                     <img src="{{ asset('assets/images/faces/1.jpg') }}" alt="Avatar">
                                 </div>
-                                <div class="text">
+                                {{-- <div class="text">
                                     <h6 class="user-dropdown-name">{{ Auth::user() ? Auth::user()->name : '' }}</h6>
                                     <p class="user-dropdown-status text-sm text-muted">
                                         {{ Auth::user() ? Auth::user()->jabatan : '' }}</p>
+                                </div> --}}
+                                <div class="text">
+                                    <h6 class="user-dropdown-name">{{ $loginUser->name}}</h6>
+                                    <p class="user-dropdown-status text-sm text-muted">
+                                        {{ $loginUser->jabatan }}</p>
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="topbarUserDropdown">
@@ -164,8 +166,8 @@
                                 <span><i class="fas fa-calendar-alt"></i> Schedule Chart</span>
                             </a>
                         </li>
-                        @if (Auth::user())
-                            @if (Auth::user()->jabatan == 'ADMIN')
+                        {{-- @if (Auth::user()) --}}
+                            @if ($loginUser->jabatan == 'ADMIN')
                                 <li class="menu-item  has-sub">
                                     <a href="#" class='menu-link'>
                                         <span><i class="bi bi-table"></i> Master Data</span>
@@ -242,7 +244,7 @@
                                     </div>
                                 </li>
                             @endif
-                        @endif
+                        {{-- @endif --}}
 
                         <li class="menu-item  ">
                             <a href="{{ route('report') }}" class='menu-link'>
@@ -294,23 +296,6 @@
 
 <!-- SCRIPT -->
 <script src="{{ asset('js/app.js') }}"></script>
-{{-- <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.min.js') }}"></script> --}}
-{{-- <script src="{{ asset('assets/js/pages/form-element-select.js') }}"></script> --}}
-
-{{-- <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('datatables/datatables.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('fontawesome/js/brands.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('fontawesome/js/solid.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('fontawesome/js/fontawesome.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/app.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/pages/horizontal-layout.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
-<script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
-<script src="{{ asset('js/jquery.number.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/bootstrap.js') }}"></script>
-<script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script> --}}
-
 
 <script>
     $(document).ready(function() {

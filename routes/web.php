@@ -45,7 +45,7 @@ use App\Http\Controllers\StandardpengecekanController;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::get('/partrepair', [PartrepairController::class, 'index'])->name('partrepair');
+// Route::get('/partrepair', [PartrepairController::class, 'index'])->name('partrepair');
 Route::get('/partrepair/request', [PartrepairController::class, 'request'])->name('request');
 Route::get('/partrepair/ganttchart', [GanttchartController::class, 'index'])->name('ganttchart');
 Route::get('/partrepair/deletedtable', [WaitingrepairController::class, 'deleted'])->name('deletedtable');

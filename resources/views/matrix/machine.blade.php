@@ -50,7 +50,7 @@
                                     <form action="{{ route('machine.update', $req->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        {{-- {!! Form::model($req, ['method' => 'PATCH', 'route' => ['matrix.machine.update', $req->id]]) !!} --}}
+
                                         <div class="modal fade" id="asu{{ $req->id }}" tabindex="-1"
                                             aria-labelledby="modalUpdateBarang" aria-hidden="true">
                                             <div class="modal-dialog">

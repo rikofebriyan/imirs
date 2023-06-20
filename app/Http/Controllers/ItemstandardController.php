@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Line;
 use App\Models\ItemStandard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,11 +19,9 @@ class ItemstandardController extends Controller
      */
     public function index()
     {
-        // $tabel2 = Line::all();
         $partr = ItemStandard::all()->sortByDesc('id');
         return view('matrix.item_standard', [
             'reqtzy' => $partr,
-            // 'tab2' => $tabel2,
         ]);
     }
 

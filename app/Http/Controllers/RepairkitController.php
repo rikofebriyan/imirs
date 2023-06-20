@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Maker;
-
-use App\Http\Requests;
 use App\Models\RepairKit;
 use Illuminate\Http\Request;
 use App\Models\MasterSparePart;
@@ -24,7 +22,7 @@ class RepairkitController extends Controller
             ->join('sparepartrepair.dbo.master_spare_parts', 'repair_kits.master_spare_part_id', '=', 'master_spare_parts.id')
             ->select('repair_kits.*', 'makers.name as maker_name', 'master_spare_parts.item_name as sparepart_name')
             ->get();
-        // dd($join);
+
         $tabel2 = MasterSparePart::all();
         $tabel3 = Maker::all();
         $partr = RepairKit::all()->sortByDesc('id');

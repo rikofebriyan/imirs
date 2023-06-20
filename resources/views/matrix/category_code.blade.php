@@ -81,10 +81,6 @@
                                         </div>
                                     </form>
 
-                                    {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.category_code.destroy', $req->id], 'style' => 'display:inline']) }}
-                                    <button type="submit" class="btn icon btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
-                                    {{ Form::close() }} --}}
                                     <form action="{{ route('category_code.destroy', $req->id) }}" method="POST"
                                         style="display:inline">
                                         @csrf

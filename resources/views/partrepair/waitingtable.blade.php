@@ -1,12 +1,9 @@
 @extends('layouts.app')
 
 @section('css')
-    {{-- <style>
-        .dataTables_wrapper table {
-            font-size: 14px;
-        }
-    </style> --}}
+
 @endsection
+
 @section('content')
     <div class="row">
         <div class="col-8 card border text-center mb-2 ">
@@ -82,18 +79,17 @@
                                             Finish</a>
                                     @endif
 
-                                    @if (Auth::user())
-                                        @if (Auth::user()->jabatan == 'ADMIN' || 'Supervisor')
+                                    {{-- @if (Auth::user()) --}}
+                                        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan ==  'Supervisor')
                                             <button type="button" class="rounded-pill btn btn-danger btn-sm"
                                                 data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
                                                 Delete
                                             </button>
                                         @endif
-                                    @endif
+                                    {{-- @endif --}}
                                     <form action="{{ route('partrepair.waitingtable.destroy', $req->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['partrepair.waitingtable.destroy', $req->id]]) }} --}}
                                         <div class="modal fade" id="modaldelete{{ $req->id }}" tabindex="-1"
                                             aria-labelledby="modaldeleteLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
@@ -108,7 +104,7 @@
                                                     <div class="modal-body">
 
                                                         <input type="hidden" name="deleted_by"
-                                                            value="{{ Auth::user() ? Auth::user()->name : '' }}">
+                                                            value="{{ $loginUser->name }}">
 
                                                         <div class="form-group position-relative has-icon-left mb-4">
                                                             <input type="text" id="reason" name="reason"

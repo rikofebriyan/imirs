@@ -1,4 +1,3 @@
-{{-- {{ Form::open(['route' => 'partrepair.finishrepair.store', 'method' => 'POST']) }} --}}
 <form action="{{ route('partrepair.finishrepair.store') }}" method="POST">
     @csrf
     <div class="container-fluid justify-content-center py-0">
@@ -243,7 +242,7 @@
 
                 <div class="mb-3 row">
                     <div class="p-3">
-                        @if (Auth::user()->jabatan == 'ADMIN' || Auth::user()->jabatan == 'RepairMan')
+                        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                             <button type="submit" class="btn btn-md btn-primary">Save</button>
                             <a href="{{ route('partrepair.waitingtable.index') }}"
                                 class="btn btn-md btn-secondary">Back</a>

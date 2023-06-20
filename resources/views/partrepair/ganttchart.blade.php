@@ -171,7 +171,6 @@
     </div>
 
     <!-- Modal -->
-
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -184,7 +183,6 @@
                     <form method="POST" action="">
                         @csrf
                         @method('PUT')
-                        {{-- <input type="hidden" name="_method" value="PATCH"> --}}
                         <input type="hidden" class="form-control" name="id" value="">
 
                         <div class="mb-3 row d-flex justify-content-between align-items-center">
@@ -210,11 +208,6 @@
                                     placeholder="Tulis Alasan Disini" required></textarea>
                             </div>
                         </div>
-
-
-
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -237,7 +230,6 @@
                     <form method="POST" action="">
                         @csrf
                         @method('PUT')
-                        {{-- <input type="hidden" name="_method" value="PATCH"> --}}
                         <input type="hidden" class="form-control" name="id" value="">
 
                         <div class="mb-3 row d-flex justify-content-between align-items-center">
@@ -247,11 +239,6 @@
                                     placeholder="Tulis Alasan Disini" required></textarea>
                             </div>
                         </div>
-
-
-
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -324,9 +311,6 @@
                         } else {
                             var datapoint = config.dataPointIndex;
                         };
-                        // console.log(data[datapoint]);
-
-
 
                         $('#exampleModal1').on('show.bs.modal', function(event) {
                             var id = data[datapoint].id;
@@ -358,24 +342,6 @@
 
 
                         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                         $('#asu').show(300);
                         $('#reg_sp').text(data[datapoint].reg_sp);
@@ -421,8 +387,6 @@
                                 .plan_finish_revision).format('DD-MMM-YYYY'));
                         }
 
-
-
                         if (data[datapoint].reason_delay == null) {
                             $('#reason_delay').text("--");
                         } else {
@@ -435,9 +399,7 @@
                             $('#reason_revision').text(data[datapoint].reason_revision);
                         }
 
-
                         $('#item_type').text(data[datapoint].item_type);
-
 
                         if (data[datapoint].progress == "Finish") {
                             $('#finish').prop("checked", true);

@@ -41,7 +41,6 @@
                                         </button>
                                         <form action="{{ route('partrepair.stockout.store') }}" method="POST">
                                             @csrf
-                                            {{-- {{ Form::open(['route' => 'partrepair.stockout.store', 'method' => 'POST']) }} --}}
                                             <div class="modal fade" id="modaldelete{{ $req->waitingrepairid }}"
                                                 tabindex="-1" aria-labelledby="modaldeleteLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">

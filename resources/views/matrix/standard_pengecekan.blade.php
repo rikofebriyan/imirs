@@ -55,7 +55,6 @@
                                         style="display:inline">
                                         @csrf
                                         @method('GET')
-                                        {{-- {{ Form::open(['method' => 'GET', 'route' => ['matrix.standard_pengecekan.show', $req->id], 'style' => 'display:inline']) }} --}}
                                         <button type="submit" class="btn icon btn-primary btn-sm me-1">
                                             <i class="bi bi-pencil"></i></button>
                                     </form>
@@ -63,7 +62,6 @@
                                         style="display:inline">
                                         @csrf
                                         @method('DELETE')
-                                        {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.standard_pengecekan.destroy', $req->id], 'style' => 'display:inline']) }} --}}
                                         <button type="submit" class="btn icon btn-danger btn-sm"><i
                                                 class="bi bi-trash3"></i></button>
                                     </form>
@@ -81,7 +79,6 @@
 
     <form action="{{ route('category_code.store') }}" method="POST">
         @csrf
-        {{-- {{ Form::open(['route' => 'matrix.standard_pengecekan.store', 'method' => 'POST']) }} --}}
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -180,7 +177,6 @@
         });
 
         function isi_otomatis_part() {
-            // var item_name = $("#isiotomatis2").val();
             $.ajax({
                 type: 'GET',
                 url: "{{ route('ajax') }}",
@@ -217,18 +213,5 @@
                 backgroundColor: "#4fbe87",
             }).showToast()
         </script>
-
-
-
-        {{-- <script type="text/javascript">
-            $('#isiotomatis2').select2({
-                dropdownParent: $('#exampleModal'),
-                width: '100%',
-            });
-
-            $(document).on('select2:open', () => {
-                document.querySelector('.select2-search__field').focus();
-            });
-        </script> --}}
     @endif
 @endsection

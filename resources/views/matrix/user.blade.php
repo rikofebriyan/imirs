@@ -96,17 +96,6 @@
                                                             </select>
                                                         </div>
 
-
-                                                        {{-- <select class="form-control choices" id="nama_pic" name="nama_pic"
-                                                        required>
-                                                        <option value="" selected disabled>Pilih ...</option>
-                                                        @foreach ($req as $rq)
-                                                            <option value="{{ $rq->jabatan }}">{{ $rq->jabatan }} |
-                                                                {{ $rq->NPK }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select> --}}
-
                                                         <div class="form-group mt-2">
                                                             <label for="email">Email</label>
                                                             <input type="email" id="email" name="email"
@@ -114,7 +103,6 @@
                                                                 value="{{ $req->email }}" required>
                                                         </div>
                                                         <div class="form-group mt-2">
-                                                            {{-- <label for="password">Isi dengan password baru</label> --}}
                                                             <input type="hidden" id="password" name="password"
                                                                 class="form-control text-center"
                                                                 value="{{ $req->password }}" required>
@@ -130,7 +118,6 @@
                                         style="display: inline">
                                         @csrf
                                         @method('DELETE')
-                                        {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['matrix.user.destroy', $req->id], 'style' => 'display:inline']) }} --}}
                                         <button type="submit" class="btn icon btn-danger btn-sm"><i
                                                 class="bi bi-trash3"></i></button>
                                     </form>

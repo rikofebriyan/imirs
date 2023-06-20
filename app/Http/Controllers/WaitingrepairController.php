@@ -16,30 +16,9 @@ use App\Models\Waitingrepair;
 use App\Models\Progressrepair;
 use App\Models\MasterSparePart;
 use App\Models\Progresspemakaian;
-use App\Models\StandardPengecekan;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\DB;
-
-// use App\Auth;
-// use App\Finishrepair;
-// use App\User;
-// use App\Subcont;
-// use App\Line;
-// use App\Section;
-// use App\Waitingrepair;
-// use Illuminate\Http\Request;
-// use App\Progresspemakaian;
-// use App\MasterSparePart;
-// use App\Maker;
-// use App\StandardPengecekan;
-// use App\ItemStandard;
-// use App\CategoryCode;
-
-// use App\Http\Requests;
-// use App\Machine;
-// use App\Progressrepair;
-// use App\Progresstrial;
 
 class WaitingrepairController extends Controller
 {
@@ -47,10 +26,7 @@ class WaitingrepairController extends Controller
      * Create a new controller instance.
      *
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+
     /**
      * Display a listing of the resource.
      *
@@ -58,14 +34,6 @@ class WaitingrepairController extends Controller
      */
     public function index(Request $request)
     {
-        // $partr = Waitingrepair::leftJoin('dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
-        //     ->select('dbo.waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair', 'progressrepairs.place_of_repair')
-        //     ->where('deleted', null)
-        //     ->where('progress', '<>', 'finish')
-        //     ->where('progress', '<>', 'Scrap')
-        //     ->where('approval', '<>', null)
-        //     ->orderBy('id')
-        //     ->get();
         $partr = DB::table('sparepartrepair.dbo.waitingrepairs')->leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair', 'progressrepairs.place_of_repair')
             ->where('deleted', null)
@@ -74,9 +42,6 @@ class WaitingrepairController extends Controller
             ->where('approval', '<>', null)
             ->orderBy('id')
             ->get();
-        // dd($partr);
-
-
 
         return view('partrepair.waitingtable', [
             'reqtzy' => $partr,
@@ -86,12 +51,11 @@ class WaitingrepairController extends Controller
 
     public function deleted(Request $request)
     {
-        // $partr = Waitingrepair::all()->sortByDesc('id');
         $partr = Waitingrepair::leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
             ->where('deleted', 1)
             ->get();
-        // dd($partr);
+
         return view('partrepair.waitingtabledelete', [
             'reqtzy' => $partr,
         ]);
@@ -99,13 +63,6 @@ class WaitingrepairController extends Controller
 
     public function finish(Request $request)
     {
-        // $partr = Waitingrepair::all()->sortByDesc('id');
-        // $partr = Waitingrepair::leftJoin('dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
-        //     ->select('dbo.waitingrepairs.id', 'dbo.waitingrepairs.reg_sp', 'dbo.waitingrepairs.problem', 'dbo.waitingrepairs.status_repair', 'dbo.waitingrepairs.progress', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
-        //     ->where('deleted', null)
-        //     ->where('progress', 'finish')
-        //     ->orWhere('progress', 'Scrap')
-        //     ->get()->take(10);
         $partr = DB::table('sparepartrepair.dbo.waitingrepairs')
             ->leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
@@ -113,7 +70,7 @@ class WaitingrepairController extends Controller
             ->where('progress', 'finish')
             ->orWhere('progress', 'Scrap')
             ->get();
-        // dd($partr);
+
         return view('partrepair.waitingtablefinish', [
             'reqtzy' => $partr,
         ]);
@@ -148,7 +105,7 @@ class WaitingrepairController extends Controller
         $data['section'] = $section->name;
         $data['line'] = $line->name;
         $data['price'] = intval(preg_replace('/[^\d.]/', '', $request->price));
-        // dd($data);
+
         if ($request->get('id') != null) {
             Waitingrepair::find($request->get('id'))->update($data);
         } else {
@@ -157,7 +114,6 @@ class WaitingrepairController extends Controller
 
 
         return redirect()->route('partrepair.waitingapprove.index')->with('success', 'Your task added successfully!');
-        // return redirect()->route('partrepair.waitingtable.index')->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -217,26 +173,10 @@ class WaitingrepairController extends Controller
         $countid = Progresspemakaian::where('form_input_id', $waitingrepair->id)->count();
 
         // form 4
-        // $actual = Progresstrial::where('form_input_id', $waitingrepair->id)->count();
-
-        // if ($actual > 0) {
-        //     $join = StandardPengecekan::join('item_standards', 'standard_pengecekans.item_pengecekan_id', '=', 'item_standards.id')
-        //         ->join('progresstrials', 'progresstrials.standard_pengecekan_id', '=', 'standard_pengecekans.id')
-        //         ->where('standard_pengecekans.master_spare_part_id', $waitingrepair->item_id)
-        //         // ->select('standard_pengecekans.*', 'item_standards.item_standard', 'progresstrials.*')
-        //         ->select('standard_pengecekans.*', 'item_standards.item_standard', 'progresstrials.actual_pengecekan', 'progresstrials.judgement')
-        //         ->get();
-        // } else {
-        //     $join = StandardPengecekan::join('item_standards', 'standard_pengecekans.item_pengecekan_id', '=', 'item_standards.id')
-        //         ->where('standard_pengecekans.master_spare_part_id', $waitingrepair->item_id)
-        //         ->select('standard_pengecekans.*', 'item_standards.item_standard')
-        //         ->get();
-        // }
         $join = Progresstrial::where('form_input_id', $waitingrepair->id)
             ->join('item_standards', 'item_standards.id', '=', 'progresstrials.item_check_id')
             ->select('progresstrials.*', 'item_standards.item_standard')
             ->get();
-
 
         $itemstandard = ItemStandard::all();
 
@@ -278,8 +218,7 @@ class WaitingrepairController extends Controller
         $machineAll = Machine::where('line_id', $line->id)->get();
         $categoryAll = CategoryCode::all();
         $test = 123;
-        // $machine = Machine::where('name', $waitingrepair->machine)->first();
-        // dd($progresspemakaian);
+
         return view('partrepair.progress', [
             'waitingrepair'    => $waitingrepair,
             'user'    => $user,
@@ -351,15 +290,6 @@ class WaitingrepairController extends Controller
         $data['reason'] = "Deleted: " . $request->reason;
         $data['deleted_by'] = $request->deleted_by;
         Waitingrepair::find($id)->update($data);
-
-
-        // $waitingrepair = Waitingrepair::where('id', $id)->first();
-        // $data = $request->all();
-        // $data['deleted'] = 1;
-        // $data['reason'] = $request['reason'];
-
-        // dd($data);
-        // Waitingrepair::find($id)->update($data);
 
         return redirect()->route('partrepair.waitingtable.index')->with('success', 'Task removed successfully');
     }
@@ -444,16 +374,12 @@ class WaitingrepairController extends Controller
         // form 3
         $waitingrepair = Waitingrepair::find($id);
         $progresspemakaian = Progresspemakaian::where('form_input_id', $waitingrepair->id)->get();
-        // $mastersparepart = MasterSparePart::all();
-
-
-        // $json = json_decode(file_get_contents('http://172.31.42.5/ims/json/stock_onhand.php?whCode=MTC'), true);
-        // $json1 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        // $json2 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        // $json3 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
-        $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
-        $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
+        $json1 = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs/public/json/stockonhandlistMTC.json'), true);
+        $json2 = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs/public/json/stockonhandlistTLC.json'), true);
+        $json3 = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs/public/json/stockonhandlistTLR.json'), true);
+        // $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
+        // $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
+        // $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
         $mergedJson = array_merge($json1, $json2, $json3);
         $mergedJson = array_merge($json3['data'], $json2['data'], $json1['data']);
         $mergedJsonFiltered = array_filter($mergedJson, function ($var) {
@@ -461,8 +387,6 @@ class WaitingrepairController extends Controller
         });
         $mastersparepart = collect($mergedJsonFiltered)->all();
 
-
-        // dd($mastersparepart);
         $maker = Maker::all();
         $ready = Progresspemakaian::where('status_part', '=', 'Ready')
             ->where('form_input_id', $waitingrepair->id)

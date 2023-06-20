@@ -11,22 +11,6 @@
 
     <div class="card border-0 shadow rounded overflow-auto">
         <div class="card-body">
-            {{-- <div class="d-flex d-inline justify-content-center mb-3">
-                <div class="me-2">Flow Repair : </div>
-                <button class="rounded-pill bg-dark text-white text-center px-2 border-white" id="allinput">Register</button>
-                <div class="px-2"><i class="fa-solid fa-arrow-right"></i></div>
-                <button class="rounded-pill bg-secondary text-white text-center px-2 border-white"
-                    id="waiting">Waiting</button>
-                <div class="px-2"><i class="fa-solid fa-arrow-right"></i></div>
-                <button class="rounded-pill bg-warning text-white text-center px-2 border-white" id="progress">On
-                    Progress</button>
-                <div class="px-2"><i class="fa-solid fa-arrow-right"></i></div>
-                <button class="rounded-pill bg-info text-white text-center px-2 border-white" id="sealkit">Seal
-                    Kit</button>
-                <div class="px-2"><i class="fa-solid fa-arrow-right"></i></div>
-                <button class="rounded-pill bg-primary text-white text-center px-2 border-white"
-                    id="trial">Trial</button>
-            </div> --}}
             <div class="table-responsive-sm">
                 <table id="myTable" class="table table-striped nowrap overflow-auto display">
                     <thead>

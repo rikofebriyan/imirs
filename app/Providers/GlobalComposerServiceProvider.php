@@ -5,6 +5,7 @@ namespace App\Providers;
 
 use Carbon\Carbon;
 use App\Models\Waitingrepair;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -47,10 +48,17 @@ class GlobalComposerServiceProvider extends ServiceProvider
                 ->where('deleted', null)
                 ->count();
 
+            if (Auth::check()) {
+                $loginUser = Auth::user();
+            } else {
+                $loginUser = [];
+            }
+
             $view->with('notif', $notif);
             $view->with('notifcount', $notifcount);
             $view->with('waiting_approve', $waiting_approve);
             $view->with('allprogress', $allprogress);
+            $view->with('loginUser', $loginUser);
         });
     }
 

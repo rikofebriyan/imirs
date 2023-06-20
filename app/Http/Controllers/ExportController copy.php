@@ -2,18 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use PHPExcel_IOFactory;
-use PHPExcel_Cell_DataType;
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
-use \PHPExcel_Style_NumberFormat;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use Illuminate\Support\Facades\Response; //new
 
 class ExportController extends Controller
 {
@@ -143,22 +135,6 @@ class ExportController extends Controller
         $sheet = $objPHPExcel->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
         $sheet->fromArray($users->toArray(), null, 'A2');
-        // $excel = Excel::create($file, function($excel) use ($users) {
-        //     $excel->sheet('Sheet 1', function($sheet) use ($users) {
-        //         $sheet->fromArray($users->toArray());
-        //     });
-        // });
-
-
-
-
-
-
-        // $objPHPExcel->createSheet();
-        // $objPHPExcel->setActiveSheetIndex($objPHPExcel->getSheetCount() - 1);
-        // $objPHPExcel->getActiveSheet()->setTitle('New sheet');
-        // $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Hello world!');
-
         $file2 = public_path('tester2.xlsx');
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save($file2);
@@ -171,17 +147,5 @@ class ExportController extends Controller
         $temp_file = tempnam(sys_get_temp_dir(), 'excel');
         $objWriter->save($temp_file);
         $objWriter->save('php://output');
-        // $excel = Excel::create($filename, function($excel) use ($users) {
-        //     $excel->sheet('Sheet 1', function($sheet) use ($users) {
-        //         $sheet->fromArray($users->toArray());
-        //         $highestRow = $sheet->getHighestRow();
-        //         for ($i = 2; $i <= $highestRow; $i++) {
-        //             $cell = $sheet->getCell('A' . $i);
-        //             $cell = PHPExcel_Style_NumberFormat::NUMERIC;
-        //         $cell->getStyle()->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_DATETIME);
-        //         }
-        //     });
-        // });
-        // return $excel->download('xlsx');
     }
 }

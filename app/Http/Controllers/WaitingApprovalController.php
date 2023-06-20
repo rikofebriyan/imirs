@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-
-// use App\Waitingrepair;
-
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
 
 class WaitingApprovalController extends Controller
 {
@@ -20,21 +17,22 @@ class WaitingApprovalController extends Controller
      */
     public function index()
     {
-        // $partr = Waitingrepair::all()->sortByDesc('id');
         $partr = Waitingrepair::leftJoin('sparepartrepair.dbo.users', 'users.name', '=', 'waitingrepairs.nama_pic')
             ->select('waitingrepairs.*', 'users.jabatan')
             ->where('deleted', null)
             ->where('progress', '<>', 'finish')
             ->where('progress', '<>', 'Scrap')
             ->where('approval', null)
+            ->orderBy('reg_sp', 'DESC')
             ->get();
-        // dd($partr);
+        $currentUser = Auth::user()->name;
 
         $user = User::all();
 
         return view('partrepair.waitingapprove', [
             'reqtzy' => $partr,
             'user' => $user,
+            'currentUser' => $currentUser,
         ]);
     }
 
@@ -94,15 +92,6 @@ class WaitingApprovalController extends Controller
         $data['approval'] = $request->approval;
         Waitingrepair::find($id)->update($data);
 
-
-        // $waitingrepair = Waitingrepair::where('id', $id)->first();
-        // $data = $request->all();
-        // $data['deleted'] = 1;
-        // $data['reason'] = $request['reason'];
-
-        // dd($data);
-        // Waitingrepair::find($id)->update($data);
-
         return redirect()->back()->with('success', 'Ticket Approved successfully');
     }
 
@@ -119,15 +108,6 @@ class WaitingApprovalController extends Controller
         $data['reason'] = "Rejected: " . $request->reason;
         $data['deleted_by'] = $request->deleted_by;
         Waitingrepair::find($id)->update($data);
-
-
-        // $waitingrepair = Waitingrepair::where('id', $id)->first();
-        // $data = $request->all();
-        // $data['deleted'] = 1;
-        // $data['reason'] = $request['reason'];
-
-        // dd($data);
-        // Waitingrepair::find($id)->update($data);
 
         return redirect()->route('partrepair.waitingtable.index')->with('success', 'Task removed successfully');
     }

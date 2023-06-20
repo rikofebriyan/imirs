@@ -19,11 +19,11 @@ class RedirectIfAuthenticated
      */
     // public function handle(Request $request, Closure $next, $guard = null)
     // {
-        
+
     //     if (Auth::user()->jabatan !== 'null' ) {
     //         return redirect('home');
     //     }
-        
+
 
     //     return $next($request);
     // }
@@ -34,7 +34,6 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                // dd($guard);
                 return redirect(RouteServiceProvider::HOME);
             }
         }

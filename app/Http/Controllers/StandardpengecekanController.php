@@ -23,7 +23,7 @@ class StandardpengecekanController extends Controller
             ->join('master_spare_parts', 'standard_pengecekans.master_spare_part_id', '=', 'master_spare_parts.id')
             ->select('standard_pengecekans.*', 'item_standards.item_standard', 'master_spare_parts.item_name')
             ->get();
-        // dd($join);
+
         $tabel2 = MasterSparePart::all();
         $tabel3 = ItemStandard::all();
         $partr = StandardPengecekan::all()->sortByDesc('id');

@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-
-
-
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use App\Http\Controllers\Controller;
@@ -27,12 +23,10 @@ class RegisteredTicketController extends Controller
      */
     public function index(Request $request)
     {
-        // $partr = Waitingrepair::all()->sortByDesc('id');
         $partr = Waitingrepair::leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
             ->where('deleted', null)
             ->get();
-        // dd($partr);
         return view('partrepair.registeredticket', [
             'reqtzy' => $partr,
         ]);

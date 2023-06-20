@@ -59,9 +59,8 @@ class ProgresspemakaianController extends Controller
             $data['estimasi_kedatangan'] = null;
         }
         Progresspemakaian::create($data);
-        // Progresspemakaian::create($request->all());
+
         return redirect()->back()->with('success', 'Task added successfully');
-        // return with('success', 'Your task added successfully!');
     }
 
     /**
@@ -111,8 +110,7 @@ class ProgresspemakaianController extends Controller
             $data['estimasi_kedatangan'] = null;
         }
         Progresspemakaian::find($id)->update($data);
-        // Progresspemakaian::create($data);
-        // Progresspemakaian::create($request->all());
+
         return redirect()->back()->with('success', 'Task added successfully');
     }
 

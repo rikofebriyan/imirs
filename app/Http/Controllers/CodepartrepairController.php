@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CodePartRepair;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 
 class CodepartrepairController extends Controller
 {

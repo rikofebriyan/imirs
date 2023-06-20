@@ -9,53 +9,23 @@ use App\Models\Subcont;
 use App\Models\Finishrepair;
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
-use Illuminate\Http\Response;
 use App\Models\CodePartRepair;
 use App\Models\Progressrepair;
 use App\Models\MasterSparePart;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Auth\User;
 use Yajra\DataTables\DataTables;
-
-// use App\Finishrepair;
-// use App\User;
-// use App\Machine;
-// use App\Line;
-// use App\Progressrepair;
-// use App\Waitingrepair;
-// use App\MasterSparePart;
-// use Illuminate\Http\Request;
-
-// use App\Http\Requests;
-// use App\Maker;
-// use App\Subcont;
-// use App\CategoryCode;
-// use App\CodePartRepair;
-// use Datatables;
-// use Illuminate\Database\Eloquent\Builder;
 
 class InfoController extends Controller
 {
 
     public function index(Request $request)
     {
-        // $item_name = $_GET['item_name'];
-        // $data = MasterSparePart::where('code_item_description', $item_name)->get();
-        // $withoutbrackets = trim($data, '[]');
-        // echo $withoutbrackets;
-
-        // $data = MasterSparePart::where('code_item_description', $request->item_name)->first();
-
-
-
-
-        // $data = MasterSparePart::where('item_code', $request->item_name)->first();
-        // $json1 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        // $json2 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        // $json3 = json_decode(file_get_contents('file:///C:/xampp/htdocs/imirs/public/json.json'), true);
-        $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
-        $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
-        $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
+        $json1 = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs/public/json/stockonhandlistMTC.json'), true);
+        $json2 = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs/public/json/stockonhandlistTLC.json'), true);
+        $json3 = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs/public/json/stockonhandlistTLR.json'), true);
+        // $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
+        // $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
+        // $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
 
         $mergedJson = array_merge($json3['data'], $json2['data'], $json1['data']);
         $mergedJsonFiltered = array_filter($mergedJson, function ($var) {
@@ -70,7 +40,6 @@ class InfoController extends Controller
     public function getInfo($nim)
     {
         $data = MasterSparePart::all()->where('id', $nim);
-        // return Response::json(['success'=>true, 'data'=>$data]);
         return Response()->json(['success' => true, 'data' => $data]);
     }
 
@@ -94,10 +63,7 @@ class InfoController extends Controller
     public function getlabour(Request $request)
     {
         $data_labour_cost = 87500;
-        // $labour_id = $request->get('labour_id');
-        // $data = User::where('name', $labour_id)->first();
-        // $withoutbrackets = trim($data, '[]');
-        // echo $withoutbrackets;
+
         return response()->json($data_labour_cost);
     }
 
@@ -185,21 +151,20 @@ class InfoController extends Controller
     }
     public function mymodel(Request $request)
     {
-        // $master = MasterSparePart::find($id);
         $master = MasterSparePart::where('id', $request->id)->first();
         return response()->json($master);
     }
+
     public function mymodelrevision(Request $request)
     {
-        // $master = MasterSparePart::find($id);
         $master = Progressrepair::where('id', $request->id)->first();
         return response()->json($master);
     }
+
     public function updatemodel(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            // other validation rules...
         ]);
 
         // Update the item in the database

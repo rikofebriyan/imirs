@@ -221,69 +221,6 @@
         </script>
     @endif
 
-
-    {{-- <script>
-        @foreach ($join as $joi)
-            $('#actual_pengecekan{{ $joi->id }}').on('input', function() {
-                var actual = $(this).val()
-                var standardMin = '{{ $joi->standard_pengecekan_min }}'
-                var standardMax = '{{ $joi->standard_pengecekan_max }}'
-                var operation = '{{ $joi->operation }}'
-
-                if (operation == 'Less Than') {
-                    if (actual < standardMax) {
-                        $('#judgement{{ $joi->id }}').val('OK')
-                    } else {
-                        $('#judgement{{ $joi->id }}').val('NG')
-                    }
-
-                    if (actual == '') {
-                        $('#judgement{{ $joi->id }}').val('')
-                    }
-
-                } else if (operation == 'Greater Than') {
-                    if (actual > standardMin) {
-                        $('#judgement{{ $joi->id }}').val('OK')
-                    } else {
-                        $('#judgement{{ $joi->id }}').val('NG')
-                    }
-
-                    if (actual == '') {
-                        $('#judgement{{ $joi->id }}').val('')
-                    }
-
-                } else if (operation == 'Between') {
-                    if (actual > standardMin && actual < standardMax) {
-                        $('#judgement{{ $joi->id }}').val('OK')
-                    } else {
-                        $('#judgement{{ $joi->id }}').val('NG')
-                    }
-
-                    if (actual == '') {
-                        $('#judgement{{ $joi->id }}').val('')
-                    }
-
-                } else if (operation == 'Equal') {
-                    if (actual == standardMin) {
-                        $('#judgement{{ $joi->id }}').val('OK')
-                    } else {
-                        $('#judgement{{ $joi->id }}').val('NG')
-                    }
-
-                    if (actual == '') {
-                        $('#judgement{{ $joi->id }}').val('')
-                    }
-
-                } else {
-                    alert('Operation Miss')
-                    $('#judgement{{ $joi->id }}').val('')
-
-                }
-
-            });
-        @endforeach
-    </script> --}}
-
     <script>
         $(document).ready(function() {
             $('#operation').on('change', function() {

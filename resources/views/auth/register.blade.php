@@ -80,7 +80,6 @@
                         </div>
 
                         <div class="form-group position-relative has-icon-left mb-4">
-                            {{-- {{ dd($errors) }} --}}
                             <select type="text" id="jabatan" name="jabatan"
                                 class="form-control form-control-xl @error('jabatan') is-invalid @enderror"
                                 placeholder="Jabatan">
