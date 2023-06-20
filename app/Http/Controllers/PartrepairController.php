@@ -55,9 +55,10 @@ class PartrepairController extends Controller
         $user = User::all();
         $section = Section::all()->sortBy('name');
 
-        $json1 = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs/public/json/stockonhandlistMTC.json'), true);
-        $json2 = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs/public/json/stockonhandlistTLC.json'), true);
-        $json3 = json_decode(file_get_contents('file:///C:/laragon/www/i-mirs/public/json/stockonhandlistTLR.json'), true);
+        // $json1 = json_decode(file_get_contents(public_path('json\stockonhandlistMTC.json')), true);
+        // $json2 = json_decode(file_get_contents(public_path('json\stockonhandlistTLC.json')), true);
+        // $json3 = json_decode(file_get_contents(public_path('json\stockonhandlistTLR.json')), true);
+
         // $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
         // $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
         // $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
@@ -65,14 +66,13 @@ class PartrepairController extends Controller
         // $json2['data'] = [];
         // $json3['data'] = [];
 
-        $mergedJson = array_merge($json3['data'], $json2['data'], $json1['data']);
-        $mergedJsonFiltered = array_filter($mergedJson, function ($var) {
-            return $var['StatusBarang'] == 'NE';
-        });
-        $partr = collect($mergedJsonFiltered)->all();
+        // $mergedJson = array_merge($json3['data'], $json2['data'], $json1['data']);
+        // $mergedJsonFiltered = array_filter($mergedJson, function ($var) {
+        //     return $var['StatusBarang'] == 'NE';
+        // });
+        // $partr = collect($mergedJsonFiltered)->all();
 
         return view('partrepair.request', [
-            'reqtzy' => $partr,
             'section' => $section,
             'ticket' => $ticket,
             'user' => $user,
