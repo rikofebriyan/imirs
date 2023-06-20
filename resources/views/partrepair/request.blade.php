@@ -108,24 +108,7 @@
                                     <div class="col-sm-9">
                                         <div id="field3" class="mb-3 d-flex">
                                             <select class="form-control select2" id="isiotomatis" name="item_name">
-                                                <option value="">Pilih Spare Part</option>
                                             </select>
-
-                                            {{-- <select class="form-select" id="isiotomatis" name="item_name">
-                                                <option value="" selected></option> --}}
-
-                                            {{-- @foreach ($reqtzy as $req)
-                                                    <option data-custom-properties="{{ $req['ItemCode'] }}"
-                                                        data-no="{{ $req['No'] }}"
-                                                        data-item-name="{{ $req['itemName'] }}"
-                                                        data-description="{{ $req['description'] }}"
-                                                        data-price="{{ $req['Price'] }}" data-stock="{{ $req['Stock'] }}"
-                                                        value="{{ $req['description'] }}">{{ $req['ItemCode'] }} |
-                                                        {{ $req['itemName'] }} | {{ $req['description'] }} | Stock:
-                                                        {{ $req['Stock'] }}
-                                                    </option>
-                                                @endforeach --}}
-                                            {{-- </select> --}}
 
                                             <button id="btnAutoMan" type="button"
                                                 class="btn btn-primary ms-1">Auto</button>
@@ -384,43 +367,17 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#section').on('change', function() {
-                var sectionId = $('#section option:selected').val()
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ route('get-line') }}" + '/?sectionId=' + sectionId,
-                    dataType: 'JSON',
-                    success: function(result) {
-                        $('#lineline').empty()
-                        $('#lineline').append(
-                            '<option value="" disabled selected>Choose</option>')
-                        $.each(result, function(id, value) {
-                            $('#lineline').append('<option value="' + id + '">' +
-                                value + '</option>');
-                        });
-                    }
-                });
-            });
 
-            $('#storage').on('change', function() {
-                // Mengosongkan nilai select2 dan input fields
-                $('#isiotomatis').val(null).trigger('change');
-                $('#item_name').val('');
-                $('#item_code').val('');
-                $('#description').val('');
-                $('#price').val('');
-                $('#qty').val('');
-                $('#status_repair').empty();
+            $(document).on('select2:open', () => {
+                document.querySelector('.select2-search__field').focus();
             });
 
             // Javascript select2 via ajax
             $('#isiotomatis').select2({
                 placeholder: 'Cari Spare Part',
-                allowClear: true,
                 ajax: {
                     url: "{{ route('get-storage') }}",
                     dataType: 'json',
-                    delay: 250,
                     data: function(params) {
                         var idstorage = $('#storage option:selected').val();
                         return {
@@ -450,7 +407,8 @@
 
                     cache: true
                 },
-                minimumInputLength: 2
+                minimumInputLength: 2, // Jumlah minimum karakter yang diperlukan sebelum pencarian dimulai
+                dropdownAutoWidth: true // Mengaktifkan lebar dropdown otomatis
             }).on('select2:select', function(e) {
                 var selectedItem = e.params.data;
                 console.log(selectedItem)
@@ -477,6 +435,35 @@
                         `)
                 }
 
+            });
+
+            $('#section').on('change', function() {
+                var sectionId = $('#section option:selected').val()
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('get-line') }}" + '/?sectionId=' + sectionId,
+                    dataType: 'JSON',
+                    success: function(result) {
+                        $('#lineline').empty()
+                        $('#lineline').append(
+                            '<option value="" disabled selected>Choose</option>')
+                        $.each(result, function(id, value) {
+                            $('#lineline').append('<option value="' + id + '">' +
+                                value + '</option>');
+                        });
+                    }
+                });
+            });
+
+            $('#storage').on('change', function() {
+                // Mengosongkan nilai select2 dan input fields
+                $('#isiotomatis').val(null).trigger('change');
+                $('#item_name').val('');
+                $('#item_code').val('');
+                $('#description').val('');
+                $('#price').val('');
+                $('#qty').val('');
+                $('#status_repair').empty();
             });
 
 
