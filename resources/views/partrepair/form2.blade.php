@@ -226,9 +226,9 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                             <button id="scrap" type="submit" class="btn btn-md btn-danger"
                                 style="display: none">Scrap</button>
-                            <button id="saveit" type="submit" class="btn btn-md btn-primary">Save</button>
+                            <button id="saveit" type="submit" class="btn btn-md btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
                             <a href="{{ route('partrepair.waitingtable.index') }}"
-                                class="btn btn-md btn-secondary">Back</a>
+                                class="btn btn-md btn-secondary @if($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
                         </div>
                     @else
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start">

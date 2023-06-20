@@ -49,8 +49,8 @@
                                     value="{{ $joi->actual_pengecekan }}" required>
                             </td>
                             <td> <input type="text" name="data[{{ $joi->id }}][judgement]"
-                                    id="judgement{{ $joi->id }}" class="form-control" placeholder="Judgement"
-                                    value="{{ $joi->judgement }}" required>
+                                    id="judgement{{ $joi->id }}" class="form-control disabledriko" placeholder="Judgement"
+                                    value="{{ $joi->judgement }}" required readonly>
                             </td>
                         </tr>
                     @empty
@@ -60,16 +60,25 @@
                     @endforelse
                 </tbody>
             </table>
-            @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
-                <button id="judgeok" type="submit" class="btn btn-md btn-primary">Save</button>
-            @else
-                <button id="/" type="button" class="btn btn-md btn-secondary disabled">Save</button>
-                <span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span>
-            @endif
+            <div class="d-flex justify-content-end">
+                @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
+                    <button type="button" class="btn btn-md btn-success me-1 @if($waitingrepair->progress == 'Finish') disabled @endif" data-bs-toggle="modal"
+                        data-bs-target="#modalAddPengecekan">
+                        Tambah Std Pengecekan
+                    </button>
+                    <button id="judgeok" type="submit" class="btn btn-md btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
+                @else
+                    <button type="button" class="btn btn-md btn-success me-1 disabled">
+                        Tambah Std Pengecekan
+                    </button>
+                    <button type="button" class="btn btn-md btn-secondary disabled">Save</button>
+                    <span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span>
+                @endif
+            </div>
         </form>
     </div>
 </div>
-<div class="row">
+{{-- <div class="row">
     <div class="col-9"></div>
     <div class="col d-grid gap-2 px-3">
         @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
@@ -79,7 +88,7 @@
             </button>
         @endif
     </div>
-</div>
+</div> --}}
 
 <!-- Modal -->
 <form action="{{ route('standard_pengecekan.store') }}" method="POST">
@@ -97,8 +106,7 @@
 
                     <div class="form-group mt-2">
                         <label for="master_spare_part_id">Item Code</label>
-                        <select name="master_spare_part_id" id="master_spare_part_id"
-                            class="form-control bg-secondary text-white">
+                        <select name="master_spare_part_id" id="master_spare_part_id" class="form-control disabledriko">
                             <option value="{{ $asu->item_id }}">{{ $asu->item_code }}
                             </option>
                         </select>
@@ -106,14 +114,14 @@
 
                     <div class="form-group mt-2">
                         <label for="master_spare_part_id">Part Name</label>
-                        <input type="text" class="form-control bg-secondary text-white"
-                            value="{{ $asu->item_name }}" disabled>
+                        <input type="text" class="form-control disabledriko" value="{{ $asu->item_name }}"
+                            disabled>
                     </div>
 
                     <div class="form-group mt-2">
                         <label for="master_spare_part_id">Part Type</label>
-                        <input type="text" class="form-control bg-secondary text-white"
-                            value="{{ $asu->item_type }}" disabled>
+                        <input type="text" class="form-control disabledriko" value="{{ $asu->item_type }}"
+                            disabled>
                     </div>
 
                     <div class="form-group mt-2">
@@ -157,8 +165,8 @@
 
                     <div class="form-group mt-2">
                         <label for="unit_measurement">Unit Measurement</label>
-                        <input type="text" id="unit_measurement" name="unit_measurement" class="form-control"
-                            value="">
+                        <input type="text" id="unit_measurement" name="unit_measurement"
+                            class="form-control disabledriko" value="" readonly>
                     </div>
 
                 </div>

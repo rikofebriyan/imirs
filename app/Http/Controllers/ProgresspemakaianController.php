@@ -60,6 +60,10 @@ class ProgresspemakaianController extends Controller
         }
         Progresspemakaian::create($data);
 
+        $request2 = Waitingrepair::find($request->form_input_id);
+        $request2->progress = 'Seal Kit';
+        $request2->save();
+
         return redirect()->back()->with('success', 'Task added successfully');
     }
 

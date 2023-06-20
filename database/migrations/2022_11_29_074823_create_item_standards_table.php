@@ -17,6 +17,7 @@ class CreateItemStandardsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('item_standard');
+            $table->string('unit_measurement');
         });
     }
 

@@ -225,9 +225,9 @@
     <script>
         @foreach ($join as $joi)
             $('#actual_pengecekan{{ $joi->id }}').on('input', function() {
-                var actual = $(this).val()
-                var standardMin = '{{ $joi->standard_pengecekan_min }}'
-                var standardMax = '{{ $joi->standard_pengecekan_max }}'
+                var actual = parseFloat($(this).val())
+                var standardMin = parseFloat('{{ $joi->standard_pengecekan_min }}')
+                var standardMax = parseFloat('{{ $joi->standard_pengecekan_max }}')
                 var operation = '{{ $joi->operation }}'
 
                 if (operation == 'Less Than') {
@@ -237,7 +237,7 @@
                         $('#judgement{{ $joi->id }}').val('NG')
                     }
 
-                    if (actual == '') {
+                    if (actual == '' || isNaN(actual)) {
                         $('#judgement{{ $joi->id }}').val('')
                     }
 
@@ -248,7 +248,7 @@
                         $('#judgement{{ $joi->id }}').val('NG')
                     }
 
-                    if (actual == '') {
+                    if (actual == '' || isNaN(actual)) {
                         $('#judgement{{ $joi->id }}').val('')
                     }
 
@@ -259,7 +259,7 @@
                         $('#judgement{{ $joi->id }}').val('NG')
                     }
 
-                    if (actual == '') {
+                    if (actual == '' || isNaN(actual)) {
                         $('#judgement{{ $joi->id }}').val('')
                     }
 
@@ -270,7 +270,7 @@
                         $('#judgement{{ $joi->id }}').val('NG')
                     }
 
-                    if (actual == '') {
+                    if (actual == '' || isNaN(actual)) {
                         $('#judgement{{ $joi->id }}').val('')
                     }
 
@@ -374,5 +374,22 @@
                 }
             });
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#item_check_id').on('change', function() {
+                var itemCheck = $(this).val()
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('get-unit-measurement') }}" + '/?id=' + itemCheck,
+                    success: function(result) {
+                        console.log(result)
+                        $('#unit_measurement').val(result.unit_measurement)
+                    }
+                });
+            });
+        });
     </script>
 @endsection

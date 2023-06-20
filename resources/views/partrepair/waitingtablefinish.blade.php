@@ -49,10 +49,10 @@
                                 <td class="text-center">
                                     @if ($req->progress == 'Scrap')
                                         <a class="rounded-pill btn btn-danger btn-sm col"
-                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}">Finished</a>
+                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}">Detail</a>
                                     @elseif($req->progress == 'Finish')
                                         <a class="rounded-pill btn btn-success btn-sm col"
-                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}">Finished</a>
+                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}">Detail</a>
                                     @endif
                                 </td>
                             </tr>
