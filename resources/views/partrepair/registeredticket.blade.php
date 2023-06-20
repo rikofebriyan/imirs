@@ -5,7 +5,7 @@
 @section('content')
     <CENTER>
         <div class="container-fluid">
-            <H2>ALL HISTORY TICKET</H2>
+            <H2>HISTORY REPAIR</H2>
         </div>
     </CENTER>
 
@@ -102,6 +102,15 @@
 @endsection
 
 @section('script')
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                order: [
+                    [0, 'desc']
+                ],
+            });
+        });
+    </script>
     @if ($message = Session::get('success'))
         <script>
             Toastify({

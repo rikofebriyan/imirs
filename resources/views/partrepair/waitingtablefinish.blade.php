@@ -5,7 +5,7 @@
 @section('content')
     <CENTER>
         <div class="container-fluid">
-            <H2>PART REPAIR : FINISH TABLE</H2>
+            <H2>FINISHED PART REPAIR</H2>
         </div>
     </CENTER>
 
@@ -86,33 +86,6 @@
         </div>
     </div>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @section('script')
     @if ($message = Session::get('success'))

@@ -5,7 +5,7 @@
 @section('content')
     <CENTER>
         <div class="container-fluid">
-            <H2>PART REPAIR : DELETED TABLE</H2>
+            <H2>DELETED PART REPAIR</H2>
         </div>
     </CENTER>
 
@@ -46,33 +46,6 @@
         </div>
     </div>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @section('script')
     @if ($message = Session::get('success'))

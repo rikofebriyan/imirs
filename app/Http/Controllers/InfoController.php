@@ -43,11 +43,10 @@ class InfoController extends Controller
         return Response()->json(['success' => true, 'data' => $data]);
     }
 
-
     public function getline(Request $request)
     {
         $sectionId = $request->get('sectionId');
-        $line = Line::all()->where('section_id', $sectionId)->pluck('name', 'id');
+        $line = Line::all()->where('section_id', $sectionId)->sortBy('name')->pluck('name', 'id');
         return response()->json($line);
     }
 
@@ -55,7 +54,7 @@ class InfoController extends Controller
     public function getmachine(Request $request)
     {
         $lineId = $request->get('lineId');
-        $machine = Machine::all()->where('line_id', $lineId)->pluck('name', 'id');
+        $machine = Machine::all()->where('line_id', $lineId)->sortBy('name')->pluck('name', 'id');
         return response()->json($machine);
     }
 
