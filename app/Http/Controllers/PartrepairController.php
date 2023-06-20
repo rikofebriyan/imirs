@@ -53,7 +53,7 @@ class PartrepairController extends Controller
 
         $maker = Maker::all();
         $user = User::all();
-        $section = Section::all();
+        $section = Section::all()->sortBy('name');
 
         // $json1 = json_decode(file_get_contents(public_path('json\stockonhandlistMTC.json')), true);
         // $json2 = json_decode(file_get_contents(public_path('json\stockonhandlistTLC.json')), true);

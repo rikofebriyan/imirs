@@ -3,7 +3,7 @@
     @if ($message = Session::get('success'))
     @endif
 
-    <div id="field3" class="p-3 mb-3 card border" @if ($countid == 0) style="display: none;" @endif>
+    <div id="field3" class="p-3 mb-3 card border">
         <table id="myTable" class="table table-striped nowrap overflow-auto display">
             <thead>
                 <tr>
@@ -206,7 +206,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td class="text-center text-mute" colspan="13">Data post tidak tersedia</td>
+                        <td class="text-center text-mute" colspan="13">Tidak ada seal kit yang diinput</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -214,8 +214,8 @@
     </div>
 
 
-    <div class="row">
-        <div class="col-6">
+    <div class="d-flex justify-content-end">
+        {{-- <div class="col-6">
             <div class="alert fw-bold m-0 @if ($progresspemakaian->count() > 0) d-none @endif"
                 style="background-color: #8fffd8">
                 <center>APAKAH PART REPAIR BUTUH ORDER SEAL KIT?</center>
@@ -236,33 +236,29 @@
                     </div>
                 </center>
             </div>
-        </div>
+        </div> --}}
 
 
         @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
-            <div class="d-grid gap-2 col">
+            <div class="me-1">
                 <button id="fieldsealkit" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
             </div>
-            <div class="d-grid gap-2 col @if ($countid == 0) d-block @else d-none @endif"
+            {{-- <div class=" @if ($countid == 0) d-block @else d-none @endif"
                 id="fieldrepair">
                 <a href="{{ route('partrepair.progresspemakaian.show', $waitingrepair->id) }}"
-                    class="btn btn-success d-flex justify-content-center align-items-center">SELESAI</a>
-            </div>
+                    class="btn btn-success">SELESAI</a>
+            </div> --}}
         @else
-            <div class="d-grid gap-2 col">
+            <div class="">
                 <button id="" class="btn btn-primary disabled" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
-            </div>
-            <div class="d-grid gap-2 col @if ($countid == 0) d-block @else d-none @endif"
-                id="fieldrepair">
-                <button href="/" class="btn btn-secondary disabled">TIDAK BUTUH SEALKIT</button>
             </div>
             <center><span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span></center>
         @endif
 
 
-        @if ($countid == 0)
+        {{-- @if ($countid == 0)
         @elseif ($countid > $ready)
             <div class="d-grid gap-2 col">
                 <button class="btn btn-primary disabled text-center">PART BELUM READY</button>
@@ -272,14 +268,8 @@
                 <a href="{{ route('partrepair.progresspemakaian.show', $waitingrepair->id) }}"
                     class="btn btn-success">SELESAI</a>
             </div>
-        @endif
+        @endif --}}
     </div>
-
-
-
-
-
-
 </div>
 
 <!-- form add new sealkit -->
@@ -367,8 +357,8 @@
                                     <div class="mb-3 row">
                                         <label for="total_price" class="col-sm-3 col-form-label">Total Price</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="total_price"
-                                                name="total_price" value="">
+                                            <input type="text" class="form-control number disabledriko" id="total_price"
+                                                name="total_price" value="" readonly>
                                         </div>
                                     </div>
 
