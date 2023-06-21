@@ -24,8 +24,9 @@
                 @forelse ($progresspemakaian as $req)
                     <tr>
                         <td>
-                            <button type="button" class="btn btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif" data-bs-toggle="modal"
-                                data-bs-target="#asu{{ $req->id }}"
+                            <button type="button"
+                                class="btn btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif"
+                                data-bs-toggle="modal" data-bs-target="#asu{{ $req->id }}"
                                 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size:
                                 .75rem">
                                 Update
@@ -189,7 +190,8 @@
                                 @csrf
                                 @method('DELETE')
 
-                                <button type="submit" class="btn btn-danger @if($waitingrepair->progress == 'Finish') disabled @endif"
+                                <button type="submit"
+                                    class="btn btn-danger @if ($waitingrepair->progress == 'Finish') disabled @endif"
                                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem">Delete</button>
                             </form>
 
@@ -241,8 +243,8 @@
 
         @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
             <div class="me-1">
-                <button id="fieldsealkit" class="btn btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
+                <button id="fieldsealkit" class="btn btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
             </div>
             {{-- <div class=" @if ($countid == 0) d-block @else d-none @endif"
                 id="fieldrepair">
@@ -283,9 +285,9 @@
                     <div class="container-fluid">
 
                         <h4 class="modal-title text-center mt-2">Add Seal Kit</h4>
-                        <div class="row gx-3">
+                        <div class="row gx-0">
                             <div class="col">
-                                <div class="p-3 m-3 border">
+                                <div class="p-3 my-0 border">
 
                                     <input type="hidden" name="form_input_id" id="form_input_id"
                                         value="{{ $waitingrepair->id }}">
@@ -307,7 +309,7 @@
                                     <div class="mb-3 row">
                                         <label for="item_code" class="col-sm-3 col-form-label">Spare Part</label>
                                         <div class="col-sm-9">
-                                            <div id="field3" class="mb-3 d-flex">
+                                            <div id="field3" class="mb-3 justify-content-center d-flex">
                                                 <select class="form-control select2" id="isiotomatis2"
                                                     name="item_name">
                                                 </select>
@@ -346,10 +348,10 @@
                                             </div>
 
                                             <div class="input-group">
-                                                <label for="price" class="col-sm-3 col-form-label">Price <sup
+                                                <label for="harga" class="col-sm-3 col-form-label">Price <sup
                                                         class="text-danger">*</sup></label>
                                                 <input type="text" class="form-control number col-9 disabledriko"
-                                                    id="price3" name="price" placeholder="Price" readonly
+                                                    id="harga" name="price" placeholder="Price" readonly
                                                     required>
                                             </div>
 
@@ -399,7 +401,7 @@
                             </div>
                             <div class="col">
 
-                                <div class="p-3 m-3 border">
+                                <div class="p-3 my-0 border">
                                     <div class="mb-3 row">
                                         <label for="quotation" class="col-sm-3 col-form-label">Status Part</label>
                                         <div class="col-sm-9">

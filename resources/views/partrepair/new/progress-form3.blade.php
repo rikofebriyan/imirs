@@ -57,6 +57,7 @@
             // Javascript select2 via ajax
             $('#isiotomatis2').select2({
                 dropdownParent: $('#exampleModal'),
+                width: '100%',
                 placeholder: 'Cari Spare Part',
                 ajax: {
                     url: "{{ route('get-storage') }}",
@@ -99,35 +100,82 @@
                 $('#item_name').val(selectedItem.id);
                 $('#item_code').val(selectedItem.item_code);
                 $('#description').val(selectedItem.description);
-                $('#price3').val(selectedItem.price);
+                $('#harga').val(selectedItem.price);
                 $('#qty').val(selectedItem.stock);
-
             });
 
             $('#storage').on('change', function() {
                 // Mengosongkan nilai select2 dan input fields
-                $('#isiotomatis').val(null).trigger('change');
+                $('#isiotomatis2').val(null).trigger('change');
                 $('#item_name').val('');
                 $('#item_code').val('');
                 $('#description').val('');
-                $('#price3').val('');
+                $('#harga').val('');
                 $('#qty').val('');
-                $('#status_repair').empty();
             });
-
-
         });
 
+        $('#btnAutoMan').on('click', function() {
+            var mode = $(this).text()
+            if (mode == 'Man') {
+                // Mode Auto
+                $('#isiotomatis2').removeClass('disabledriko')
+                // $('#isiotomatis2').select2({
+                //     disabled: false,
+                //     // minimumInputLength: 2,
+                //     language: {
+                //         inputTooShort: function() {
+                //             return "Masukkan keyword item";
+                //         }
+                //     }
+                // });
 
+                $('#item_code').addClass('disabledriko')
+                $('#item_code').prop('readonly', true)
 
+                $('#item_name').addClass('disabledriko')
+                $('#item_name').prop('readonly', true)
 
+                $('#description').addClass('disabledriko')
+                $('#description').prop('readonly', true)
 
+                $('#harga').addClass('disabledriko')
+                $('#harga').prop('readonly', true)
 
+                $('#qty').addClass('disabledriko')
+                $('#qty').prop('readonly', true)
 
+                $('#btnAutoMan').text('Auto')
+                $('#qty').addClass('btn-primary')
+                $('#btnAutoMan').removeClass('btn-warning')
+            } else if (mode == 'Auto') {
 
+                // Mode Manual
+                $('#isiotomatis2').addClass('disabledriko')
+                // $('#isiotomatis2').select2({
+                //     disabled: true
+                // })
 
+                $('#item_code').removeClass('disabledriko')
+                $('#item_code').prop('readonly', false)
 
+                $('#item_name').removeClass('disabledriko')
+                $('#item_name').prop('readonly', false)
 
+                $('#description').removeClass('disabledriko')
+                $('#description').prop('readonly', false)
+
+                $('#harga').removeClass('disabledriko')
+                $('#harga').prop('readonly', false)
+
+                $('#qty').removeClass('disabledriko')
+                $('#qty').prop('readonly', false)
+
+                $('#btnAutoMan').text('Man')
+                $('#qty').removeClass('btn-primary')
+                $('#btnAutoMan').addClass('btn-warning')
+            }
+        });
 
         // $('#isiotomatis2').select2({
         //     dropdownParent: $('#exampleModal'),
@@ -140,77 +188,76 @@
         //     }
         // });
 
+        // function isi_otomatis() {
+        //     var labour_id = $("#isiotomatis").val();
+        //     var total_time_repair = $('#selisih').val()
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: "{{ route('get-labour') }}",
+        //         data: "labour_id=" + labour_id,
+        //         dataType: 'JSON',
+        //         success: function(data) {
+        //             if (total_time_repair > 0 && data > 0) {
+        //                 labourCost = total_time_repair * data
 
-        function isi_otomatis() {
-            var labour_id = $("#isiotomatis").val();
-            var total_time_repair = $('#selisih').val()
-            $.ajax({
-                type: 'GET',
-                url: "{{ route('get-labour') }}",
-                data: "labour_id=" + labour_id,
-                dataType: 'JSON',
-                success: function(data) {
-                    if (total_time_repair > 0 && data > 0) {
-                        labourCost = total_time_repair * data
+        //                 $('#labour_cost').val(labourCost);
+        //             }
+        //         }
+        //     });
+        // }
 
-                        $('#labour_cost').val(labourCost);
-                    }
-                }
-            });
-        }
+        // function isi_otomatis_part() {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: "{{ route('ajax') }}",
+        //         data: {
+        //             item_name: $('#isiotomatis2').find(':selected').data('custom-properties'),
+        //         },
+        //         dataType: 'JSON',
+        //         success: function(data) {
+        //             $('#item_name2').val(data.itemName);
+        //             $('#item_code2').val(data.ItemCode);
+        //             $('#description2').val(data.description);
+        //             $('#price2').val(data.Price).number(true);
+        //         }
+        //     });
+        // }
 
-        function isi_otomatis_part() {
-            $.ajax({
-                type: 'GET',
-                url: "{{ route('ajax') }}",
-                data: {
-                    item_name: $('#isiotomatis2').find(':selected').data('custom-properties'),
-                },
-                dataType: 'JSON',
-                success: function(data) {
-                    $('#item_name2').val(data.itemName);
-                    $('#item_code2').val(data.ItemCode);
-                    $('#description2').val(data.description);
-                    $('#price2').val(data.Price).number(true);
-                }
-            });
-        }
-
-        function isi_otomatis_part2() {
-            var item_name = $("#isiotomatis3").val();
-            $.ajax({
-                type: 'GET',
-                url: "{{ route('ajax') }}" + '/?item_name=' + item_name,
-                dataType: 'JSON',
-                success: function(data) {
-                    $('#item_name3').val(data.itemName);
-                    $('#item_code3').val(data.ItemCode);
-                    $('#description3').val(data.description);
-                    $('#price3').val(data.Price);
-                }
-            });
-        }
-
+        // function isi_otomatis_part2() {
+        //     var item_name = $("#isiotomatis3").val();
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: "{{ route('ajax') }}" + '/?item_name=' + item_name,
+        //         dataType: 'JSON',
+        //         success: function(data) {
+        //             $('#item_name3').val(data.itemName);
+        //             $('#item_code3').val(data.ItemCode);
+        //             $('#description3').val(data.description);
+        //             $('#price3').val(data.Price);
+        //         }
+        //     });
+        // }
 
 
-        function isi_otomatis_subcont() {
-            $.ajax({
-                type: 'GET',
-                url: "{{ route('get-subcont') }}",
-                dataType: 'JSON',
-                success: function(data) {
-                    $('#subcont_name').empty()
-                    $('#subcont_name').append(`<option value="" selected>Pilih ...</option>`)
-                    $.each(data, function(id, value) {
-                        $('#subcont_name').append(
-                            `<option value="${value.id}">${value.name}</option>`)
-                    });
-                }
-            });
-        }
+
+        // function isi_otomatis_subcont() {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: "{{ route('get-subcont') }}",
+        //         dataType: 'JSON',
+        //         success: function(data) {
+        //             $('#subcont_name').empty()
+        //             $('#subcont_name').append(`<option value="" selected>Pilih ...</option>`)
+        //             $.each(data, function(id, value) {
+        //                 $('#subcont_name').append(
+        //                     `<option value="${value.id}">${value.name}</option>`)
+        //             });
+        //         }
+        //     });
+        // }
     </script>
 
-    <script>
+    {{-- <script>
         $(function() {
             $("#datepicker2").datepicker();
             $("#datepicker").datepicker();
@@ -226,10 +273,9 @@
                 isi_otomatis()
             });
         }
-    </script>
+    </script> --}}
 
-
-    <script>
+    {{-- <script>
         $('#showsubcont').change(function() {
             var val = $(this).val();
             if (val === "Subcont") {
@@ -275,22 +321,22 @@
             }
 
         });
-    </script>
+    </script> --}}
 
     <script>
         $('#price3, #qty3').change(function() {
-            var price3 = parseFloat($('#price3').val()) || 0;
-            var qty3 = parseFloat($('#qty3').val()) || 0;
+            var price3 = parseFloat($('#harga').val()) || 0;
+            var qty3 = parseFloat($('#qty').val()) || 0;
             $('#total_price').val(price3 * qty3);
         });
-        $('#price3, #qty3').keyup(function() {
-            var price3 = parseFloat($('#price3').val()) || 0;
-            var qty3 = parseFloat($('#qty3').val()) || 0;
-            $('#total_price2').val(price3 * qty3);
-        });
+        // $('#price3, #qty3').keyup(function() {
+        //     var price3 = parseFloat($('#price3').val()) || 0;
+        //     var qty3 = parseFloat($('#qty3').val()) || 0;
+        //     $('#total_price2').val(price3 * qty3);
+        // });
     </script>
 
-    <script>
+    {{-- <script>
         $('#price2, #qty2').change(function() {
             var price2 = parseFloat($('#price2').val()) || 0;
             var qty2 = parseFloat($('#qty2').val()) || 0;
@@ -301,7 +347,7 @@
             var qty2 = parseFloat($('#qty2').val()) || 0;
             $('#total_price').val(price2 * qty2);
         });
-    </script>
+    </script> --}}
 
     @if ($message = Session::get('success'))
         <script>
@@ -342,8 +388,6 @@
             function asuasu() {
                 alert('ok');
             }
-
-
         });
 
         $(document).ready(function() {

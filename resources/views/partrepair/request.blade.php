@@ -569,15 +569,15 @@
                 if (mode == 'Man') {
                     // Mode Auto
                     $('#isiotomatis').removeClass('disabledriko')
-                    $('#isiotomatis').select2({
-                        disabled: false,
-                        // minimumInputLength: 2,
-                        language: {
-                            inputTooShort: function() {
-                                return "Masukkan keyword item";
-                            }
-                        }
-                    });
+                    // $('#isiotomatis').select2({
+                    //     disabled: false,
+                    //     // minimumInputLength: 2,
+                    //     language: {
+                    //         inputTooShort: function() {
+                    //             return "Masukkan keyword item";
+                    //         }
+                    //     }
+                    // });
 
                     $('#item_code').addClass('disabledriko')
                     $('#item_code').prop('readonly', true)
@@ -601,9 +601,9 @@
 
                     // Mode Manual
                     $('#isiotomatis').addClass('disabledriko')
-                    $('#isiotomatis').select2({
-                        disabled: true
-                    })
+                    // $('#isiotomatis').select2({
+                    //     disabled: true
+                    // })
 
                     $('#item_code').removeClass('disabledriko')
                     $('#item_code').prop('readonly', false)
