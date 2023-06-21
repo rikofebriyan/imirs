@@ -85,15 +85,15 @@ class FinishrepairController extends Controller
         $request2->progress = 'Finish';
         $request2->save();
 
-        $query = Finishrepair::where('code_part_repair', $request->code_part_repair)->first();
+        // $query = Finishrepair::where('code_part_repair', $request->code_part_repair)->first();
 
-        if ($query = null) {
+        // if ($query == null) {
             $request3 = new CodePartRepair;
             $request3->category = $request->category;
             $request3->number = $request->number;
             $request3->code_part_repair = $request->code_part_repair;
             $request3->save();
-        }
+        // }
 
         return redirect()->route('finishtable')->with('success', 'Your task added successfully!');
     }

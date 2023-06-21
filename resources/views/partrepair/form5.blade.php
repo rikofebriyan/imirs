@@ -188,7 +188,7 @@
                         <div class="col-sm-3">
                             <label for="category" class="col-form-label">Category</label>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-9">
                             <select class="form-select choices" onchange="categorycodeajax()" id="categorycodejs"
                                 name="category">
                                 <option value="" selected>Pilih ...</option>
@@ -207,8 +207,8 @@
                         <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
                             Repair</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="code_part_repair2"
-                                name="code_part_repair" value="{{ $waitingrepair->code_part_repair }}">
+                            <input type="text" class="form-control disabledriko" id="code_part_repair2"
+                                name="code_part_repair" value="{{ $waitingrepair->code_part_repair }}" readonly>
                         </div>
                     </div>
 
@@ -243,9 +243,9 @@
                 <div class="mb-3 row">
                     <div class="p-3">
                         @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
-                            <button type="submit" class="btn btn-md btn-primary">Save</button>
+                            <button type="submit" class="btn btn-md btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
                             <a href="{{ route('partrepair.waitingtable.index') }}"
-                                class="btn btn-md btn-secondary">Back</a>
+                                class="btn btn-md btn-secondary @if($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
                         @else
                             <a class="btn btn-md btn-secondary disabled">Save</a>
                             <a href="{{ route('partrepair.waitingtable.index') }}"

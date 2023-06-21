@@ -230,9 +230,9 @@
                     </div>
 
                     @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
-                        <button type="submit" class="btn btn-md btn-primary">Update</button>
+                        <button type="submit" class="btn btn-md btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif">Update</button>
                         <a href="{{ route('partrepair.waitingtable.index') }}"
-                            class="btn btn-md btn-secondary">Back</a>
+                            class="btn btn-md btn-secondary @if($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
                     @else
                         <a class="btn btn-md btn-secondary disabled">Update</a>
                         <a href="/" class="btn btn-md btn-secondary">Back</a>

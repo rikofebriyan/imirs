@@ -10,6 +10,7 @@ use App\Models\Finishrepair;
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use App\Models\CodePartRepair;
+use App\Models\ItemStandard;
 use App\Models\Progressrepair;
 use App\Models\MasterSparePart;
 use Illuminate\Routing\Controller;
@@ -77,15 +78,6 @@ class InfoController extends Controller
 
         return response()->json($filteredItems);
     }
-
-
-
-
-
-
-
-
-
 
     public function getmachine(Request $request)
     {
@@ -211,5 +203,11 @@ class InfoController extends Controller
         return response()->json([
             'message' => 'Item updated successfully'
         ]);
+    }
+
+    public function getUnitMeasurement(Request $request)
+    {
+        $unitMeasurement = ItemStandard::where('id', $request->id)->first();
+        return response()->json($unitMeasurement);
     }
 }
