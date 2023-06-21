@@ -48,21 +48,98 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-        $('#isiotomatis2').select2({
-            dropdownParent: $('#exampleModal'),
-            width: '100%',
-            minimumInputLength: 2,
-            language: {
-                inputTooShort: function() {
-                    return "Masukkan keyword item";
-                }
-            }
+        $(document).ready(function() {
+
+            $(document).on('select2:open', () => {
+                document.querySelector('.select2-search__field').focus();
+            });
+
+            // Javascript select2 via ajax
+            $('#isiotomatis2').select2({
+                dropdownParent: $('#exampleModal'),
+                placeholder: 'Cari Spare Part',
+                ajax: {
+                    url: "{{ route('get-storage') }}",
+                    dataType: 'json',
+                    data: function(params) {
+                        var idstorage = $('#storage option:selected').val();
+                        return {
+                            storageId: idstorage,
+                            itemName: params
+                                .term // Mengirim nilai pencarian ke endpoint controller sebagai itemName
+                        };
+                    },
+                    processResults: function(data) {
+                        var options = data.map(function(item) {
+                            var combinedText = item.itemName + ' | ' + item.ItemCode + ' | ' +
+                                item.description;
+                            return {
+                                id: item.itemName,
+                                item_code: item.ItemCode,
+                                description: item.description,
+                                price: item.Price,
+                                stock: item.Stock,
+                                text: combinedText
+                            };
+                        });
+
+                        return {
+                            results: options
+                        };
+                    },
+
+                    cache: true
+                },
+                minimumInputLength: 2, // Jumlah minimum karakter yang diperlukan sebelum pencarian dimulai
+                dropdownAutoWidth: true // Mengaktifkan lebar dropdown otomatis
+            }).on('select2:select', function(e) {
+                var selectedItem = e.params.data;
+                console.log(selectedItem)
+
+                $('#item_name').val(selectedItem.id);
+                $('#item_code').val(selectedItem.item_code);
+                $('#description').val(selectedItem.description);
+                $('#price3').val(selectedItem.price);
+                $('#qty').val(selectedItem.stock);
+
+            });
+
+            $('#storage').on('change', function() {
+                // Mengosongkan nilai select2 dan input fields
+                $('#isiotomatis').val(null).trigger('change');
+                $('#item_name').val('');
+                $('#item_code').val('');
+                $('#description').val('');
+                $('#price3').val('');
+                $('#qty').val('');
+                $('#status_repair').empty();
+            });
+
+
         });
 
 
-        $(document).on('select2:open', () => {
-            document.querySelector('.select2-search__field').focus();
-        });
+
+
+
+
+
+
+
+
+
+
+        // $('#isiotomatis2').select2({
+        //     dropdownParent: $('#exampleModal'),
+        //     width: '100%',
+        //     minimumInputLength: 2,
+        //     language: {
+        //         inputTooShort: function() {
+        //             return "Masukkan keyword item";
+        //         }
+        //     }
+        // });
+
 
         function isi_otomatis() {
             var labour_id = $("#isiotomatis").val();

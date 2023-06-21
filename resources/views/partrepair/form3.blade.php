@@ -290,45 +290,78 @@
                                     <input type="hidden" name="form_input_id" id="form_input_id"
                                         value="{{ $waitingrepair->id }}">
 
+
+                                    <div class="mb-3 row">
+                                        <label for="storage" class="col-sm-3 col-form-label">Warehouse <sup
+                                                class="text-danger">*</sup></label>
+                                        <div class="col-sm-9">
+                                            <select class="form-select" id="storage" name="storage" required>
+                                                <option selected disabled>Pilih ...</option>
+                                                <option value="1">Maintenance Spare Part</option>
+                                                <option value="2">Tool Center</option>
+                                                <option value="3">Tool Room</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="mb-3 row">
                                         <label for="item_code" class="col-sm-3 col-form-label">Spare Part</label>
                                         <div class="col-sm-9">
-
-                                            <div class="mb-3">
-                                                <select class="form-select form-select-isiotomatis2"
-                                                    onchange="isi_otomatis_part()" id="isiotomatis2" name="item_name"
-                                                    required>
-                                                    <option value="" selected></option>
-                                                    @foreach ($mastersparepart as $req)
-                                                        <option data-custom-properties="{{ $req['ItemCode'] }}"
-                                                            value="{{ $req['description'] }}">{{ $req['ItemCode'] }}
-                                                            |
-                                                            {{ $req['itemName'] }} | {{ $req['description'] }} |
-                                                            Stock:
-                                                            {{ $req['Stock'] }}
-                                                        </option>
-                                                    @endforeach
+                                            <div id="field3" class="mb-3 d-flex">
+                                                <select class="form-control select2" id="isiotomatis2"
+                                                    name="item_name">
                                                 </select>
-                                            </div>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control disabledriko"
-                                                    id="item_code2" name="item_code" placeholder="Item Code"
-                                                    readonly>
-                                                <input type="text" class="form-control disabledriko"
-                                                    id="item_name2" name="item_name" placeholder="Item Name"
-                                                    readonly>
-                                            </div>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control disabledriko"
-                                                    id="description2" name="description" placeholder="description"
-                                                    readonly>
+
+                                                <button id="btnAutoMan" type="button"
+                                                    class="btn btn-primary ms-1">Auto</button>
                                             </div>
 
                                             <div class="input-group">
-                                                <input type="text" class="form-control disabledriko"
-                                                    id="price2" name="price" placeholder="Price" readonly>
+                                                <input type="hidden" class="form-control" name="item_id"
+                                                    id="item_id">
+                                            </div>
+
+                                            <div class="input-group">
+                                                <label for="item_code" class="col-sm-3 col-form-label">Item Code <sup
+                                                        class="text-danger">*</sup></label>
+                                                <input type="text" class="form-control col-9 disabledriko"
+                                                    id="item_code" name="item_code" placeholder="Item Code" readonly
+                                                    required>
+                                            </div>
+
+                                            <div class="input-group">
+                                                <label for="item_name" class="col-sm-3 col-form-label">Item Name <sup
+                                                        class="text-danger">*</sup></label>
+                                                <input type="text" class="form-control col-9 disabledriko"
+                                                    id="item_name" name="item_name" placeholder="Item Name" readonly
+                                                    required>
+                                            </div>
+
+                                            <div class="input-group">
+                                                <label for="item_type" class="col-sm-3 col-form-label">Desc
+                                                    <sup class="text-danger">*</sup></label>
+                                                <input type="text" class="form-control col-9 disabledriko"
+                                                    id="description" name="item_type" placeholder="Item Type"
+                                                    readonly required>
+                                            </div>
+
+                                            <div class="input-group">
+                                                <label for="price" class="col-sm-3 col-form-label">Price <sup
+                                                        class="text-danger">*</sup></label>
+                                                <input type="text" class="form-control number col-9 disabledriko"
+                                                    id="price3" name="price" placeholder="Price" readonly
+                                                    required>
+                                            </div>
+
+                                            <div class="input-group">
+                                                <label for="qty" class="col-sm-3 col-form-label">Stock <sup
+                                                        class="text-danger">*</sup></label>
+                                                <input type="text" class="form-control number col-9 disabledriko"
+                                                    id="qty" name="stock_spare_part" placeholder="Stock"
+                                                    readonly required>
                                             </div>
                                         </div>
+
                                     </div>
 
                                     <div class="mb-3 row">
@@ -349,7 +382,7 @@
                                     <div class="mb-3 row">
                                         <label for="qty" class="col-sm-3 col-form-label">Qty</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" id="qty2" name="qty"
+                                            <input type="number" class="form-control" id="qty3" name="qty"
                                                 value="">
                                         </div>
                                     </div>
@@ -357,8 +390,8 @@
                                     <div class="mb-3 row">
                                         <label for="total_price" class="col-sm-3 col-form-label">Total Price</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control number disabledriko" id="total_price"
-                                                name="total_price" value="" readonly>
+                                            <input type="text" class="form-control number disabledriko"
+                                                id="total_price" name="total_price" value="" readonly>
                                         </div>
                                     </div>
 
