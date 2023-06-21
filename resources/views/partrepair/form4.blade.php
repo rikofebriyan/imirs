@@ -64,12 +64,12 @@
                 @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                     <button type="button" class="btn btn-md btn-success me-1 @if($waitingrepair->progress == 'Finish') disabled @endif" data-bs-toggle="modal"
                         data-bs-target="#modalAddPengecekan">
-                        Tambah Std Pengecekan
+                        Tambah Item Pengecekan
                     </button>
                     <button id="judgeok" type="submit" class="btn btn-md btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
                 @else
                     <button type="button" class="btn btn-md btn-success me-1 disabled">
-                        Tambah Std Pengecekan
+                        Tambah Item Pengecekan
                     </button>
                     <button type="button" class="btn btn-md btn-secondary disabled">Save</button>
                     <span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span>

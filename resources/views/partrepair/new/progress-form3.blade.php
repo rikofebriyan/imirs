@@ -46,6 +46,7 @@
         </div>
     </div>
 @endsection
+
 @section('script')
     <script type="text/javascript">
         $(document).ready(function() {
@@ -54,11 +55,11 @@
                 document.querySelector('.select2-search__field').focus();
             });
 
-            // Javascript select2 via ajax
+            // Javascript select2 via ajax (pertama)
             $('#isiotomatis2').select2({
                 dropdownParent: $('#exampleModal'),
-                width: '100%',
                 placeholder: 'Cari Spare Part',
+                width: '100%',
                 ajax: {
                     url: "{{ route('get-storage') }}",
                     dataType: 'json',
@@ -70,23 +71,35 @@
                                 .term // Mengirim nilai pencarian ke endpoint controller sebagai itemName
                         };
                     },
-                    processResults: function(data) {
-                        var options = data.map(function(item) {
-                            var combinedText = item.itemName + ' | ' + item.ItemCode + ' | ' +
-                                item.description;
-                            return {
-                                id: item.itemName,
-                                item_code: item.ItemCode,
-                                description: item.description,
-                                price: item.Price,
-                                stock: item.Stock,
-                                text: combinedText
-                            };
-                        });
+                    processResults: function(result) {
+                        if (result.status.status == 'error') {
+                            alert(result.status.message)
+                            $('#isiotomatis2').select2('data', {
+                                id: null,
+                                text: null
+                            })
+                            $('#storage').focus()
+                        } else {
+                            var options = result.data.map(function(item) {
+                                var combinedText = item.itemName + ' | ' + item.ItemCode +
+                                    ' | ' +
+                                    item.description;
+                                return {
+                                    id: item.itemName,
+                                    item_code: item.ItemCode,
+                                    description: item.description,
+                                    price: item.Price,
+                                    stock: item.Stock,
+                                    text: combinedText
+                                };
+                            });
 
-                        return {
-                            results: options
-                        };
+                            totalPrice()
+
+                            return {
+                                results: options
+                            };
+                        }
                     },
 
                     cache: true
@@ -95,22 +108,22 @@
                 dropdownAutoWidth: true // Mengaktifkan lebar dropdown otomatis
             }).on('select2:select', function(e) {
                 var selectedItem = e.params.data;
-                console.log(selectedItem)
 
                 $('#item_name').val(selectedItem.id);
                 $('#item_code').val(selectedItem.item_code);
                 $('#description').val(selectedItem.description);
-                $('#harga').val(selectedItem.price);
+                $('#price').val(selectedItem.price);
                 $('#qty').val(selectedItem.stock);
+
             });
 
+            // Mengosongkan nilai select2 dan input fields
             $('#storage').on('change', function() {
-                // Mengosongkan nilai select2 dan input fields
                 $('#isiotomatis2').val(null).trigger('change');
                 $('#item_name').val('');
                 $('#item_code').val('');
                 $('#description').val('');
-                $('#harga').val('');
+                $('#price').val('');
                 $('#qty').val('');
             });
         });
@@ -120,15 +133,58 @@
             if (mode == 'Man') {
                 // Mode Auto
                 $('#isiotomatis2').removeClass('disabledriko')
-                // $('#isiotomatis2').select2({
-                //     disabled: false,
-                //     // minimumInputLength: 2,
-                //     language: {
-                //         inputTooShort: function() {
-                //             return "Masukkan keyword item";
-                //         }
-                //     }
-                // });
+
+                // Javascript select2 via ajax (kedua)
+                $('#isiotomatis2').select2({
+                    dropdownParent: $('#exampleModal'),
+                    placeholder: 'Cari Spare Part',
+                    width: '100%',
+                    disabled: false,
+                    ajax: {
+                        url: "{{ route('get-storage') }}",
+                        dataType: 'json',
+                        data: function(params) {
+                            var idstorage = $('#storage option:selected').val();
+                            return {
+                                storageId: idstorage,
+                                itemName: params
+                                    .term // Mengirim nilai pencarian ke endpoint controller sebagai itemName
+                            };
+                        },
+                        processResults: function(result) {
+                            if (result.status.status == 'error') {
+                                alert(result.status.message)
+                                $('#isiotomatis2').select2('data', {
+                                    id: null,
+                                    text: null
+                                })
+                                $('#storage').focus()
+                            } else {
+                                var options = result.data.map(function(item) {
+                                    var combinedText = item.itemName + ' | ' + item.ItemCode +
+                                        ' | ' +
+                                        item.description;
+                                    return {
+                                        id: item.itemName,
+                                        item_code: item.ItemCode,
+                                        description: item.description,
+                                        price: item.Price,
+                                        stock: item.Stock,
+                                        text: combinedText
+                                    };
+                                });
+
+                                return {
+                                    results: options
+                                };
+                            }
+                        },
+
+                        cache: true
+                    },
+                    minimumInputLength: 2, // Jumlah minimum karakter yang diperlukan sebelum pencarian dimulai
+                    dropdownAutoWidth: true // Mengaktifkan lebar dropdown otomatis
+                });
 
                 $('#item_code').addClass('disabledriko')
                 $('#item_code').prop('readonly', true)
@@ -139,8 +195,8 @@
                 $('#description').addClass('disabledriko')
                 $('#description').prop('readonly', true)
 
-                $('#harga').addClass('disabledriko')
-                $('#harga').prop('readonly', true)
+                $('#price').addClass('disabledriko')
+                $('#price').prop('readonly', true)
 
                 $('#qty').addClass('disabledriko')
                 $('#qty').prop('readonly', true)
@@ -152,9 +208,9 @@
 
                 // Mode Manual
                 $('#isiotomatis2').addClass('disabledriko')
-                // $('#isiotomatis2').select2({
-                //     disabled: true
-                // })
+                $('#isiotomatis2').select2({
+                    disabled: true
+                })
 
                 $('#item_code').removeClass('disabledriko')
                 $('#item_code').prop('readonly', false)
@@ -165,8 +221,8 @@
                 $('#description').removeClass('disabledriko')
                 $('#description').prop('readonly', false)
 
-                $('#harga').removeClass('disabledriko')
-                $('#harga').prop('readonly', false)
+                $('#price').removeClass('disabledriko')
+                $('#price').prop('readonly', false)
 
                 $('#qty').removeClass('disabledriko')
                 $('#qty').prop('readonly', false)
@@ -324,11 +380,25 @@
     </script> --}}
 
     <script>
-        $('#price3, #qty3').change(function() {
-            var price3 = parseFloat($('#harga').val()) || 0;
-            var qty3 = parseFloat($('#qty').val()) || 0;
-            $('#total_price').val(price3 * qty3);
+        $('#price, #qty2').keyup(function() {
+            totalPrice()
         });
+
+        function totalPrice() {
+            var price2 = parseFloat($('#price').val()) || 0;
+            var qty2 = parseInt($('#qty2').val()) || 0;
+            $('#total_price').val(price2 * qty2);
+        }
+
+        @foreach ($progresspemakaian as $req)
+            $('#qty3{{ $req->id }}').on('input', function() {
+                console.log('qty3'+{{ $req->id }})
+                var price2 = parseFloat($('#price3{{ $req->id }}').val()) || 0;
+                var qty2 = parseInt($('#qty3{{ $req->id }}').val()) || 0;
+                $('#total_price2{{ $req->id }}').val(price2 * qty2);
+            });
+        @endforeach
+
         // $('#price3, #qty3').keyup(function() {
         //     var price3 = parseFloat($('#price3').val()) || 0;
         //     var qty3 = parseFloat($('#qty3').val()) || 0;
@@ -414,6 +484,14 @@
                 $('#notready').show();
             } else
                 $('#notready').hide();
+        });
+
+        $('.status_partbaru_update').change(function() {
+            var val = $(this).val();
+            if (val === "Not Ready") {
+                $('.status_partbaru_update_div').removeClass('d-none');
+            } else
+                $('.status_partbaru_update_div').addClass('d-none')
         });
     </script>
 

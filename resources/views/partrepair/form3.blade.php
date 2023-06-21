@@ -84,8 +84,8 @@
 
                                                                         <div class="input-group">
                                                                             <input type="text"
-                                                                                class="form-control disabledriko"
-                                                                                id="price3" name="price"
+                                                                                class="form-control disabledriko number"
+                                                                                id="price3{{ $req->id }}" name="price"
                                                                                 placeholder="Price"
                                                                                 value="{{ $req->price }}" readonly>
                                                                         </div>
@@ -114,9 +114,9 @@
                                                                         class="col-sm-3 col-form-label">Qty</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="number"
-                                                                            class="form-control disabledriko"
-                                                                            id="qty3" name="qty"
-                                                                            value="{{ $req->qty }}" readonly>
+                                                                            class="form-control qty_update"
+                                                                            id="qty3{{ $req->id }}" name="qty"
+                                                                            value="{{ $req->qty }}">
                                                                     </div>
                                                                 </div>
 
@@ -126,8 +126,8 @@
                                                                         Price</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text"
-                                                                            class="form-control disabledriko"
-                                                                            id="total_price2" name="total_price"
+                                                                            class="form-control disabledriko number total_price_update"
+                                                                            id="total_price2{{ $req->id }}" name="total_price"
                                                                             value="{{ $req->total_price }}">
                                                                     </div>
                                                                 </div>
@@ -143,7 +143,7 @@
                                                                         class="col-sm-3 col-form-label">Status
                                                                         Part</label>
                                                                     <div class="col-sm-9">
-                                                                        <select class="form-control"
+                                                                        <select class="form-control status_partbaru_update"
                                                                             id="status_partbaru2" name="status_part">
                                                                             <option value="" selected disabled>
                                                                                 Choose
@@ -158,7 +158,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="mb-3 row">
+                                                                <div class="mb-3 row status_partbaru_update_div @if ($req->status_part == 'Ready') d-none @endif">
                                                                     <label for="estimasi_kedatangan"
                                                                         class="col-sm-3 col-form-label">Estimasi
                                                                         Datang</label>
@@ -175,6 +175,8 @@
                                                                 <button type="submit"
                                                                     class="btn btn-primary">Perbarui
                                                                     Data</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -192,7 +194,8 @@
 
                                 <button type="submit"
                                     class="btn btn-danger @if ($waitingrepair->progress == 'Finish') disabled @endif"
-                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem">Delete</button>
+                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem"
+                                    onclick="return confirm('Yakin?')">Delete</button>
                             </form>
 
                         </td>
@@ -201,8 +204,8 @@
                         <td>{{ $req->description }}</td>
                         <td>{{ $req->maker }}</td>
                         <td>{{ $req->qty }}</td>
-                        <td>{{ $req->price }}</td>
-                        <td>{{ $req->total_price }}</td>
+                        <td><span class="number">{{ $req->price }}</span></td>
+                        <td><span class="number">{{ $req->total_price }}</span></td>
                         <td>{{ $req->status_part }}</td>
                         <td>{{ $req->estimasi_kedatangan }}</td>
                     </tr>
@@ -280,25 +283,21 @@
         <div class="modal-content">
             <form action="{{ route('partrepair.progresspemakaian.store') }}" method="POST">
                 @csrf
-
                 <div class="container-fluid justify-content-center py-0">
                     <div class="container-fluid">
-
                         <h4 class="modal-title text-center mt-2">Add Seal Kit</h4>
-                        <div class="row gx-0">
-                            <div class="col">
+                        <div class="row gx-0 px-3">
+                            <div class="col mb-3">
                                 <div class="p-3 my-0 border">
-
                                     <input type="hidden" name="form_input_id" id="form_input_id"
                                         value="{{ $waitingrepair->id }}">
 
-
-                                    <div class="mb-3 row">
+                                    <div class="input-group mb-3">
                                         <label for="storage" class="col-sm-3 col-form-label">Warehouse <sup
                                                 class="text-danger">*</sup></label>
                                         <div class="col-sm-9">
                                             <select class="form-select" id="storage" name="storage" required>
-                                                <option selected disabled>Pilih ...</option>
+                                                <option value="" selected>Pilih ...</option>
                                                 <option value="1">Maintenance Spare Part</option>
                                                 <option value="2">Tool Center</option>
                                                 <option value="3">Tool Room</option>
@@ -306,68 +305,66 @@
                                         </div>
                                     </div>
 
-                                    <div class="mb-3 row">
+                                    <div class="input-group mb-3">
                                         <label for="item_code" class="col-sm-3 col-form-label">Spare Part</label>
                                         <div class="col-sm-9">
-                                            <div id="field3" class="mb-3 justify-content-center d-flex">
-                                                <select class="form-control select2" id="isiotomatis2"
-                                                    name="item_name">
+                                            <div class="d-flex">
+                                                <select class="form-select" id="isiotomatis2" name="item_name">
                                                 </select>
-
                                                 <button id="btnAutoMan" type="button"
                                                     class="btn btn-primary ms-1">Auto</button>
                                             </div>
-
-                                            <div class="input-group">
-                                                <input type="hidden" class="form-control" name="item_id"
-                                                    id="item_id">
-                                            </div>
-
-                                            <div class="input-group">
-                                                <label for="item_code" class="col-sm-3 col-form-label">Item Code <sup
-                                                        class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control col-9 disabledriko"
-                                                    id="item_code" name="item_code" placeholder="Item Code" readonly
-                                                    required>
-                                            </div>
-
-                                            <div class="input-group">
-                                                <label for="item_name" class="col-sm-3 col-form-label">Item Name <sup
-                                                        class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control col-9 disabledriko"
-                                                    id="item_name" name="item_name" placeholder="Item Name" readonly
-                                                    required>
-                                            </div>
-
-                                            <div class="input-group">
-                                                <label for="item_type" class="col-sm-3 col-form-label">Desc
-                                                    <sup class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control col-9 disabledriko"
-                                                    id="description" name="item_type" placeholder="Item Type"
-                                                    readonly required>
-                                            </div>
-
-                                            <div class="input-group">
-                                                <label for="harga" class="col-sm-3 col-form-label">Price <sup
-                                                        class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control number col-9 disabledriko"
-                                                    id="harga" name="price" placeholder="Price" readonly
-                                                    required>
-                                            </div>
-
-                                            <div class="input-group">
-                                                <label for="qty" class="col-sm-3 col-form-label">Stock <sup
-                                                        class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control number col-9 disabledriko"
-                                                    id="qty" name="stock_spare_part" placeholder="Stock"
-                                                    readonly required>
-                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group">
+                                            <input type="hidden" class="form-control" name="item_id"
+                                                id="item_id">
                                         </div>
 
+                                        <div class="input-group mb-3">
+                                            <label for="item_code" class="col-sm-3 col-form-label">Item Code <sup
+                                                    class="text-danger">*</sup></label>
+                                            <input type="text" class="form-control col-9 disabledriko"
+                                                id="item_code" name="item_code" placeholder="Item Code" readonly
+                                                required>
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <label for="item_name" class="col-sm-3 col-form-label">Item Name <sup
+                                                    class="text-danger">*</sup></label>
+                                            <input type="text" class="form-control col-9 disabledriko"
+                                                id="item_name" name="item_name" placeholder="Item Name" readonly
+                                                required>
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <label for="description" class="col-sm-3 col-form-label">Description
+                                                <sup class="text-danger">*</sup></label>
+                                            <input type="text" class="form-control col-9 disabledriko"
+                                                id="description" name="description" placeholder="Item Type" readonly
+                                                required>
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <label for="price" class="col-sm-3 col-form-label">Price <sup
+                                                    class="text-danger">*</sup></label>
+                                            <input type="text" class="form-control number col-9 disabledriko"
+                                                id="price" name="price" placeholder="Price" readonly required>
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <label for="qty" class="col-sm-3 col-form-label">Stock <sup
+                                                    class="text-danger">*</sup></label>
+                                            <input type="text" class="form-control number col-9 disabledriko"
+                                                id="qty" name="stock_spare_part" placeholder="Stock" readonly
+                                                required>
+                                        </div>
                                     </div>
 
-                                    <div class="mb-3 row">
-                                        <label for="maker" class="col-sm-3 col-form-label">Maker</label>
+                                    <div class="input-group mb-3">
+                                        <label for="maker" class="col-sm-3 col-form-label">Maker <sup
+                                            class="text-danger">*</sup></label>
                                         <div class="col">
                                             <select class="form-control choices" id="maker" name="maker"
                                                 required>
@@ -380,33 +377,36 @@
                                         </div>
                                     </div>
 
-
-                                    <div class="mb-3 row">
-                                        <label for="qty" class="col-sm-3 col-form-label">Qty</label>
+                                    <div class="input-group mb-3">
+                                        <label for="qty" class="col-sm-3 col-form-label">Qty <sup
+                                            class="text-danger">*</sup></label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" id="qty3" name="qty"
+                                            <input type="number" class="form-control" id="qty2" name="qty"
                                                 value="">
                                         </div>
                                     </div>
 
-                                    <div class="mb-3 row">
-                                        <label for="total_price" class="col-sm-3 col-form-label">Total Price</label>
+                                    <div class="input-group mb-3">
+                                        <label for="total_price" class="col-sm-3 col-form-label">Total Price <sup
+                                            class="text-danger">*</sup></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control number disabledriko"
                                                 id="total_price" name="total_price" value="" readonly>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-                            <div class="col">
+                        </div>
 
+                        <div class="row gx-0 px-3">
+                            <div class="col mb-3">
                                 <div class="p-3 my-0 border">
                                     <div class="mb-3 row">
-                                        <label for="quotation" class="col-sm-3 col-form-label">Status Part</label>
+                                        <label for="quotation" class="col-sm-3 col-form-label">Status Part <sup
+                                            class="text-danger">*</sup></label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" id="status_partbaru" name="status_part">
-                                                <option value="" selected disabled>Status Part ...</option>
+                                            <select class="form-control" id="status_partbaru" name="status_part" required>
+                                                <option value="" selected>Status Part ...</option>
                                                 <option value="Ready">Ready</option>
                                                 <option value="Not Ready">Not Ready</option>
                                             </select>
@@ -417,7 +417,7 @@
 
                                         <div class="mb-3 row">
                                             <label for="estimasi_kedatangan" class="col-sm-3 col-form-label">Estimasi
-                                                Datang</label>
+                                                Datang <sup class="text-danger">*</sup></label>
                                             <div class="col-sm-9">
                                                 <input type="datetime-local" class="form-control"
                                                     id="estimasi_kedatangan" name="estimasi_kedatangan">
@@ -425,11 +425,15 @@
                                         </div>
 
                                     </div>
-
-                                    <button type="submit" class="btn btn-md btn-primary">Save</button>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row gx-0 px-3">
+                            <div class="col mb-3">
+                                <button type="submit" class="btn btn-md btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -437,4 +441,5 @@
             </form>
         </div>
     </div>
+</div>
 </div>

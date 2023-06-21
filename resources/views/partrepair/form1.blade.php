@@ -8,7 +8,7 @@
 
                     <div class="mb-3 row">
                         <label for="tanggal" class="col-sm-3 col-form-label">Date
-                            Created</label>
+                            Created <sup class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <input type="datetime-local" class="form-control" id="tanggal" name="date"
                                 value="{{ $waitingrepair->date }}">
@@ -17,8 +17,7 @@
 
                     <div class="mb-3 row">
                         <label for="parts_from" class="col-sm-3 col-form-label">Apakah part
-                            pernah di
-                            repair?</label>
+                            pernah di repair?</label>
                         <div class="col-sm-9 col-form-label">
 
                             <div class="form-check-inline">
@@ -65,7 +64,7 @@
                         <label for="item_code" class="col-sm-3 col-form-label">Spare
                             Part</label>
                         <div class="col-sm-9">
-                            <div class="input-group">
+                            {{-- <div class="input-group">
                                 <input type="text" class="form-control" id="item_code" name="item_code"
                                     placeholder="Item Code" value="{{ $waitingrepair->item_code }}">
                                 <input type="text" class="form-control" id="item_name" name="item_name"
@@ -81,11 +80,49 @@
                                     placeholder="Price" value="{{ $waitingrepair->price }}">
                                 <input type="text" class="form-control" id="qty" name="stock_spare_part"
                                     placeholder="Stock" value="{{ $waitingrepair->stock_spare_part }}">
+                            </div> --}}
+                            <div class="input-group">
+                                <input type="hidden" class="form-control" name="item_id" id="item_id">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="item_code" class="col-sm-3 col-form-label">Item Code <sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" class="form-control col-9" id="item_code"
+                                    name="item_code" placeholder="Item Code" value="{{ $waitingrepair->item_code }}">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="item_name" class="col-sm-3 col-form-label">Item Name <sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" class="form-control col-9" id="item_name"
+                                    name="item_name" placeholder="Item Name" value="{{ $waitingrepair->item_name }}">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="item_type" class="col-sm-3 col-form-label">Description <sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" class="form-control col-9" id="description"
+                                    name="item_type" placeholder="Item Type" value="{{ $waitingrepair->item_type }}">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="price" class="col-sm-3 col-form-label">Price <sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" class="form-control number col-9" id="price"
+                                    name="price" placeholder="Price" value="{{ $waitingrepair->price }}">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="qty" class="col-sm-3 col-form-label">Stock <sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" class="form-control number col-9" id="qty"
+                                    name="stock_spare_part" placeholder="Stock" value="{{ $waitingrepair->stock_spare_part }}">
                             </div>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="maker" class="col-sm-3 col-form-label">Maker & Type</label>
+                        <label for="maker" class="col-sm-3 col-form-label">Maker & Type <sup class="text-danger">*</sup></label>
                         <div class="col">
                             <select class="form-control choices" id="maker" name="maker" required>
                                 <option selected disabled>Maker ...</option>
@@ -124,7 +161,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="problem" class="col-sm-3 col-form-label">Problem</label>
+                        <label for="problem" class="col-sm-3 col-form-label">Problem <sup class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <textarea class="form-control" id="problem" name="problem" rows="4" placeholder="Input Detail Problem">{{ $waitingrepair->problem }}</textarea>
                         </div>
@@ -137,7 +174,7 @@
             <div class="card col border mx-2">
                 <div class="p-3">
                     <div class="mb-3 row">
-                        <label for="section" class="col-sm-3 col-form-label">Section</label>
+                        <label for="section" class="col-sm-3 col-form-label">Section <sup class="text-danger">*</sup></label>
                         <div class="col-sm-9">
 
                             <select class="form-select" id="section" name="section">
@@ -153,7 +190,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="line" class="col-sm-3 col-form-label">Line</label>
+                        <label for="line" class="col-sm-3 col-form-label">Line <sup class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <select class="form-select" id="lineline" name="line">
                                 <option disabled>Pilih ...</option>
@@ -168,7 +205,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="machine" class="col-sm-3 col-form-label">Machine</label>
+                        <label for="machine" class="col-sm-3 col-form-label">Machine <sup class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <select class="form-select" id="machine" name="machine">
                                 <option disabled>Pilih ...</option>
@@ -184,7 +221,7 @@
 
                     <div class="mb-3 row">
                         <label for="status_repair" class="col-sm-3 col-form-label">Status
-                            Repair</label>
+                            Repair <sup class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <select class="form-control" id="status_repair" name="status_repair">
                                 <option disabled>Pilih ...</option>
@@ -197,7 +234,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="nama_pic" class="col-sm-3 col-form-label">PIC User</label>
+                        <label for="nama_pic" class="col-sm-3 col-form-label">PIC User <sup class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <select class="form-control choices" id="nama_pic" name="nama_pic">
                                 <option value="" disabled>Pilih ...</option>
@@ -214,7 +251,7 @@
 
                     <div class="mb-3 row">
                         <label for="reg_sp" class="col-sm-3 col-form-label">Ticket
-                            Number</label>
+                            Number <sup class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control disabledriko" id="reg_sp" name="reg_sp"
                                 value="{{ $waitingrepair->reg_sp }}" readonly>
@@ -222,7 +259,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="progress" class="col-sm-3 col-form-label">Progress</label>
+                        <label for="progress" class="col-sm-3 col-form-label">Progress <sup class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control disabledriko" id="progres" name="progress"
                                 value="{{ $waitingrepair->progress }}" readonly>
@@ -230,9 +267,10 @@
                     </div>
 
                     @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
-                        <button type="submit" class="btn btn-md btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif">Update</button>
+                        <button type="submit"
+                            class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif">Update</button>
                         <a href="{{ route('partrepair.waitingtable.index') }}"
-                            class="btn btn-md btn-secondary @if($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
+                            class="btn btn-md btn-secondary @if ($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
                     @else
                         <a class="btn btn-md btn-secondary disabled">Update</a>
                         <a href="/" class="btn btn-md btn-secondary">Back</a>

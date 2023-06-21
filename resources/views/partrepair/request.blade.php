@@ -67,23 +67,19 @@
                                     </select>
                                 </div> --}}
 
-
-
                                 {{-- Pemilihan Storage Item --}}
                                 <div class="mb-3 row">
                                     <label for="storage" class="col-sm-3 col-form-label">Warehouse <sup
                                             class="text-danger">*</sup></label>
                                     <div class="col-sm-9">
                                         <select class="form-select" id="storage" name="storage" required>
-                                            <option selected disabled>Pilih ...</option>
+                                            <option value="" selected>Pilih ...</option>
                                             <option value="1">Maintenance Spare Part</option>
                                             <option value="2">Tool Center</option>
                                             <option value="3">Tool Room</option>
                                         </select>
                                     </div>
                                 </div>
-
-
 
                                 <div class="mb-3 row" id="field2" style="display: none">
                                     <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
@@ -377,7 +373,7 @@
             $('#machine').select2()
             $('#nama_pic').select2()
 
-            // Javascript select2 via ajax
+            // Javascript select2 via ajax (pertama)
             $('#isiotomatis').select2({
                 placeholder: 'Cari Spare Part',
                 ajax: {
@@ -391,23 +387,33 @@
                                 .term // Mengirim nilai pencarian ke endpoint controller sebagai itemName
                         };
                     },
-                    processResults: function(data) {
-                        var options = data.map(function(item) {
-                            var combinedText = item.itemName + ' | ' + item.ItemCode + ' | ' +
-                                item.description;
-                            return {
-                                id: item.itemName,
-                                item_code: item.ItemCode,
-                                description: item.description,
-                                price: item.Price,
-                                stock: item.Stock,
-                                text: combinedText
-                            };
-                        });
+                    processResults: function(result) {
+                        if (result.status.status == 'error') {
+                            alert(result.status.message)
+                            $('#isiotomatis').select2('data', {
+                                id: null,
+                                text: null
+                            })
+                            $('#storage').focus()
+                        } else {
+                            var options = result.data.map(function(item) {
+                                var combinedText = item.itemName + ' | ' + item.ItemCode +
+                                    ' | ' +
+                                    item.description;
+                                return {
+                                    id: item.itemName,
+                                    item_code: item.ItemCode,
+                                    description: item.description,
+                                    price: item.Price,
+                                    stock: item.Stock,
+                                    text: combinedText
+                                };
+                            });
 
-                        return {
-                            results: options
-                        };
+                            return {
+                                results: options
+                            };
+                        }
                     },
 
                     cache: true
@@ -416,7 +422,6 @@
                 dropdownAutoWidth: true // Mengaktifkan lebar dropdown otomatis
             }).on('select2:select', function(e) {
                 var selectedItem = e.params.data;
-                console.log(selectedItem)
 
                 $('#item_name').val(selectedItem.id);
                 $('#item_code').val(selectedItem.item_code);
@@ -568,16 +573,55 @@
                 var mode = $(this).text()
                 if (mode == 'Man') {
                     // Mode Auto
-                    $('#isiotomatis').removeClass('disabledriko')
-                    // $('#isiotomatis').select2({
-                    //     disabled: false,
-                    //     // minimumInputLength: 2,
-                    //     language: {
-                    //         inputTooShort: function() {
-                    //             return "Masukkan keyword item";
-                    //         }
-                    //     }
-                    // });
+                    // Javascript select2 via ajax (kedua)
+                    $('#isiotomatis').select2({
+                        disabled: false,
+                        placeholder: 'Cari Spare Part',
+                        ajax: {
+                            url: "{{ route('get-storage') }}",
+                            dataType: 'json',
+                            data: function(params) {
+                                var idstorage = $('#storage option:selected').val();
+                                return {
+                                    storageId: idstorage,
+                                    itemName: params
+                                        .term // Mengirim nilai pencarian ke endpoint controller sebagai itemName
+                                };
+                            },
+                            processResults: function(result) {
+                                if (result.status.status == 'error') {
+                                    alert(result.status.message)
+                                    $('#isiotomatis').select2('data', {
+                                        id: null,
+                                        text: null
+                                    })
+                                    $('#storage').focus()
+                                } else {
+                                    var options = result.data.map(function(item) {
+                                        var combinedText = item.itemName + ' | ' + item
+                                            .ItemCode + ' | ' +
+                                            item.description;
+                                        return {
+                                            id: item.itemName,
+                                            item_code: item.ItemCode,
+                                            description: item.description,
+                                            price: item.Price,
+                                            stock: item.Stock,
+                                            text: combinedText
+                                        };
+                                    });
+
+                                    return {
+                                        results: options
+                                    };
+                                }
+                            },
+
+                            cache: true
+                        },
+                        minimumInputLength: 2, // Jumlah minimum karakter yang diperlukan sebelum pencarian dimulai
+                        dropdownAutoWidth: true // Mengaktifkan lebar dropdown otomatis
+                    });
 
                     $('#item_code').addClass('disabledriko')
                     $('#item_code').prop('readonly', true)
@@ -601,9 +645,9 @@
 
                     // Mode Manual
                     $('#isiotomatis').addClass('disabledriko')
-                    // $('#isiotomatis').select2({
-                    //     disabled: true
-                    // })
+                    $('#isiotomatis').select2({
+                        disabled: true
+                    })
 
                     $('#item_code').removeClass('disabledriko')
                     $('#item_code').prop('readonly', false)

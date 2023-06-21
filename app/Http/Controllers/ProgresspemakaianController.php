@@ -107,12 +107,19 @@ class ProgresspemakaianController extends Controller
 
         // create new task
         $data = $request->all();
+        $data['price'] = intval(preg_replace('/[^\d.]/', '', $request->price));
+        $data['total_price'] = intval(preg_replace('/[^\d.]/', '', $request->total_price));
 
         if ($request->estimasi_kedatangan != null) {
             $data['estimasi_kedatangan'] = Carbon::parse($request->estimasi_kedatangan)->format('Y-m-d H:i:s');
         } else {
             $data['estimasi_kedatangan'] = null;
         }
+
+        if ($data['status_part'] == 'Ready') {
+            $data['estimasi_kedatangan'] = null;
+        }
+
         Progresspemakaian::find($id)->update($data);
 
         return redirect()->back()->with('success', 'Task added successfully');

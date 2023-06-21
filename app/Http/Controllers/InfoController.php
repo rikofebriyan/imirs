@@ -56,23 +56,50 @@ class InfoController extends Controller
         $storageId = $request->input('storageId');
         $itemName = $request->input('itemName'); // Mendapatkan nilai pencarian item name dari permintaan POST
 
-        $item = [];
-        if ($storageId == '1') {
-            $item = json_decode(file_get_contents(public_path('json/stockonhandlistMTC.json')), true);
-        } elseif ($storageId == '2') {
-            $item = json_decode(file_get_contents(public_path('json/stockonhandlistTLC.json')), true);
-        } elseif ($storageId == '3') {
-            $item = json_decode(file_get_contents(public_path('json/stockonhandlistTLR.json')), true);
+        // error bila storage belum dipilih
+        $filteredItems = [];
+        if ($storageId == null) {
+            $filteredItems['status']['status'] = 'error';
+            $filteredItems['status']['message'] = 'Pilih Storage Terlebih Dahulu !!!';
+
+            $filteredItems['data'] = [];
+
+            return response()->json($filteredItems);
         }
 
-        $filteredItems = [];
-        foreach ($item['data'] as $data) {
+        $itemJson = [];
+        if ($storageId == '1') {
+            $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistMTC.json')), true);
+        } elseif ($storageId == '2') {
+            $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistTLC.json')), true);
+        } elseif ($storageId == '3') {
+            $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistTLR.json')), true);
+        }
+
+        $item = array_filter($itemJson['data'], function ($var) {
+            return $var['StatusBarang'] == 'NE';
+        });
+
+        // error bila data json berisi nol
+        if (count($item) == 0) {
+            $filteredItems['status']['status'] = 'error';
+            $filteredItems['status']['message'] = 'Pilih Storage Terlebih Dahulu !!!';
+
+            $filteredItems['data'] = [];
+
+            return response()->json($filteredItems);
+        } else {
+            $filteredItems['status']['status'] = 'success';
+            $filteredItems['status']['message'] = '';
+        }
+
+        foreach ($item as $data) {
             if (
                 strpos(strtolower($data['itemName']), strtolower($itemName)) !== false ||
                 strpos(strtolower($data['ItemCode']), strtolower($itemName)) !== false ||
                 strpos(strtolower($data['description']), strtolower($itemName)) !== false
             ) {
-                $filteredItems[] = $data;
+                $filteredItems['data'][] = $data;
             }
         }
 
@@ -190,14 +217,14 @@ class InfoController extends Controller
 
     public function updatemodel(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        // ]);
 
-        // Update the item in the database
-        $item->name = $request->name;
-        // etc...
-        $item->save();
+        // // Update the item in the database
+        // $item->name = $request->name;
+        // // etc...
+        // $item->save();
 
         // Return a response
         return response()->json([
