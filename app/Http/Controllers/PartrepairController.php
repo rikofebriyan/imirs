@@ -9,6 +9,7 @@ use App\Models\Waitingrepair;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\DB;
 
 class PartrepairController extends Controller
 {
@@ -41,7 +42,10 @@ class PartrepairController extends Controller
         $bulan = date('m');
         $tanggal    = date('d');
         $currentDate = Carbon::now()->format('Y-m-d');
-        $noUrutAkhir = Waitingrepair::where('created_at', '>=', $currentDate)
+        // $noUrutAkhir = Waitingrepair::where('created_at', '>=', $currentDate)
+        //     ->count('reg_sp');
+        $noUrutAkhir = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->where('created_at', '>=', $currentDate)
             ->count('reg_sp');
 
         $no = 1;

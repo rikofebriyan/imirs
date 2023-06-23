@@ -207,8 +207,8 @@
                         <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
                             Repair</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control disabledriko" id="code_part_repair2"
-                                name="code_part_repair" value="{{ $waitingrepair->code_part_repair }}" readonly>
+                            <input type="text" class="form-control" id="code_part_repair2"
+                                name="code_part_repair" value="{{ $waitingrepair->code_part_repair }}">
                         </div>
                     </div>
 
