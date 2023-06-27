@@ -59,22 +59,6 @@ class PartrepairController extends Controller
         // $maker = Maker::all();
         // $user = User::all();
         // $section = Section::all()->sortBy('name');
-<<<<<<< HEAD
-
-        $maker = DB::table('sparepartrepair.dbo.makers')
-            ->select('makers.*')
-            ->get();
-
-        $user = DB::table('sparepartrepair.dbo.users')
-            ->select('users.*')
-            ->get();
-
-        $section = DB::table('sparepartrepair.dbo.sections')
-            ->select('sections.*')
-            ->orderBy('name')
-            ->get();
-=======
->>>>>>> 8d1d81a6089addbed367e585906108d8014707ce
 
         $maker = DB::table('sparepartrepair.dbo.makers')->orderBy('name')->get();
         $user = DB::table('sparepartrepair.dbo.users')->orderBy('name')->get();
