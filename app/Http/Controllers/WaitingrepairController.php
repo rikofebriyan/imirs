@@ -7,6 +7,7 @@ use App\Models\Maker;
 use App\Models\Machine;
 use App\Models\Section;
 use App\Models\Subcont;
+use Illuminate\Support\Str;
 use App\Models\CategoryCode;
 use App\Models\Finishrepair;
 use App\Models\ItemStandard;
@@ -16,9 +17,9 @@ use App\Models\Waitingrepair;
 use App\Models\Progressrepair;
 use App\Models\MasterSparePart;
 use App\Models\Progresspemakaian;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\DB;
 
 class WaitingrepairController extends Controller
 {
@@ -438,6 +439,12 @@ class WaitingrepairController extends Controller
                 'delivery_date' => '',
                 'pic_delivery' => '',
             ];
+
+            $number_category_repair = '';
+            $category_repair = '';
+        } else {
+            $number_category_repair = preg_replace('/[^\d.0123456789]/', '', $formFinish_totalFinish->code_part_repair);
+            $category_repair = Str::replace($number_category_repair, '', $formFinish_totalFinish->code_part_repair);
         }
 
         $progressrepair2 = Progressrepair::where('form_input_id', $waitingrepair->id)->first();
@@ -484,6 +491,8 @@ class WaitingrepairController extends Controller
             'formFinish_progresstrial' => $formFinish_progresstrial,
             'formFinish_totalFinish' => $formFinish_totalFinish,
             'category' => $categoryAll,
+            'category_repair' => $category_repair,
+            'number_category_repair' => $number_category_repair,
         ]);
     }
 }

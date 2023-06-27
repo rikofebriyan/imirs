@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label for="disabledInput" class="col-sm-3 col-form-label">Price</label>
+                        <label for="disabledInput" class="col-sm-3 col-form-label"> New Price</label>
                         <div class="col-sm-9 align-items-center d-flex">
                             <input type="text" name="f_price" class="form-control number border-0"
                                 value="{{ $waitingrepair->price }}" readonly>
@@ -164,16 +164,26 @@
                     <div class="divider m-0">
                         <div class="divider-text">Cost Saving</div>
                     </div>
+
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label">Coefficient</label>
+                        <div class="col-sm-9 align-items-center d-flex">
+                            <input type="text" class="form-control border-0" value="70%">
+                        </div>
+                    </div>
+
                     <div class="row">
                         <label for="disabledInput" class="col-sm-3 col-form-label">Total Cost Saving</label>
                         <div class="col-sm-9 align-items-center d-flex">
                             <input type="text" name="f_total_cost_saving" class="form-control number border-0"
-                                value="{{ $waitingrepair->price - ($formFinish_progressrepair->subcont_cost + $formFinish_progressrepair->labour_cost + $formFinish_progresspemakaian->sum('total_price')) }}"
+                                value="@if($category_repair) {{ $formFinish_totalFinish->f_total_cost_saving }} @else {{ ($waitingrepair->price - ($formFinish_progressrepair->subcont_cost + $formFinish_progressrepair->labour_cost + $formFinish_progresspemakaian->sum('total_price'))) * 0.7 }} @endif"
                                 readonly>
                         </div>
                     </div>
 
-
+                    <div class="row">
+                        <small class="fw-light fst-italic">(New Price - Total Cost Repair) * Coefficient</small>
+                    </div>
                 </div>
             </div>
 
@@ -190,10 +200,10 @@
                         </div>
                         <div class="col-sm-9">
                             <select class="form-select choices" onchange="categorycodeajax()" id="categorycodejs"
-                                name="category">
-                                <option value="" selected>Pilih ...</option>
+                                name="category" @if($category_repair) readonly @endif>
+                                <option value="">Pilih ...</option>
                                 @foreach ($category as $cat)
-                                    <option value="{{ $cat->category_code }}">
+                                    <option value="{{ $cat->category_code }}" @if($category_repair == $cat->category_code) selected @endif>
                                         {{ $cat->category }}
                                     </option>
                                 @endforeach
@@ -208,7 +218,7 @@
                             Repair</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="code_part_repair2"
-                                name="code_part_repair" value="{{ $waitingrepair->code_part_repair }}">
+                                name="code_part_repair" value="{{ $formFinish_totalFinish->code_part_repair }}" @if($formFinish_totalFinish->code_part_repair) readonly @endif>
                         </div>
                     </div>
 
@@ -243,9 +253,10 @@
                 <div class="mb-3 row">
                     <div class="p-3">
                         @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
-                            <button type="submit" class="btn btn-md btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
+                            <button type="submit"
+                                class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
                             <a href="{{ route('partrepair.waitingtable.index') }}"
-                                class="btn btn-md btn-secondary @if($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
+                                class="btn btn-md btn-secondary @if ($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
                         @else
                             <a class="btn btn-md btn-secondary disabled">Save</a>
                             <a href="{{ route('partrepair.waitingtable.index') }}"
