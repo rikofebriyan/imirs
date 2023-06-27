@@ -48,7 +48,7 @@ class GlobalComposerServiceProvider extends ServiceProvider
                 ->where('deleted', null)
                 ->count();
 
-            if (Auth::check()) {
+            if (Auth::guard()->check()) {
                 $loginUser = Auth::user();
             } else {
                 $loginUser = [];

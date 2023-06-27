@@ -236,7 +236,7 @@
                                     <label for="nama_pic" class="col-sm-3 col-form-label">PIC User <sup
                                             class="text-danger">*</sup></label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" id="nama_pic" name="nama_pic" required>
+                                        <select class="form-control choices" id="nama_pic" name="nama_pic" required>
                                             <option value="" selected disabled>Pilih ...</option>
                                             @foreach ($user as $us)
                                                 @if ($us->jabatan != 'ADMIN' || 'Supervisor')
@@ -371,7 +371,6 @@
             $('#section').select2()
             $('#lineline').select2()
             $('#machine').select2()
-            $('#nama_pic').select2()
 
             // Javascript select2 via ajax (pertama)
             $('#isiotomatis').select2({
@@ -458,6 +457,7 @@
                         $('#lineline').append(
                             '<option value="" disabled selected>Choose</option>')
                         $.each(result, function(id, value) {
+                            console.log(value)
                             $('#lineline').append('<option value="' + id + '">' +
                                 value + '</option>');
                         });

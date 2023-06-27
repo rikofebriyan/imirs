@@ -7,14 +7,15 @@ use App\Models\Maker;
 use App\Models\Machine;
 use App\Models\Subcont;
 use App\Models\Finishrepair;
+use App\Models\ItemStandard;
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use App\Models\CodePartRepair;
-use App\Models\ItemStandard;
 use App\Models\Progressrepair;
 use App\Models\MasterSparePart;
-use Illuminate\Routing\Controller;
 use Yajra\DataTables\DataTables;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class InfoController extends Controller
 {
@@ -47,7 +48,13 @@ class InfoController extends Controller
     public function getline(Request $request)
     {
         $sectionId = $request->get('sectionId');
-        $line = Line::all()->where('section_id', $sectionId)->sortBy('name')->pluck('name', 'id');
+        // $line = Line::all()->where('section_id', $sectionId)->sortBy('name')->pluck('name', 'id');
+
+        $line = DB::table('sparepartrepair.dbo.lines')
+            ->select('id', 'name')
+            ->where('section_id', '=', $sectionId)
+            ->orderBy('name')
+            ->get();
         return response()->json($line);
     }
 
@@ -70,10 +77,13 @@ class InfoController extends Controller
         $itemJson = [];
         if ($storageId == '1') {
             $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistMTC.json')), true);
+            // $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
         } elseif ($storageId == '2') {
             $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistTLC.json')), true);
+            // $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
         } elseif ($storageId == '3') {
             $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistTLR.json')), true);
+            // $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
         }
 
         $item = array_filter($itemJson['data'], function ($var) {

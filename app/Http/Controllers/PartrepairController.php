@@ -7,9 +7,10 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PartrepairController extends Controller
 {
@@ -55,10 +56,15 @@ class PartrepairController extends Controller
             $ticket = $AWAL . $tahun . $bulan . $tanggal . sprintf("%03s", $no);
         }
 
-        $maker = Maker::all();
-        $user = User::all();
-        $section = Section::all()->sortBy('name');
+        // $maker = Maker::all();
+        // $user = User::all();
+        // $section = Section::all()->sortBy('name');
 
+        $maker = DB::table('sparepartrepair.dbo.makers')->orderBy('name')->get();
+        $user = DB::table('sparepartrepair.dbo.users')->orderBy('name')->get();
+        $section = DB::table('sparepartrepair.dbo.sections')->orderBy('name')->get();
+
+        // nouse gaes
         // $json1 = json_decode(file_get_contents(public_path('json\stockonhandlistMTC.json')), true);
         // $json2 = json_decode(file_get_contents(public_path('json\stockonhandlistTLC.json')), true);
         // $json3 = json_decode(file_get_contents(public_path('json\stockonhandlistTLR.json')), true);
@@ -75,6 +81,7 @@ class PartrepairController extends Controller
         //     return $var['StatusBarang'] == 'NE';
         // });
         // $partr = collect($mergedJsonFiltered)->all();
+          // end nouse gaes
 
         return view('partrepair.request', [
             'section' => $section,
