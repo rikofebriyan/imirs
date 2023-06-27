@@ -51,7 +51,10 @@ class GlobalComposerServiceProvider extends ServiceProvider
             if (Auth::check()) {
                 $loginUser = Auth::user();
             } else {
-                $loginUser = [];
+                $loginUser = (object) [
+                    'name' => 'Mr. X',
+                    'jabatan' => 'Any',
+                ];
             }
 
             $view->with('notif', $notif);
