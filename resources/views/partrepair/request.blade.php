@@ -456,10 +456,9 @@
                         $('#lineline').empty()
                         $('#lineline').append(
                             '<option value="" disabled selected>Choose</option>')
-                        $.each(result, function(id, value) {
-                            console.log(value)
-                            $('#lineline').append('<option value="' + id + '">' +
-                                value + '</option>');
+                        $.each(result, function(index, value) {
+                            $('#lineline').append('<option value="' + value.id + '">' +
+                                value.name + '</option>');
                         });
                     }
                 });
