@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,17 @@ class WaitingApprovalController extends Controller
      */
     public function index()
     {
-        $partr = Waitingrepair::leftJoin('sparepartrepair.dbo.users', 'users.name', '=', 'waitingrepairs.nama_pic')
+        // $partr = Waitingrepair::leftJoin('sparepartrepair.dbo.users', 'users.name', '=', 'waitingrepairs.nama_pic')
+        //     ->select('waitingrepairs.*', 'users.jabatan')
+        //     ->where('deleted', null)
+        //     ->where('progress', '<>', 'finish')
+        //     ->where('progress', '<>', 'Scrap')
+        //     ->where('approval', null)
+        //     ->orderBy('reg_sp', 'DESC')
+        //     ->get();
+
+        $partr = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->leftJoin('sparepartrepair.dbo.users', 'users.name', '=', 'waitingrepairs.nama_pic')
             ->select('waitingrepairs.*', 'users.jabatan')
             ->where('deleted', null)
             ->where('progress', '<>', 'finish')

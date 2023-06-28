@@ -309,6 +309,7 @@ class WaitingrepairController extends Controller
         $test = 123;
         $maker = Maker::all();
         $user = User::all();
+
         return view('partrepair.new.progress-form1', [
             'waitingrepair'    => $waitingrepair,
             'section' => $sectionAll,
@@ -395,10 +396,15 @@ class WaitingrepairController extends Controller
     {
         // form 4
         $waitingrepair = Waitingrepair::find($id);
-        $join = Progresstrial::where('form_input_id', $waitingrepair->id)
+        // $join = Progresstrial::where('form_input_id', $waitingrepair->id)
+        //     ->join('item_standards', 'item_standards.id', '=', 'progresstrials.item_check_id')
+        //     ->select('progresstrials.*', 'item_standards.item_standard')
+        //     ->get();
+        $join = DB::table('progresstrials')->where('form_input_id', $waitingrepair->id)
             ->join('item_standards', 'item_standards.id', '=', 'progresstrials.item_check_id')
             ->select('progresstrials.*', 'item_standards.item_standard')
             ->get();
+
         $itemstandard = ItemStandard::all();
         return view('partrepair.new.progress-form4', [
             'waitingrepair'    => $waitingrepair,
@@ -416,7 +422,7 @@ class WaitingrepairController extends Controller
         $formFinish_waitingrepair = Waitingrepair::where('id', $id)->first();
         $formFinish_progressrepair = Progressrepair::where('form_input_id', $formFinish_waitingrepair->id)->first();
         $formFinish_progresspemakaian = Progresspemakaian::where('form_input_id', $formFinish_waitingrepair->id)->get();
-        $formFinish_progresstrial = Progresstrial::join('item_standards', 'progresstrials.item_check_id', '=', 'item_standards.id')
+        $formFinish_progresstrial = DB::table('progresstrials')->join('item_standards', 'progresstrials.item_check_id', '=', 'item_standards.id')
             ->where('form_input_id', $formFinish_waitingrepair->id)
             ->select('progresstrials.*', 'item_standards.item_standard')
             ->get();
