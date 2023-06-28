@@ -76,14 +76,14 @@ class InfoController extends Controller
 
         $itemJson = [];
         if ($storageId == '1') {
-            $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistMTC.json')), true);
-            // $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
+            // $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistMTC.json')), true);
+            $itemJson = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
         } elseif ($storageId == '2') {
-            $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistTLC.json')), true);
-            // $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
+            // $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistTLC.json')), true);
+            $itemJson = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
         } elseif ($storageId == '3') {
-            $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistTLR.json')), true);
-            // $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
+            // $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistTLR.json')), true);
+            $itemJson = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
         }
 
         $item = array_filter($itemJson['data'], function ($var) {
