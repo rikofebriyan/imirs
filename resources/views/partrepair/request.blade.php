@@ -472,7 +472,6 @@
                 $('#description').val('');
                 $('#price').val('');
                 $('#qty').val('');
-                $('#status_repair').empty();
             });
 
 
