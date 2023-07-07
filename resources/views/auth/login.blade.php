@@ -69,7 +69,7 @@
                     <div class="text-center mt-5 text-lg fs-5">
                         <p class="text-gray-600">Don't have an account? <a href="{{ route('register') }}"
                                 class="font-bold">Signup</a>.</p>
-                        {{-- <p><a class="font-bold" href="{{ url('/password/reset') }}">Forgot password?</a>.</p> --}}
+                        <p><a class="font-bold" href="{{ url('/password/reset') }}">Forgot password?</a>.</p>
                     </div>
                 </div>
             </div>
