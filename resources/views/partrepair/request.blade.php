@@ -68,11 +68,10 @@
                                 </div> --}}
 
                                 {{-- Pemilihan Storage Item --}}
-                                <div class="mb-3 row">
-                                    <label for="storage" class="col-sm-3 col-form-label">Warehouse <sup
-                                            class="text-danger">*</sup></label>
+                                <div class="mb-3 row" id="storageDiv">
+                                    <label for="storage" class="col-sm-3 col-form-label">Warehouse</label>
                                     <div class="col-sm-9">
-                                        <select class="form-select" id="storage" name="storage" required>
+                                        <select class="form-select" id="storage" name="storage">
                                             <option value="" selected>Pilih ...</option>
                                             <option value="1">Maintenance Spare Part</option>
                                             <option value="2">Tool Center</option>
@@ -92,6 +91,8 @@
                                             <input type="text" class="form-control disabledriko" id="number_of_repair"
                                                 name="number_of_repair" placeholder="Number of Repair" readonly>
                                             <label for="number_of_repair" class="col-sm-3 col-form-label ms-3">Times</label>
+                                            <button id="btnAutoMan2" type="button"
+                                                class="btn btn-primary ms-1">Auto</button>
                                             <div id="number_of_repairFeedback" class="invalid-feedback">
                                                 Part Has Been Repaired Over 5 Times. Please Scrap!
                                             </div>
@@ -103,7 +104,7 @@
                                     <label for="item_code" class="col-sm-3 col-form-label">Spare Part</label>
                                     <div class="col-sm-9">
                                         <div id="field3" class="mb-3 d-flex">
-                                            <select class="form-control select2" id="isiotomatis" name="item_name">
+                                            <select class="form-control" id="isiotomatis" name="item_name">
                                             </select>
 
                                             <button id="btnAutoMan" type="button"
@@ -301,6 +302,8 @@
                 $('#number_of_repair').val('')
                 $('#field3').removeClass('d-none')
 
+                $('#storageDiv').removeClass('d-none')
+
                 $('#item_code').val('')
                 $('#item_name').val('')
                 $('#description').val('')
@@ -314,6 +317,8 @@
             } else {
                 $('#field2').css('display', 'flex');
                 $('#field3').addClass('d-none')
+
+                $('#storageDiv').addClass('d-none')
 
                 $('#item_code').val('')
                 $('#item_name').val('')
@@ -567,7 +572,7 @@
                 });
             });
 
-            $('#btnAutoMan').on('click', function() {
+            $('#btnAutoMan, #btnAutoMan2').on('click', function() {
                 var mode = $(this).text()
                 if (mode == 'Man') {
                     // Mode Auto
@@ -635,10 +640,12 @@
 
                     $('#qty').addClass('disabledriko')
                     $('#qty').prop('readonly', true)
+                    $('#qty').addClass('btn-primary')
 
                     $('#btnAutoMan').text('Auto')
-                    $('#qty').addClass('btn-primary')
                     $('#btnAutoMan').removeClass('btn-warning')
+                    $('#btnAutoMan2').text('Auto')
+                    $('#btnAutoMan2').removeClass('btn-warning')
                 } else if (mode == 'Auto') {
 
                     // Mode Manual
@@ -661,10 +668,12 @@
 
                     $('#qty').removeClass('disabledriko')
                     $('#qty').prop('readonly', false)
+                    $('#qty').removeClass('btn-primary')
 
                     $('#btnAutoMan').text('Man')
-                    $('#qty').removeClass('btn-primary')
                     $('#btnAutoMan').addClass('btn-warning')
+                    $('#btnAutoMan2').text('Man')
+                    $('#btnAutoMan2').addClass('btn-warning')
                 }
             });
         });
