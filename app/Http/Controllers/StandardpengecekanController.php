@@ -54,7 +54,7 @@ class StandardpengecekanController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'master_spare_part_id' => $request->master_spare_part_id,
+            'master_spare_part_id' => $request->master_spare_part_id ?? 0,
             'item_pengecekan_id' => $request->item_check_id,
             'operation' => $request->operation,
             'standard_pengecekan_min' => ($request->standard_pengecekan_min) ? $request->standard_pengecekan_min : 0,
