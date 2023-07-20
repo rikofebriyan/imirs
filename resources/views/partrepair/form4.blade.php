@@ -166,7 +166,7 @@
                     <div class="form-group mt-2">
                         <label for="unit_measurement">Unit Measurement</label>
                         <input type="text" id="unit_measurement" name="unit_measurement"
-                            class="form-control disabledriko" value="" readonly>
+                            class="form-control" value="">
                     </div>
 
                 </div>

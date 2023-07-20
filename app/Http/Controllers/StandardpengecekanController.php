@@ -59,7 +59,7 @@ class StandardpengecekanController extends Controller
             'operation' => $request->operation,
             'standard_pengecekan_min' => ($request->standard_pengecekan_min) ? $request->standard_pengecekan_min : 0,
             'standard_pengecekan_max' => ($request->standard_pengecekan_max) ? $request->standard_pengecekan_max : 0,
-            'unit_measurement' => $request->unit_measurement,
+            'unit_measurement' => $request->unit_measurement ?? '-',
         ];
 
         // create new task
@@ -70,7 +70,7 @@ class StandardpengecekanController extends Controller
             'operation' => $request->operation,
             'standard_pengecekan_min' => $request->standard_pengecekan_min,
             'standard_pengecekan_max' => $request->standard_pengecekan_max,
-            'unit_measurement' => $request->unit_measurement,
+            'unit_measurement' => $request->unit_measurement ?? '-',
         ]);
         return redirect()->back()->with('success', 'Your task added successfully!');
     }
