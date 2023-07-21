@@ -84,6 +84,8 @@
                                 class="form-control form-control-xl @error('jabatan') is-invalid @enderror"
                                 placeholder="Jabatan">
                                 <option value="">Pilih Role</option>
+                                <option value="Facility" @if ($errors->first('jabatan') == 'Facility') selected @endif>
+                                    Facility</option>
                                 <option value="Maintenance" @if ($errors->first('jabatan') == 'Maintenance') selected @endif>
                                     Maintenance</option>
                                 <option value="RepairMan" @if ($errors->first('jabatan') == 'RepairMan') selected @endif>RepairMan
