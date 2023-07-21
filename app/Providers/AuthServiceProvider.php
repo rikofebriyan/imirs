@@ -34,9 +34,6 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
-
-
-
         Gate::define('Supervisor', function (User $user) {
             if ($user->jabatan == 'Supervisor') {
                 return true;
@@ -55,6 +52,14 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('RepairMan', function (User $user) {
             if ($user->jabatan == 'RepairMan') {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        Gate::define('Facility', function (User $user) {
+            if ($user->jabatan == 'Facility') {
                 return true;
             } else {
                 return false;
