@@ -110,7 +110,23 @@ class WaitingrepairController extends Controller
         if ($request->get('id') != null) {
             Waitingrepair::find($request->get('id'))->update($data);
         } else {
-            Waitingrepair::create($data);
+            $formInput = Waitingrepair::create($data);
+
+            foreach ($request->get('standard') as $standard) {
+                if ($standard['operation'] != null || $standard['standard_pengecekan_min'] != null) {
+                    $submit['item_check_id'] = $standard['item_check_id'];
+                    $submit['form_input_id'] = $formInput->id;
+                    $submit['standard_pengecekan_id'] = null;
+                    $submit['operation'] = $standard['operation'];
+                    $submit['standard_pengecekan_min'] = $standard['standard_pengecekan_min'];
+                    $submit['standard_pengecekan_max'] = null;
+                    $submit['unit_measurement'] = $standard['unit_measurement'];
+                    $submit['actual_pengecekan'] = null;
+                    $submit['judgement'] = null;
+
+                    Progresstrial::create($submit);
+                }
+            }
         }
 
 

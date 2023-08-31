@@ -118,21 +118,23 @@
                                         <div class="input-group">
                                             <label for="item_code" class="col-sm-3 col-form-label">Item Code <sup
                                                     class="text-danger">*</sup></label>
-                                            <input type="text" class="form-control col-9 disabledriko" id="item_code"
-                                                name="item_code" placeholder="Item Code" readonly required>
+                                            <input type="text" class="form-control col-9 disabledriko rounded-1"
+                                                id="item_code" name="item_code" placeholder="Item Code" readonly
+                                                required>
                                         </div>
 
                                         <div class="input-group">
                                             <label for="item_name" class="col-sm-3 col-form-label">Item Name <sup
                                                     class="text-danger">*</sup></label>
-                                            <input type="text" class="form-control col-9 disabledriko" id="item_name"
-                                                name="item_name" placeholder="Item Name" readonly required>
+                                            <input type="text" class="form-control col-9 disabledriko rounded-1"
+                                                id="item_name" name="item_name" placeholder="Item Name" readonly
+                                                required>
                                         </div>
 
                                         <div class="input-group">
                                             <label for="item_type" class="col-sm-3 col-form-label">Description <sup
                                                     class="text-danger">*</sup></label>
-                                            <input type="text" class="form-control col-9 disabledriko"
+                                            <input type="text" class="form-control col-9 disabledriko rounded-1"
                                                 id="description" name="item_type" placeholder="Item Type" readonly
                                                 required>
                                         </div>
@@ -140,14 +142,14 @@
                                         <div class="input-group">
                                             <label for="price" class="col-sm-3 col-form-label">Price <sup
                                                     class="text-danger">*</sup></label>
-                                            <input type="text" class="form-control number col-9 disabledriko"
+                                            <input type="text" class="form-control number col-9 disabledriko rounded-1"
                                                 id="price" name="price" placeholder="Price" readonly required>
                                         </div>
 
                                         <div class="input-group">
                                             <label for="qty" class="col-sm-3 col-form-label">Stock <sup
                                                     class="text-danger">*</sup></label>
-                                            <input type="text" class="form-control number col-9 disabledriko"
+                                            <input type="text" class="form-control number col-9 disabledriko rounded-1"
                                                 id="qty" name="stock_spare_part" placeholder="Stock" readonly
                                                 required>
                                         </div>
@@ -186,7 +188,11 @@
                                             name="serial_number" placeholder="(Kosongkan bila tidak ada serial number)">
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="card col border m-2">
+                            <div class="p-3">
                                 <div class="mb-3 row">
                                     <label for="problem" class="col-sm-3 col-form-label">Problem <sup
                                             class="text-danger">*</sup></label>
@@ -195,10 +201,7 @@
                                             required></textarea>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card col border m-2">
-                            <div class="p-3">
+
                                 <div class="mb-3 row">
                                     <label for="section" class="col-sm-3 col-form-label">Section <sup
                                             class="text-danger">*</sup></label>
@@ -279,20 +282,159 @@
                                             name="progress" value="Waiting" readonly required>
                                     </div>
                                 </div>
-
-                                <button type="submit" id="btnSubmitFormInput"
-                                    class="btn btn-md btn-primary">Save</button>
-                                <a href="{{ route('partrepair.waitingtable.index') }}"
-                                    class="btn btn-md btn-secondary">Back</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
 
+            <div class="container-fluid justify-content-center py-0">
+                <div class="container-fluid">
+                    <div class="card border text-center mb-2">
+                        <h3 class="m-2">STANDARD</h3>
+                        <div class="row gx-3">
+                            <div class="card col border m-2">
+                                <table id="myTable" class="table table-striped nowrap overflow-scroll display">
+                                    <thead>
+                                        <tr>
+                                            {{-- <th scope="col">Action</th> --}}
+                                            <th scope="col">Item Pengecekan</th>
+                                            <th scope="col">Unit Measurement</th>
+                                            <th scope="col">Operation</th>
+                                            <th scope="col">Standard</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($itemstandard as $tabw)
+                                            <tr>
+                                                {{-- <td>
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#"
+                                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size:
+                                                    .75rem">
+                                                        Update
+                                                    </button>
+
+                                                    <a href="" class="btn btn-danger"
+                                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem"
+                                                        onclick="return confirm('Yakin?')">Delete</a>
+                                                </td> --}}
+                                                <td>
+                                                    <input type="hidden"
+                                                        name="standard[{{ $tabw->id }}][item_check_id]"
+                                                        value="{{ $tabw->id }}">
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[{{ $tabw->id }}][item_standard]"
+                                                        id="" value="{{ $tabw->item_standard }}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                        name="standard[{{ $tabw->id }}][unit_measurement]"
+                                                        id="" value="{{ $tabw->unit_measurement }}">
+                                                </td>
+                                                <td>
+                                                    <select name="standard[{{ $tabw->id }}][operation]"
+                                                        id="" class="form-control">
+                                                        <option value="" selected>Choose ...</option>
+                                                        <option value="Min">Min</option>
+                                                        <option value="Max">Max</option>
+                                                        <option value="Between">Between</option>
+                                                        <option value="Equal">Equal</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                        name="standard[{{ $tabw->id }}][standard_pengecekan_min]"
+                                                        id="">
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td class="text-center text-mute" colspan="6">Data post tidak tersedia
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+
+                                {{-- <div class="d-flex justify-content-end mb-3">
+                                    <button type="button" class="btn btn-md btn-success me-1" data-bs-toggle="modal"
+                                        data-bs-target="#modalAddPengecekan">
+                                        Tambah Item Pengecekan
+                                    </button>
+                                </div> --}}
+                            </div>
+                        </div>
+
+                        <div class="mt-2 mb-5">
+                            <button type="submit" id="btnSubmitFormInput" class="btn btn-md btn-primary">Save
+                                Ticket</button>
+                            <a href="{{ route('partrepair.waitingtable.index') }}"
+                                class="btn btn-md btn-secondary">Back</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="modalAddPengecekan" tabindex="-1" aria-labelledby="modalAddPengecekanLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalAddPengecekanLabel">Add Item Pengecekan</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="form_input_id" value="">
+
+                    <div class="form-group mt-2">
+                        <label for="item_check_id">Item Check</label>
+                        <select name="item_check_id" id="item_check_id" class="form-control">
+                            <option value="" disabled selected>
+                                Choose ...
+                            </option>
+                            @foreach ($itemstandard as $tabw)
+                                <option value="{{ $tabw->id }}">{{ $tabw->item_standard }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="operation">Operation</label>
+                        <select name="operation" id="operation" class="form-control">
+                            <option value="" disabled selected>Choose ...</option>
+                            <option value="Min">Min</option>
+                            <option value="Max">Max</option>
+                            <option value="Between">Between</option>
+                            <option value="Equal">Equal</option>
+                        </select>
+                    </div>
+
+                    <div id="standard_pengecekan_min_div" class="form-group mt-2">
+                        <label for="standard_pengecekan_min">Standard</label>
+                        <input type="text" id="standard_pengecekan_min" name="standard_pengecekan_min"
+                            class="form-control" value="">
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="unit_measurement">Unit Measurement</label>
+                        <input type="text" id="unit_measurement" name="unit_measurement" class="form-control"
+                            value="">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
+
 @section('script')
     <script>
         function formChoice(x) {
@@ -676,6 +818,27 @@
                     $('#btnAutoMan2').addClass('btn-warning')
                 }
             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+
+            $('#item_check_id').on('change', function() {
+                var itemCheck = $(this).val()
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('get-unit-measurement') }}" + '/?id=' + itemCheck,
+                    success: function(result) {
+                        console.log(result)
+                        $('#unit_measurement').val(result.unit_measurement)
+                    }
+                });
+            });
+
+
         });
     </script>
 @endsection

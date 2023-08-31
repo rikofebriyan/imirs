@@ -23,6 +23,7 @@ class ProgresstrialController extends Controller
      */
     public function index()
     {
+        // nouse sepertinya
         $partr = Progresstrial::all()->sortByDesc('id');
         return view('partrepair.progresstrialtable', [
             'reqtzy' => $partr,
@@ -52,13 +53,13 @@ class ProgresstrialController extends Controller
             ->select('progresstrials.*', 'item_standards.item_standard')
             ->get();
 
-
         foreach ($join as $joi) {
             $data['form_input_id'] = $request->data[$joi->id]['form_input_id'];
             $data['item_check_id'] = $request->data[$joi->id]['item_check_id'];
             $data['operation'] = $request->data[$joi->id]['operation'];
-            $data['standard_pengecekan_min'] = $request->data[$joi->id]['standard_pengecekan_min'];
-            $data['standard_pengecekan_max'] = $request->data[$joi->id]['standard_pengecekan_max'];
+            $data['standard_pengecekan_min'] = $request->data[$joi->id]['standard_pengecekan_min'] ? $request->data[$joi->id]['standard_pengecekan_min'] : 0;
+            // $data['standard_pengecekan_max'] = $request->data[$joi->id]['standard_pengecekan_max'] ? $request->data[$joi->id]['standard_pengecekan_max'] : 0;
+            $data['standard_pengecekan_max'] = 0;
             $data['unit_measurement'] = $request->data[$joi->id]['unit_measurement'];
             $data['actual_pengecekan'] = $request->data[$joi->id]['actual_pengecekan'];
             $data['judgement'] = $request->data[$joi->id]['judgement'];
@@ -147,5 +148,23 @@ class ProgresstrialController extends Controller
     {
         Progresstrial::find($id)->delete();
         return redirect()->route('partrepair.progresstrial.index')->with('success', 'Task removed successfully');
+    }
+
+    public function deleteTrial($id)
+    {
+        Progresstrial::find($id)->delete();
+        return redirect()->back()->with('success', 'Task removed successfully');
+    }
+
+    public function updateTrial($id, Request $request)
+    {
+        $this->validate($request, [
+            'operation' => 'required',
+            'standard_pengecekan_min' => 'required',
+            'unit_measurement' => 'required',
+        ]);
+
+        Progresstrial::find($id)->update($request->all());
+        return redirect()->back()->with('success', 'Task removed successfully');
     }
 }

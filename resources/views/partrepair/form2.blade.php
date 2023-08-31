@@ -25,21 +25,24 @@
 
 
                     <div class="mb-3 row">
-                        <label for="analisa" class="col-sm-3 col-form-label">Analisa <sup class="text-danger">*</sup></label>
+                        <label for="analisa" class="col-sm-3 col-form-label">Analisa <sup
+                                class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <textarea class="form-control" id="analisa" name="analisa" rows="5" placeholder="Input Analisa" required>{{ $progressrepair2->analisa }}</textarea>
                         </div>
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="action" class="col-sm-3 col-form-label">Action <sup class="text-danger">*</sup></label>
+                        <label for="action" class="col-sm-3 col-form-label">Action <sup
+                                class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <textarea class="form-control" id="action" name="action" rows="5" placeholder="Input Action" required>{{ $progressrepair2->action }}</textarea>
                         </div>
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="judgement" class="col-sm-3 col-form-label">Judgement <sup class="text-danger">*</sup></label>
+                        <label for="judgement" class="col-sm-3 col-form-label">Judgement <sup
+                                class="text-danger">*</sup></label>
                         <div class="col-sm-9">
                             <select class="form-select choices" id="judgement_scrap" name="judgement" required>
                                 <option value="">Pilih ...</option>
@@ -53,7 +56,8 @@
 
                     <div class="mb-3 row">
                         <div class="col-sm-3">
-                            <label for="pic_repair" class="col-form-label">PIC Repair <sup class="text-danger">*</sup></label>
+                            <label for="pic_repair" class="col-form-label">PIC Repair <sup
+                                    class="text-danger">*</sup></label>
                         </div>
                         <div class="col-sm-5">
                             <select class="form-select choices" id="isiotomatis" onchange="isi_otomatis()"
@@ -130,7 +134,8 @@
                         </div>
                         <div class="mb-3 row">
                             <div class="col-sm-3">
-                                <label for="labour_cost" class="col-form-label">Labour Cost <sup class="text-danger">*</sup></label>
+                                <label for="labour_cost" class="col-form-label">Labour Cost <sup
+                                        class="text-danger">*</sup></label>
                             </div>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control number disabledriko" id="labour_cost"
@@ -158,15 +163,26 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="subcont_cost" class="col-sm-3 col-form-label">Cost <sup class="text-danger">*</sup></label>
+                            <label for="subcont_name" class="col-sm-3 col-form-label">No. Quotation <sup
+                                    class="text-danger">*</sup></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="subcont_cost" name="subcont_cost"
+                                <input type="text" class="form-control" id="no_quotation" name="no_quotation"
+                                    value="{{ $progressrepair2->quotation }}">
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label for="subcont_cost" class="col-sm-3 col-form-label">Cost <sup
+                                    class="text-danger">*</sup></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control number" id="subcont_cost" name="subcont_cost"
                                     value="{{ $progressrepair2->subcont_cost }}">
                             </div>
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="lead_time" class="col-sm-3 col-form-label">Lead Time <sup class="text-danger">*</sup></label>
+                            <label for="lead_time" class="col-sm-3 col-form-label">Lead Time <sup
+                                    class="text-danger">*</sup></label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" id="lead_time" name="lead_time"
                                     value="{{ $progressrepair2->lead_time }}">
@@ -226,9 +242,10 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                             <button id="scrap" type="submit" class="btn btn-md btn-danger"
                                 style="display: none">Scrap</button>
-                            <button id="saveit" type="submit" class="btn btn-md btn-primary @if($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
+                            <button id="saveit" type="submit"
+                                class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
                             <a href="{{ route('partrepair.waitingtable.index') }}"
-                                class="btn btn-md btn-secondary @if($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
+                                class="btn btn-md btn-secondary @if ($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
                         </div>
                     @else
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start">

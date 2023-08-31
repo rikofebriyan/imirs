@@ -173,49 +173,138 @@ class ExportController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        $users = Finishrepair::whereBetween('delivery_date', [$start_date, $end_date])
-            ->select(
-                'f_reg_sp',
-                'f_date',
-                'f_item_name',
-                'f_item_type',
-                'f_maker',
-                'f_price',
-                'f_nama_pic',
-                'f_place_of_repair',
-                'f_analisa',
-                'f_action',
-                'f_subcont_cost',
-                'f_labour_cost',
-                'f_seal_kit_cost',
-                'f_total_cost_repair',
-                'f_total_cost_saving',
-                'code_part_repair',
-                'delivery_date',
-                'pic_delivery',
-            )
-            ->get();
+        $users = Finishrepair::leftJoin('sparepartrepair.dbo.progressrepairs', function ($join) {
+            $join->on('finishrepairs.progressrepair_id', '=', 'progressrepairs.id');
+        })
+            ->whereBetween('delivery_date', [$start_date, $end_date])
+            ->get([
+                'finishrepairs.f_reg_sp',
+                'finishrepairs.f_date',
+                'finishrepairs.f_item_name',
+                'finishrepairs.f_item_type',
+                'finishrepairs.f_maker',
+                'finishrepairs.f_price',
+                'finishrepairs.f_nama_pic',
+                'finishrepairs.f_place_of_repair',
+                'progressrepairs.subcont_name',
+                'finishrepairs.f_analisa',
+                'finishrepairs.f_action',
+                'finishrepairs.f_subcont_cost',
+                'finishrepairs.f_labour_cost',
+                'finishrepairs.f_seal_kit_cost',
+                'finishrepairs.f_total_cost_repair',
+                'finishrepairs.f_total_cost_saving',
+                'finishrepairs.code_part_repair',
+                'finishrepairs.delivery_date',
+                'finishrepairs.pic_delivery',
+            ]);
 
         $header = array(
-            'f_reg_sp',
-            'f_date',
-            'f_item_name',
-            'f_item_type',
-            'f_maker',
-            'f_price',
-            'f_nama_pic',
-            'f_place_of_repair',
-            'f_analisa',
-            'f_action',
-            'f_subcont_cost',
-            'f_labour_cost',
-            'f_seal_kit_cost',
-            'f_total_cost_repair',
-            'f_total_cost_saving',
+            'reg_sp',
+            'date',
+            'item_name',
+            'item_type',
+            'maker',
+            'price',
+            'nama_pic',
+            'place_of_repair',
+            'subcont_name',
+            'analisa',
+            'action',
+            'subcont_cost',
+            'labour_cost',
+            'seal_kit_cost',
+            'total_cost_repair',
+            'total_cost_saving',
             'code_part_repair',
             'delivery_date',
             'pic_delivery',
         );
+
+        $spreadsheet = IOFactory::load(public_path('I-Mirs Export_Finish.xlsx'));
+        $sheet = $spreadsheet->getSheetByName('Sheet Export');
+        if ($sheet == null) {
+            $sheet = new Worksheet($spreadsheet, 'Sheet Export');
+            $spreadsheet->addSheet($sheet);
+        }
+
+        $sheet->fromArray([$header], null, 'A1');
+        $sheet->fromArray($users->toArray(), null, 'A2');
+
+        $start_date_formatted = date("d-m-y", strtotime($start_date));
+        $end_date_formatted = date("d-m-y", strtotime($end_date));
+        $fileName = "I-Mirs Export Finish " . $start_date_formatted . " sampai " . $end_date_formatted . ".xlsx";
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        return response()->stream(function () use ($writer) {
+            $writer->save('php://output');
+        }, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+        ]);
+    }
+
+    public function export_waiting(Request $request)
+    {
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $users = Waitingrepair::whereBetween('date', [$start_date, $end_date])
+            ->select(
+                "date",
+                "part_from",
+                "code_part_repair",
+                "number_of_repair",
+                "reg_sp",
+                "section",
+                "line",
+                "machine",
+                "item_id",
+                "item_code",
+                "item_name",
+                "item_type",
+                "maker",
+                "serial_number",
+                "problem",
+                "nama_pic",
+                "type_of_part",
+                "price",
+                "stock_spare_part",
+                "status_repair",
+                "progress",
+                "deleted",
+                "deleted_by",
+                "reason",
+                "approval",
+            )->get();
+
+        $header = [
+            "date",
+            "part_from",
+            "code_part_repair",
+            "number_of_repair",
+            "reg_sp",
+            "section",
+            "line",
+            "machine",
+            "item_id",
+            "item_code",
+            "item_name",
+            "item_type",
+            "maker",
+            "serial_number",
+            "problem",
+            "nama_pic",
+            "type_of_part",
+            "price",
+            "stock_spare_part",
+            "status_repair",
+            "progress",
+            "deleted",
+            "deleted_by",
+            "reason",
+            "approval",
+        ];
 
         $spreadsheet = IOFactory::load(public_path('I-Mirs Export_Finish.xlsx'));
         $sheet = $spreadsheet->getSheetByName('Sheet Export');

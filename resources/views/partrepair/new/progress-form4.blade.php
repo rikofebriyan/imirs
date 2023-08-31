@@ -224,92 +224,106 @@
 
     <script>
         @foreach ($join as $joi)
-            $('#actual_pengecekan{{ $joi->id }}').on('input', function() {
-                var actual = parseFloat($(this).val())
-                var standardMin = parseFloat('{{ $joi->standard_pengecekan_min }}')
-                var standardMax = parseFloat('{{ $joi->standard_pengecekan_max }}')
-                var operation = '{{ $joi->operation }}'
+            $('#judgement{{ $joi->id }}').on('input', function() {
+                var judgement = $(this).val()
 
-                if (operation == 'Less Than') {
-                    if (actual < standardMax) {
-                        $('#judgement{{ $joi->id }}').val('OK')
-                    } else {
-                        $('#judgement{{ $joi->id }}').val('NG')
-                    }
-
-                    if (actual == '' || isNaN(actual)) {
-                        $('#judgement{{ $joi->id }}').val('')
-                    }
-
-                } else if (operation == 'Greater Than') {
-                    if (actual > standardMin) {
-                        $('#judgement{{ $joi->id }}').val('OK')
-                    } else {
-                        $('#judgement{{ $joi->id }}').val('NG')
-                    }
-
-                    if (actual == '' || isNaN(actual)) {
-                        $('#judgement{{ $joi->id }}').val('')
-                    }
-
-                } else if (operation == 'Between') {
-                    if (actual > standardMin && actual < standardMax) {
-                        $('#judgement{{ $joi->id }}').val('OK')
-                    } else {
-                        $('#judgement{{ $joi->id }}').val('NG')
-                    }
-
-                    if (actual == '' || isNaN(actual)) {
-                        $('#judgement{{ $joi->id }}').val('')
-                    }
-
-                } else if (operation == 'Equal') {
-                    if (actual == standardMin) {
-                        $('#judgement{{ $joi->id }}').val('OK')
-                    } else {
-                        $('#judgement{{ $joi->id }}').val('NG')
-                    }
-
-                    if (actual == '' || isNaN(actual)) {
-                        $('#judgement{{ $joi->id }}').val('')
-                    }
-
+                if (judgement == 'OK') {
+                    $(this).addClass('bg-success')
+                    $(this).addClass('text-white')
+                    $(this).removeClass('bg-warning')
                 } else {
-                    alert('Operation Miss')
-                    $('#judgement{{ $joi->id }}').val('')
-
+                    $(this).addClass('bg-warning')
+                    $(this).removeClass('bg-success')
+                    $(this).removeClass('text-white')
                 }
-
             });
+
+            // $('#actual_pengecekan{{ $joi->id }}').on('input', function() {
+            //     var actual = parseFloat($(this).val())
+            //     var standardMin = parseFloat('{{ $joi->standard_pengecekan_min }}')
+            //     var standardMax = parseFloat('{{ $joi->standard_pengecekan_max }}')
+            //     var operation = '{{ $joi->operation }}'
+
+            //     if (operation == 'Less Than') {
+            //         if (actual < standardMax) {
+            //             $('#judgement{{ $joi->id }}').val('OK')
+            //         } else {
+            //             $('#judgement{{ $joi->id }}').val('NG')
+            //         }
+
+            //         if (actual == '' || isNaN(actual)) {
+            //             $('#judgement{{ $joi->id }}').val('')
+            //         }
+
+            //     } else if (operation == 'Greater Than') {
+            //         if (actual > standardMin) {
+            //             $('#judgement{{ $joi->id }}').val('OK')
+            //         } else {
+            //             $('#judgement{{ $joi->id }}').val('NG')
+            //         }
+
+            //         if (actual == '' || isNaN(actual)) {
+            //             $('#judgement{{ $joi->id }}').val('')
+            //         }
+
+            //     } else if (operation == 'Between') {
+            //         if (actual > standardMin && actual < standardMax) {
+            //             $('#judgement{{ $joi->id }}').val('OK')
+            //         } else {
+            //             $('#judgement{{ $joi->id }}').val('NG')
+            //         }
+
+            //         if (actual == '' || isNaN(actual)) {
+            //             $('#judgement{{ $joi->id }}').val('')
+            //         }
+
+            //     } else if (operation == 'Equal') {
+            //         if (actual == standardMin) {
+            //             $('#judgement{{ $joi->id }}').val('OK')
+            //         } else {
+            //             $('#judgement{{ $joi->id }}').val('NG')
+            //         }
+
+            //         if (actual == '' || isNaN(actual)) {
+            //             $('#judgement{{ $joi->id }}').val('')
+            //         }
+
+            //     } else {
+            //         alert('Operation Miss')
+            //         $('#judgement{{ $joi->id }}').val('')
+
+            //     }
+
+            // });
         @endforeach
     </script>
 
     <script>
         $(document).ready(function() {
-            $('#operation').on('change', function() {
-                var operation = $('#operation option:selected').val()
+            // $('#operation').on('change', function() {
+            //     var operation = $('#operation option:selected').val()
 
-                if (operation == 'Between') {
-                    $('#standard_pengecekan_min_div').show()
-                    $('#standard_pengecekan_max_div').show()
-                } else if (operation == 'Less Than') {
-                    $('#standard_pengecekan_min_div').hide()
-                    $('#standard_pengecekan_max_div').show()
-                } else if (operation == 'Greater Than') {
-                    $('#standard_pengecekan_min_div').show()
-                    $('#standard_pengecekan_max_div').hide()
-                } else if (operation == 'Equal') {
-                    $('#standard_pengecekan_min_div').show()
-                    $('#standard_pengecekan_max_div').hide()
-                } else {
-                    $('#standard_pengecekan_min_div').hide()
-                    $('#standard_pengecekan_max_div').hide()
-                }
-            });
+            //     if (operation == 'Between') {
+            //         $('#standard_pengecekan_min_div').show()
+            //         $('#standard_pengecekan_max_div').show()
+            //     } else if (operation == 'Less Than') {
+            //         $('#standard_pengecekan_min_div').hide()
+            //         $('#standard_pengecekan_max_div').show()
+            //     } else if (operation == 'Greater Than') {
+            //         $('#standard_pengecekan_min_div').show()
+            //         $('#standard_pengecekan_max_div').hide()
+            //     } else if (operation == 'Equal') {
+            //         $('#standard_pengecekan_min_div').show()
+            //         $('#standard_pengecekan_max_div').hide()
+            //     } else {
+            //         $('#standard_pengecekan_min_div').hide()
+            //         $('#standard_pengecekan_max_div').hide()
+            //     }
+            // });
 
-            function asuasu() {
-                alert('ok');
-            }
+            // function asuasu() {
+            //     alert('ok');
+            // }
 
 
         });

@@ -68,6 +68,7 @@ class ProgressrepairController extends Controller
         $submit['subcont_cost'] = $data['subcont_cost'];
         $submit['lead_time'] = $data['lead_time'];
         $submit['time_period'] = $data['time_period'];
+        $submit['quotation'] = $data['no_quotation'];
 
         if ($request->place_of_repair == "In House") {
             if ($request->plan_start_repair != '') {

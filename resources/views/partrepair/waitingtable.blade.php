@@ -186,6 +186,26 @@
             </div>
         </div>
     </div>
+
+    <div class="card border-0 shadow rounded col-3 mx-auto">
+        <div class="card-header text-center">
+            <h3><i class="fas fa-file-excel"></i> Export to Excel </h3>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('export_waiting') }}" method="post">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" name="start_date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" name="end_date" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Export to Excel</button>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('script')

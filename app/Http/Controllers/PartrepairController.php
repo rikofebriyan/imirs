@@ -9,6 +9,7 @@ use App\Models\Waitingrepair;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\ItemStandard;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,6 +50,8 @@ class PartrepairController extends Controller
             ->where('created_at', '>=', $currentDate)
             ->count('reg_sp');
 
+        $itemstandard = ItemStandard::all();
+
         $no = 1;
         if ($noUrutAkhir) {
             $ticket = $AWAL . $tahun . $bulan . $tanggal . sprintf("%03s", abs($noUrutAkhir + 1));
@@ -88,6 +91,7 @@ class PartrepairController extends Controller
             'ticket' => $ticket,
             'user' => $user,
             'maker' => $maker,
+            'itemstandard' => $itemstandard,
         ]);
     }
 }
