@@ -65,7 +65,7 @@ class ProgressrepairController extends Controller
         $submit['total_time_repair'] = $data['total_time_repair'];
         $submit['labour_cost'] =  intval(preg_replace('/[^\d.]/', '', $data['labour_cost']));
         $submit['subcont_name'] = $data['subcont_name'];
-        $submit['subcont_cost'] = $data['subcont_cost'];
+        $submit['subcont_cost'] = intval(preg_replace('/[^\d.]/', '', $data['subcont_cost']));
         $submit['lead_time'] = $data['lead_time'];
         $submit['time_period'] = $data['time_period'];
         $submit['quotation'] = $data['no_quotation'];
