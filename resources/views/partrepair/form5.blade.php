@@ -176,7 +176,7 @@
                         <label for="disabledInput" class="col-sm-3 col-form-label">Total Cost Saving</label>
                         <div class="col-sm-9 align-items-center d-flex">
                             <input type="text" name="f_total_cost_saving" class="form-control number border-0"
-                                value="@if($category_repair) {{ $formFinish_totalFinish->f_total_cost_saving }} @else {{ ($waitingrepair->price - ($formFinish_progressrepair->subcont_cost + $formFinish_progressrepair->labour_cost + $formFinish_progresspemakaian->sum('total_price'))) * 0.7 }} @endif"
+                                value="@if ($category_repair) {{ $formFinish_totalFinish->f_total_cost_saving }} @else {{ ($waitingrepair->price - ($formFinish_progressrepair->subcont_cost + $formFinish_progressrepair->labour_cost + $formFinish_progresspemakaian->sum('total_price'))) * 0.7 }} @endif"
                                 readonly>
                         </div>
                     </div>
@@ -200,10 +200,11 @@
                         </div>
                         <div class="col-sm-9">
                             <select class="form-select choices" onchange="categorycodeajax()" id="categorycodejs"
-                                name="category" @if($category_repair) readonly @endif>
+                                name="category" @if ($category_repair) readonly @endif>
                                 <option value="">Pilih ...</option>
                                 @foreach ($category as $cat)
-                                    <option value="{{ $cat->category_code }}" @if($category_repair == $cat->category_code) selected @endif>
+                                    <option value="{{ $cat->category_code }}"
+                                        @if ($category_repair == $cat->category_code) selected @endif>
                                         {{ $cat->category }}
                                     </option>
                                 @endforeach
@@ -217,8 +218,11 @@
                         <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
                             Repair</label>
                         <div class="col-sm-9">
+                            {{-- <input type="text" class="form-control" id="code_part_repair2"
+                                name="code_part_repair" value="{{ $formFinish_totalFinish->code_part_repair }}" @if ($formFinish_totalFinish->code_part_repair) readonly @endif> --}}
                             <input type="text" class="form-control" id="code_part_repair2"
-                                name="code_part_repair" value="{{ $formFinish_totalFinish->code_part_repair }}" @if($formFinish_totalFinish->code_part_repair) readonly @endif>
+                                name="code_part_repair" value="@if ($formFinish_totalFinish->code_part_repair) {{ $formFinish_totalFinish->code_part_repair }} @else {{ $waitingrepair->code_part_repair }} @endif"
+                                @if ($formFinish_totalFinish->code_part_repair) readonly @endif>
                         </div>
                     </div>
 
