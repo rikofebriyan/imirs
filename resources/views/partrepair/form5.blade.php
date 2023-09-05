@@ -138,8 +138,8 @@
                                 <tr>
                                     <th class="text-center">Item Check</th>
                                     <th class="text-center">Operation</th>
-                                    <th class="text-center">Standard Min</th>
-                                    <th class="text-center">Standard Max</th>
+                                    <th class="text-center">Standard</th>
+                                    {{-- <th class="text-center">Standard Max</th> --}}
                                     <th class="text-center">Unit Measurement</th>
                                     <th class="text-center">Actual</th>
                                     <th class="text-center">Judgement</th>
@@ -151,7 +151,7 @@
                                         <td>{{ $item->item_standard }}</td>
                                         <td>{{ $item->operation }}</td>
                                         <td class="text-center">{{ $item->standard_pengecekan_min }}</td>
-                                        <td class="text-center">{{ $item->standard_pengecekan_max }}</td>
+                                        {{-- <td class="text-center">{{ $item->standard_pengecekan_max }}</td> --}}
                                         <td class="text-center">{{ $item->unit_measurement }}</td>
                                         <td class="text-center">{{ $item->actual_pengecekan }}</td>
                                         <td class="text-center">{{ $item->judgement }}</td>
