@@ -18,7 +18,8 @@
                             <th scope="col">Ticket No</th>
                             <th scope="col">Plan Start</th>
                             <th scope="col">Plan Finish</th>
-                            <th scope="col">Spare Part</th>
+                            <th scope="col">Name Part</th>
+                            <th scope="col">Type Part</th>
                             <th scope="col">Problem</th>
                             <th class="text-center" scope="col">Status Repair</th>
                             <th class="text-center" scope="col">Progress</th>
@@ -44,6 +45,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $req->item_name }}</td>
+                                <td>{{ $req->item_type }}</td>
                                 <td>{{ $req->problem }}</td>
                                 <td class="text-center"><span
                                         class="@if ($req->status_repair == 'Urgent') bg-danger text-white px-3 py-2 rounded-pill @endif">{{ $req->status_repair }}</span>

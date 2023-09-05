@@ -99,17 +99,19 @@
                     <ul>
                         <li class="menu-item  ">
                             <a href="{{ route('home') }}" class='menu-link'>
-                                <span><i class="bi bi-grid-fill"></i> Dashboard</span>
+                                <span><i class="fas fa-grip"></i> Dashboard</span>
                             </a>
                         </li>
                         <li class="menu-item  ">
                             <a href="{{ route('request') }}" class='menu-link'>
-                                <span><i class="bi bi-stack"></i> Create Repair Ticket</span>
+                                <span><i class="fas fa-ticket"></i> Create Repair Ticket</span>
                             </a>
                         </li>
                         <li class="menu-item  ">
                             <a href="{{ route('partrepair.waitingapprove.index') }}" class='menu-link'>
-                                <span><i class="fas fa-file-signature"></i> Waiting Approval</span>
+                                <span>
+                                    <i class="fas fa-file-signature"></i> Waiting Approval
+                                </span>
                                 @if ($waiting_approve > 0)
                                     <span
                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $waiting_approve }}</span>
@@ -118,7 +120,7 @@
                         </li>
                         <li class="menu-item  has-sub">
                             <a href="#" class='menu-link'>
-                                <span><i class="bi bi-table"></i>Ticket Repair Table</span>
+                                <span><i class="fas fa-list"></i> Ticket Repair Table</span>
                                 @if ($allprogress > 0)
                                     <span
                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ $allprogress }}</span>
@@ -170,7 +172,7 @@
                             @if ($loginUser->jabatan == 'ADMIN')
                                 <li class="menu-item  has-sub">
                                     <a href="#" class='menu-link'>
-                                        <span><i class="bi bi-table"></i> Master Data</span>
+                                        <span><i class="fas fa-database"></i> Master Data</span>
                                     </a>
                                     <div class="submenu ">
                                         <div class="submenu-group-wrapper">
@@ -248,7 +250,7 @@
 
                         <li class="menu-item  ">
                             <a href="{{ route('report') }}" class='menu-link'>
-                                <span><i class="bi bi-grid-fill"></i> Report</span>
+                                <span><i class="fas fa-sheet-plastic"></i> Report</span>
                             </a>
                         </li>
                     </ul>

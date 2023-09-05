@@ -17,7 +17,8 @@
                         <tr>
                             <th scope="col">Ticket No</th>
                             <th scope="col">Nama Requester</th>
-                            <th scope="col">Spare Part</th>
+                            <th scope="col">Name Part</th>
+                            <th scope="col">Type Part</th>
                             <th scope="col">Problem</th>
                             <th class="text-center" scope="col">Status Repair</th>
                             <th class="text-center" scope="col">Section</th>
@@ -30,6 +31,7 @@
                                 <td>{{ $req->reg_sp }}</td>
                                 <td>{{ $req->nama_pic . ' ( ' . $req->jabatan . ' )' }}</td>
                                 <td>{{ $req->item_name }}</td>
+                                <td>{{ $req->item_type }}</td>
                                 <td>{{ $req->problem }}</td>
                                 <td class="text-center"><span
                                         class="@if ($req->status_repair == 'Urgent') bg-danger text-white px-3 py-2 rounded-pill @endif">{{ $req->status_repair }}</span>

@@ -19,7 +19,8 @@
                             <th scope="col">Ticket No</th>
                             <th scope="col">Plan Start</th>
                             <th scope="col">Plan Finish</th>
-                            <th scope="col">Spare Part</th>
+                            <th scope="col">Name Part</th>
+                            <th scope="col">Type Part</th>
                             <th scope="col">Problem</th>
                             <th class="text-center" scope="col">Status Repair</th>
                             <th class="text-center" scope="col">Progress</th>
@@ -33,6 +34,7 @@
                                 <td>{{ Carbon\Carbon::parse($req->plan_start_repair)->format('Y-m-d') }}</td>
                                 <td>{{ Carbon\Carbon::parse($req->plan_finish_repair)->format('Y-m-d') }}</td>
                                 <td>{{ $req->item_name }}</td>
+                                <td>{{ $req->item_type }}</td>
                                 <td>{{ $req->problem }}</td>
                                 <td>{{ $req->status_repair }}</td>
                                 <td>
