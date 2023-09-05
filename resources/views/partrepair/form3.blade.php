@@ -296,7 +296,7 @@
                                         <label for="storage" class="col-sm-3 col-form-label">Warehouse <sup
                                                 class="text-danger">*</sup></label>
                                         <div class="col-sm-9">
-                                            <select class="form-select" id="storage" name="storage" required>
+                                            <select class="form-select" id="storage" name="storage">
                                                 <option value="" selected>Pilih ...</option>
                                                 <option value="1">Maintenance Spare Part</option>
                                                 <option value="2">Tool Center</option>
