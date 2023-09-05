@@ -109,6 +109,8 @@ class WaitingrepairController extends Controller
 
         if ($request->get('id') != null) {
             Waitingrepair::find($request->get('id'))->update($data);
+
+            return redirect()->back()->with('success', 'Your task added successfully!');
         } else {
             $formInput = Waitingrepair::create($data);
 
