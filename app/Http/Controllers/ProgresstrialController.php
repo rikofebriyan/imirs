@@ -171,11 +171,11 @@ class ProgresstrialController extends Controller
 
     public function updateTrial($id, Request $request)
     {
-        $this->validate($request, [
-            'operation' => 'required',
-            'standard_pengecekan_min' => 'required',
-            'unit_measurement' => 'required',
-        ]);
+        // $this->validate($request, [
+            // 'operation' => 'required',
+            // 'standard_pengecekan_min' => 'required',
+            // 'unit_measurement' => 'required',
+        // ]);
 
         // Progresstrial::find($id)->update($request->all());
         DB::table('sparepartrepair.dbo.progresstrials')->where('id', $id)->update([
