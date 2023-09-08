@@ -47,8 +47,8 @@
                                 <td>{{ $req->standard_pengecekan_max }}</td>
 
 
-                                <td>{{ $req->created_at->format('d-m-Y H:i:s') }}</td>
-                                <td>{{ $req->updated_at->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ $req->created_at }}</td>
+                                <td>{{ $req->updated_at }}</td>
                                 <td class="text-center d-flex d-inline">
 
                                     <form action="{{ route('standard_pengecekan.show', $req->id) }}" method="POST"

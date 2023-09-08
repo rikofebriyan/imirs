@@ -17,19 +17,19 @@ class StockoutController extends Controller
      */
     public function index()
     {
-        $partr = Waitingrepair::leftjoin('sparepartrepair.dbo.stockouts', 'waitingrepairs.id', '=', 'stockouts.form_input_id')
-            ->select('waitingrepairs.id as waitingrepairid', 'waitingrepairs.*', 'stockouts.*')
-            ->where('deleted', null)
-            ->where('progress', 'finish')
-            ->where('form_input_id', null)
-            ->get();
-
-        // $partr = DB::table('sparepartrepair.dbo.waitingrepairs')->leftjoin('sparepartrepair.dbo.stockouts', 'waitingrepairs.id', '=', 'stockouts.form_input_id')
+        // $partr = Waitingrepair::leftjoin('sparepartrepair.dbo.stockouts', 'waitingrepairs.id', '=', 'stockouts.form_input_id')
         //     ->select('waitingrepairs.id as waitingrepairid', 'waitingrepairs.*', 'stockouts.*')
         //     ->where('deleted', null)
         //     ->where('progress', 'finish')
         //     ->where('form_input_id', null)
         //     ->get();
+
+        $partr = DB::table('sparepartrepair.dbo.waitingrepairs')->leftjoin('sparepartrepair.dbo.stockouts', 'waitingrepairs.id', '=', 'stockouts.form_input_id')
+            ->select('waitingrepairs.id as waitingrepairid', 'waitingrepairs.*', 'stockouts.*')
+            ->where('deleted', null)
+            ->where('progress', 'finish')
+            ->where('form_input_id', null)
+            ->get();
 
         return view('partrepair.stockout', [
             'reqtzy' => $partr,
@@ -54,7 +54,6 @@ class StockoutController extends Controller
      */
     public function store(Request $request)
     {
-        // create new task
         Stockout::create($request->all());
 
         return redirect()->back()->with('success', 'Your task added successfully!');

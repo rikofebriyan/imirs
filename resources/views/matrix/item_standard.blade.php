@@ -25,6 +25,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Item Standard</th>
+                            <th scope="col">Unit Measurement</th>
                             <th scope="col">created_at</th>
                             <th scope="col">updated_at</th>
                             <th scope="col">action</th>
@@ -35,10 +36,9 @@
                             <tr>
                                 <td>{{ $req->id }}</td>
                                 <td>{{ $req->item_standard }}</td>
-
-
-                                <td>{{ $req->created_at->format('d-m-Y H:i:s') }}</td>
-                                <td>{{ $req->updated_at->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ $req->unit_measurement }}</td>
+                                <td>{{ $req->created_at }}</td>
+                                <td>{{ $req->updated_at }}</td>
                                 <td class="text-center d-flex d-inline">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn icon btn-primary btn-sm me-1" data-bs-toggle="modal"
@@ -66,6 +66,12 @@
                                                                 class="form-control" value="{{ $req->item_standard }}"
                                                                 required>
                                                         </div>
+                                                        <div class="form-group mt-2">
+                                                            <label for="unit_measurement">unit_measurement</label>
+                                                            <input type="text" id="unit_measurement" name="unit_measurement"
+                                                                class="form-control" value="{{ $req->unit_measurement }}"
+                                                                required>
+                                                        </div>
                                                         <button type="submit" class="btn btn-primary">Perbarui
                                                             Data</button>
                                                     </div>
@@ -77,7 +83,7 @@
                                         style="display: inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn icon btn-danger btn-sm"><i
+                                        <button type="submit" class="btn icon btn-danger btn-sm" onclick="return confirm('Yakin?')"><i
                                                 class="bi bi-trash3"></i></button>
                                     </form>
                                 </td>
@@ -106,6 +112,11 @@
                         <div class="form-group mt-2">
                             <label for="item_standard">Item_standard</label>
                             <input type="text" id="item_standard" name="item_standard" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="unit_measurement">unit_measurement</label>
+                            <input type="text" id="unit_measurement" name="unit_measurement" class="form-control" required>
                         </div>
 
                     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Line;
 use App\Models\Machine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class MachineController extends Controller
@@ -17,11 +18,19 @@ class MachineController extends Controller
     public function index()
     {
 
-        $join = Machine::join('lines', 'machines.line_id', '=', 'lines.id')
+        // $join = Machine::join('lines', 'machines.line_id', '=', 'lines.id')
+        //     ->select('machines.*', 'lines.name as line')
+        //     ->get();
+        // $tabel2 = Line::all();
+        // $partr = Machine::all()->sortByDesc('id');
+        $join = DB::table('sparepartrepair.dbo.machines')
+            ->leftJoin('lines', 'machines.line_id', '=', 'lines.id')
             ->select('machines.*', 'lines.name as line')
             ->get();
-        $tabel2 = Line::all();
-        $partr = Machine::all()->sortByDesc('id');
+
+        $tabel2 = DB::table('sparepartrepair.dbo.lines')->get();
+        $partr = DB::table('sparepartrepair.dbo.machines')->orderByDesc('id')->get();
+
         return view('matrix.machine', [
             'reqtzy' => $partr,
             'tab2' => $tabel2,
@@ -90,7 +99,11 @@ class MachineController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        Machine::find($id)->update($request->all());
+        // Machine::find($id)->update($request->all());
+        DB::table('sparepartrepair.dbo.machines')->where('id', $id)->update([
+            'line_id' => $request->line_id,
+            'name' => $request->name,
+        ]);
         return redirect()->route('machine.index')->with('success', 'Machine updated successfully');
     }
 
@@ -102,7 +115,8 @@ class MachineController extends Controller
      */
     public function destroy($id)
     {
-        Machine::find($id)->delete();
+        // Machine::find($id)->delete();
+        DB::table('sparepartrepair.dbo.lines')->where('id', $id)->delete();
         return redirect()->route('machine.index')->with('success', 'Task removed successfully');
     }
 }

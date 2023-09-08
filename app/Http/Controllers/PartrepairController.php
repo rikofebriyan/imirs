@@ -34,7 +34,7 @@ class PartrepairController extends Controller
 
     public function index()
     {
-        return view('partrepair.index');
+        // return view('partrepair.index');
     }
 
     public function request(Request $request)
@@ -50,7 +50,8 @@ class PartrepairController extends Controller
             ->where('created_at', '>=', $currentDate)
             ->count('reg_sp');
 
-        $itemstandard = ItemStandard::all();
+        // $itemstandard = ItemStandard::all();
+        $itemstandard = DB::table('sparepartrepair.dbo.item_standards')->get();
 
         $no = 1;
         if ($noUrutAkhir) {

@@ -83,7 +83,7 @@ class ExportController extends Controller
 
         $start_date_formatted = date("d-m-y", strtotime($start_date));
         $end_date_formatted = date("d-m-y", strtotime($end_date));
-        $fileName = "I-Mirs Export " . $start_date_formatted . " sampai " . $end_date_formatted . ".xlsx";
+        $fileName = "I-Mirs Export History Repair " . $start_date_formatted . " sampai " . $end_date_formatted . ".xlsx";
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         return response()->stream(function () use ($writer) {
@@ -98,7 +98,8 @@ class ExportController extends Controller
     {
         $reg_sp = $request->reg_sp;
 
-        $users = Waitingrepair::where('reg_sp', $reg_sp)
+        $users = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->where('reg_sp', $reg_sp)
             ->select(
                 'date as tanggal',
                 'part_from',
@@ -121,7 +122,7 @@ class ExportController extends Controller
                 'progress',
                 'approval'
             )
-            ->get();
+            ->get()->toArray();
 
         $header = array(
             'Tanggal',
@@ -154,7 +155,7 @@ class ExportController extends Controller
         }
 
         $sheet->fromArray([$header], null, 'A1');
-        $sheet->fromArray($users->toArray(), null, 'A2');
+        $sheet->fromArray(json_decode(json_encode($users), true), null, 'A2');
 
         $fileName = "Ticket Approval " . $reg_sp .  ".xlsx";
 
@@ -167,15 +168,15 @@ class ExportController extends Controller
         ]);
     }
 
-
     public function export_finish(Request $request)
     {
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        $users = Finishrepair::leftJoin('sparepartrepair.dbo.progressrepairs', function ($join) {
-            $join->on('finishrepairs.progressrepair_id', '=', 'progressrepairs.id');
-        })
+        $users = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->leftJoin('sparepartrepair.dbo.progressrepairs', function ($join) {
+                $join->on('finishrepairs.progressrepair_id', '=', 'progressrepairs.id');
+            })
             ->whereBetween('delivery_date', [$start_date, $end_date])
             ->get([
                 'finishrepairs.f_reg_sp',
@@ -199,7 +200,7 @@ class ExportController extends Controller
                 'finishrepairs.code_part_repair',
                 'finishrepairs.delivery_date',
                 'finishrepairs.pic_delivery',
-            ]);
+            ])->toArray();
 
         $header = array(
             'reg_sp',
@@ -233,11 +234,11 @@ class ExportController extends Controller
         }
 
         $sheet->fromArray([$header], null, 'A1');
-        $sheet->fromArray($users->toArray(), null, 'A2');
+        $sheet->fromArray(json_decode(json_encode($users), true), null, 'A2');
 
         $start_date_formatted = date("d-m-y", strtotime($start_date));
         $end_date_formatted = date("d-m-y", strtotime($end_date));
-        $fileName = "I-Mirs Export Finish " . $start_date_formatted . " sampai " . $end_date_formatted . ".xlsx";
+        $fileName = "I-Mirs Export Finish Table " . $start_date_formatted . " sampai " . $end_date_formatted . ".xlsx";
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         return response()->stream(function () use ($writer) {
@@ -253,36 +254,37 @@ class ExportController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        $users = Waitingrepair::whereBetween('date', [$start_date, $end_date])
+        $users = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->whereBetween('date', [$start_date, $end_date])
             ->select(
-                "date",
-                "part_from",
-                "code_part_repair",
-                "number_of_repair",
-                "reg_sp",
-                "section",
-                "line",
-                "machine",
-                "item_id",
-                "item_code",
-                "item_name",
-                "item_type",
-                "maker",
-                "serial_number",
-                "problem",
-                "nama_pic",
-                "type_of_part",
-                "price",
-                "stock_spare_part",
-                "status_repair",
-                "progress",
-                "deleted",
-                "deleted_by",
-                "reason",
-                "approval",
-            )->get();
+                'date',
+                'part_from',
+                'code_part_repair',
+                'number_of_repair',
+                'reg_sp',
+                'section',
+                'line',
+                'machine',
+                'item_id',
+                'item_code',
+                'item_name',
+                'item_type',
+                'maker',
+                'serial_number',
+                'problem',
+                'nama_pic',
+                'type_of_part',
+                'price',
+                'stock_spare_part',
+                'status_repair',
+                'progress',
+                'deleted',
+                'deleted_by',
+                'reason',
+                'approval',
+            )->get()->toArray();
 
-        $header = [
+        $header = (array) [
             "date",
             "part_from",
             "code_part_repair",
@@ -317,12 +319,12 @@ class ExportController extends Controller
             $spreadsheet->addSheet($sheet);
         }
 
-        $sheet->fromArray([$header], null, 'A1');
-        $sheet->fromArray($users->toArray(), null, 'A2');
+        $sheet->fromArray($header, null, 'A1');
+        $sheet->fromArray(json_decode(json_encode($users), true), null, 'A2');
 
         $start_date_formatted = date("d-m-y", strtotime($start_date));
         $end_date_formatted = date("d-m-y", strtotime($end_date));
-        $fileName = "I-Mirs Export Finish " . $start_date_formatted . " sampai " . $end_date_formatted . ".xlsx";
+        $fileName = "I-Mirs Export Waiting Table " . $start_date_formatted . " sampai " . $end_date_formatted . ".xlsx";
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         return response()->stream(function () use ($writer) {

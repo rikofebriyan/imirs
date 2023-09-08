@@ -41,8 +41,8 @@ class InfoController extends Controller
 
     public function getInfo($nim)
     {
-        $data = MasterSparePart::all()->where('id', $nim);
-        return Response()->json(['success' => true, 'data' => $data]);
+        // $data = MasterSparePart::all()->where('id', $nim);
+        // return Response()->json(['success' => true, 'data' => $data]);
     }
 
     public function getline(Request $request)
@@ -119,7 +119,8 @@ class InfoController extends Controller
     public function getmachine(Request $request)
     {
         $lineId = $request->get('lineId');
-        $machine = Machine::all()->where('line_id', $lineId)->sortBy('name')->pluck('name', 'id');
+        // $machine = Machine::all()->where('line_id', $lineId)->sortBy('name')->pluck('name', 'id');
+        $machine = DB::table('sparepartrepair.dbo.machines')->where('line_id', $lineId)->orderBy('name')->pluck('name', 'id');
         return response()->json($machine);
     }
 
@@ -134,11 +135,15 @@ class InfoController extends Controller
 
     public function getNumberOfRepair(Request $request)
     {
-        $finishRepair = Finishrepair::where('code_part_repair', $request->codePartRepair)->get();
+        // $finishRepair = Finishrepair::where('code_part_repair', $request->codePartRepair)->get();
+        $finishRepair = DB::table('sparepartrepair.dbo.finishrepairs')->where('code_part_repair', $request->codePartRepair)->get();
+
         if ($finishRepair->count() > 0) {
-            $ticket = Waitingrepair::where('id', $finishRepair->last()->form_input_id)->first();
-            $masterSparePart = MasterSparePart::where('id', $ticket->item_id)->first();
-            $maker = Maker::all();
+            // $ticket = Waitingrepair::where('id', $finishRepair->last()->form_input_id)->first();
+            $ticket = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $finishRepair->last()->form_input_id)->first();
+            // $masterSparePart = MasterSparePart::where('id', $ticket->item_id)->first();
+            // $maker = Maker::all();
+            $maker = DB::table('sparepartrepair.dbo.makers')->get();
             $typeOfPart = [
                 1 => 'Mechanic',
                 2 => 'Electric',
@@ -147,7 +152,7 @@ class InfoController extends Controller
             ];
         } else {
             $ticket = [];
-            $masterSparePart = [];
+            // $masterSparePart = [];
             $maker = [];
             $typeOfPart = [];
         }
@@ -155,7 +160,7 @@ class InfoController extends Controller
         return response()->json([
             'finishRepair' => $finishRepair->count(),
             'dataRepair' => $ticket,
-            'dataPart' => $masterSparePart,
+            // 'dataPart' => $masterSparePart,
             'maker' => $maker,
             'typeOfPart' => $typeOfPart,
         ]);
@@ -163,7 +168,8 @@ class InfoController extends Controller
 
     public function getMaker()
     {
-        $maker = Maker::all();
+        // $maker = Maker::all();
+        $maker = DB::table('sparepartrepair.dbo.makers')->get();
         return response()->json($maker);
     }
 
@@ -180,19 +186,22 @@ class InfoController extends Controller
 
     public function getSubcont()
     {
-        $subcont = Subcont::all();
+        // $subcont = Subcont::all();
+        $subcont = DB::table('sparepartrepair.dbo.subconts')->get();
         return response()->json($subcont);
     }
 
     public function getcategory(Request $request)
     {
-        $data = CodePartRepair::all()->sortByDesc('id')->where('category', $request->category)->first();
+        // $data = CodePartRepair::all()->sortByDesc('id')->where('category', $request->category)->first();
+        $data = DB::table('sparepartrepair.dbo.code_part_repairs')->where('category', $request->category)->orderByDesc('id')->first();
         return response()->json($data);
     }
 
     public function masterdelete($id)
     {
-        MasterSparePart::find($id)->delete();
+        // MasterSparePart::find($id)->delete();
+        DB::table('sparepartrepair.dbo.master_spare_parts')->where('id', $id)->delete();
         return response()->json([
             'success' => 'Record has been deleted successfully!'
         ]);
@@ -244,7 +253,8 @@ class InfoController extends Controller
 
     public function getUnitMeasurement(Request $request)
     {
-        $unitMeasurement = ItemStandard::where('id', $request->id)->first();
+        // $unitMeasurement = ItemStandard::where('id', $request->id)->first();
+        $unitMeasurement = DB::table('sparepartrepair.dbo.item_standards')->where('id', $request->id)->first();
         return response()->json($unitMeasurement);
     }
 }

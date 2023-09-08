@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Maker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 
@@ -20,7 +21,9 @@ class MakerController extends Controller
      */
     public function index()
     {
-        $partr = Maker::all()->sortByDesc('id');
+        // $partr = Maker::all()->sortByDesc('id');
+        $partr = DB::table('sparepartrepair.dbo.makers')->orderByDesc('id')->get();
+
         return view('matrix.maker', [
             'reqtzy' => $partr,
         ]);
@@ -87,7 +90,11 @@ class MakerController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        Maker::find($id)->update($request->all());
+        // Maker::find($id)->update($request->all());
+        DB::table('sparepartrepair.dbo.makers')->where('id', $id)->update([
+            'name' => $request->name,
+        ]);
+
         return redirect()->route('maker.index')->with('success', 'Maker updated successfully');
     }
 
@@ -99,7 +106,8 @@ class MakerController extends Controller
      */
     public function destroy($id)
     {
-        Maker::find($id)->delete();
+        // Maker::find($id)->delete();
+        DB::table('sparepartrepair.dbo.makers')->where('id', $id)->delete();
         return redirect()->route('maker.index')->with('success', 'Task removed successfully');
     }
 }

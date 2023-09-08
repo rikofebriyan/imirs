@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Progresstrial;
 use App\Models\MasterSparePart;
 use App\Models\StandardPengecekan;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class StandardpengecekanController extends Controller
@@ -19,14 +20,24 @@ class StandardpengecekanController extends Controller
     public function index()
     {
 
-        $join = StandardPengecekan::join('item_standards', 'standard_pengecekans.item_pengecekan_id', '=', 'item_standards.id')
-            ->join('master_spare_parts', 'standard_pengecekans.master_spare_part_id', '=', 'master_spare_parts.id')
+        // $join = StandardPengecekan::join('item_standards', 'standard_pengecekans.item_pengecekan_id', '=', 'item_standards.id')
+        //     ->join('master_spare_parts', 'standard_pengecekans.master_spare_part_id', '=', 'master_spare_parts.id')
+        //     ->select('standard_pengecekans.*', 'item_standards.item_standard', 'master_spare_parts.item_name')
+        //     ->get();
+
+        $join = DB::table('sparepartrepair.dbo.standard_pengecekans')
+            ->leftJoin('item_standards', 'standard_pengecekans.item_pengecekan_id', '=', 'item_standards.id')
+            ->leftJoin('master_spare_parts', 'standard_pengecekans.master_spare_part_id', '=', 'master_spare_parts.id')
             ->select('standard_pengecekans.*', 'item_standards.item_standard', 'master_spare_parts.item_name')
             ->get();
 
-        $tabel2 = MasterSparePart::all();
-        $tabel3 = ItemStandard::all();
-        $partr = StandardPengecekan::all()->sortByDesc('id');
+        // $tabel2 = MasterSparePart::all();
+        // $tabel3 = ItemStandard::all();
+        // $partr = StandardPengecekan::all()->sortByDesc('id');
+        $tabel2 = DB::table('sparepartrepair.dbo.master_spare_parts')->get();
+        $tabel3 = DB::table('sparepartrepair.dbo.item_standards')->get();
+        $partr = DB::table('sparepartrepair.dbo.standard_pengecekans')->orderByDesc('id')->get();
+
         return view('matrix.standard_pengecekan', [
             'reqtzy' => $partr,
             'tab2' => $tabel2,

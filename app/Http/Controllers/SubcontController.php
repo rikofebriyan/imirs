@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subcont;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class SubcontController extends Controller
@@ -15,7 +16,9 @@ class SubcontController extends Controller
      */
     public function index()
     {
-        $partr = Subcont::all()->sortByDesc('id');
+        // $partr = Subcont::all()->sortByDesc('id');
+        $partr = DB::table('sparepartrepair.dbo.subconts')->orderByDesc('id')->get();
+
         return view('matrix.subcont', [
             'reqtzy' => $partr,
         ]);
@@ -82,7 +85,14 @@ class SubcontController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        Subcont::find($id)->update($request->all());
+        // Subcont::find($id)->update($request->all());
+        DB::table('sparepartrepair.dbo.subconts')->where('id', $id)->update([
+            'name' => $request->name,
+            'alamat' => $request->alamat,
+            'email' => $request->email,
+            'contact' => $request->contact,
+        ]);
+
         return redirect()->route('subcont.index')->with('success', 'Subcont updated successfully');
     }
 
@@ -94,7 +104,9 @@ class SubcontController extends Controller
      */
     public function destroy($id)
     {
-        Subcont::find($id)->delete();
+        // Subcont::find($id)->delete();
+        DB::table('sparepartrepair.dbo.subconts')->where('id', $id)->delete();
+
         return redirect()->route('subcont.index')->with('success', 'Task removed successfully');
     }
 }

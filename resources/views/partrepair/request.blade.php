@@ -665,8 +665,8 @@
                             $('#item_name').val(result['dataRepair'].item_name)
                             $('#description').val(result['dataRepair'].item_type)
 
-                            $('#price').val(result['dataPart'].price)
-                            $('#qty').val(result['dataPart'].qty)
+                            $('#price').val(result['dataRepair'].price)
+                            $('#qty').val(result['dataRepair'].stock_spare_part)
 
                             $('#maker').empty()
                             $('#type_of_part').empty()
@@ -694,21 +694,21 @@
                                     selected + `>${part}</option>`)
                             });
 
-                            if (result['dataPart'].qty == 0) {
-                                $('#status_repair').empty()
-                                $('#status_repair').append(`
-                                    <option disabled>Pilih ...</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Urgent" selected>Urgent</option>
-                                `)
-                            } else {
-                                $('#status_repair').empty()
-                                $('#status_repair').append(`
-                                    <option disabled>Pilih ...</option>
-                                    <option value="Normal" selected>Normal</option>
-                                    <option value="Urgent">Urgent</option>
-                                `)
-                            }
+                            // if (result['dataPart'].qty == 0) {
+                            //     $('#status_repair').empty()
+                            //     $('#status_repair').append(`
+                            //         <option disabled>Pilih ...</option>
+                            //         <option value="Normal">Normal</option>
+                            //         <option value="Urgent" selected>Urgent</option>
+                            //     `)
+                            // } else {
+                            //     $('#status_repair').empty()
+                            //     $('#status_repair').append(`
+                            //         <option disabled>Pilih ...</option>
+                            //         <option value="Normal" selected>Normal</option>
+                            //         <option value="Urgent">Urgent</option>
+                            //     `)
+                            // }
                         }
                     }
                 });

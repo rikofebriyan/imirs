@@ -52,7 +52,12 @@ class WaitingrepairController extends Controller
 
     public function deleted(Request $request)
     {
-        $partr = Waitingrepair::leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+        // $partr = Waitingrepair::leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+        //     ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
+        //     ->where('deleted', 1)
+        //     ->get();
+        $partr = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
             ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair')
             ->where('deleted', 1)
             ->get();
@@ -100,15 +105,45 @@ class WaitingrepairController extends Controller
             'problem' => 'required',
         ]);
 
-        $line = Line::where('id', $request->get('line'))->first();
-        $section = Section::where('id', $request->get('section'))->first();
-        $data = $request->all();
-        $data['section'] = $section->name;
-        $data['line'] = $line->name;
-        $data['price'] = intval(preg_replace('/[^\d.]/', '', $request->price));
+        // $line = Line::where('id', $request->get('line'))->first();
+        // $section = Section::where('id', $request->get('section'))->first();
+        $line = DB::table('sparepartrepair.dbo.lines')->where('id', $request->get('line'))->first();
+        $section = DB::table('sparepartrepair.dbo.sections')->where('id', $request->get('section'))->first();
+        // $data = $request->all();
+        // $data['section'] = $section->name;
+        // $data['line'] = $line->name;
+        // $data['price'] = intval(preg_replace('/[^\d.]/', '', $request->price));
+        $data = (array) [
+            'date' => $request->date,
+            'part_from' => $request->part_from,
+            'code_part_repair' => $request->code_part_repair,
+            'number_of_repair' => $request->number_of_repair,
+            'reg_sp' => $request->reg_sp,
+            'section' => $section->name,
+            'line' => $line->name,
+            'machine' => $request->machine,
+            'item_id' => $request->item_id,
+            'item_code' => $request->item_code,
+            'item_name' => $request->item_name,
+            'item_type' => $request->item_type,
+            'maker' => $request->maker,
+            'serial_number' => $request->serial_number,
+            'problem' => $request->problem,
+            'nama_pic' => $request->nama_pic,
+            'type_of_part' => $request->type_of_part,
+            'price' => intval(preg_replace('/[^\d.]/', '', $request->price)),
+            'stock_spare_part' => $request->stock_spare_part,
+            'status_repair' => $request->status_repair,
+            'progress' => $request->progress,
+            'deleted' => null,
+            'deleted_by' => null,
+            'reason' => null,
+            'approval' => null,
+        ];
 
         if ($request->get('id') != null) {
-            Waitingrepair::find($request->get('id'))->update($data);
+            // Waitingrepair::find($request->get('id'))->update($data);
+            DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $request->get('id'))->update($data);
 
             return redirect()->back()->with('success', 'Your task added successfully!');
         } else {
@@ -131,8 +166,8 @@ class WaitingrepairController extends Controller
             }
         }
 
-
-        return redirect()->route('partrepair.waitingapprove.index')->with('success', 'Your task added successfully!');
+        // return redirect()->route('partrepair.waitingapprove.index')->with('success', 'Your task added successfully!');
+        return redirect()->back()->with('success', 'Your task added successfully!');
     }
 
     /**
@@ -143,133 +178,133 @@ class WaitingrepairController extends Controller
      */
     public function show($id)
     {
-        // form 2
-        $subcont = Subcont::all();
-        $user = User::all();
-        $waitingrepair = Waitingrepair::find($id);
-        $tradeinddisc = 0.3;
-        $price = $waitingrepair->price;
-        $price = $waitingrepair->price;
-        $tradeincost = $tradeinddisc * $price;
-        $progressrepair2 = Progressrepair::where('form_input_id', $waitingrepair->id)->first();
+        // // form 2
+        // $subcont = Subcont::all();
+        // $user = User::all();
+        // $waitingrepair = Waitingrepair::find($id);
+        // $tradeinddisc = 0.3;
+        // $price = $waitingrepair->price;
+        // $price = $waitingrepair->price;
+        // $tradeincost = $tradeinddisc * $price;
+        // $progressrepair2 = Progressrepair::where('form_input_id', $waitingrepair->id)->first();
 
-        if ($progressrepair2 == null) {
-            $progressrepair2 = (object) ([
-                'place_of_repair' => '',
-                'analisa' => '',
-                'action' => '',
-                'pic_repair' => '',
-                'judgement' => '',
-                'plan_start_repair' => '',
-                'plan_finish_repair' => '',
-                'actual_start_repair' => '',
-                'actual_finish_repair' => '',
-                'total_time_repair' => '',
-                'labour_cost' => '',
-                'subcont_name' => '',
-                'judgement' => '',
-                'quotation' => '',
-                'subcont_cost' => '',
-                'lead_time' => '',
-                'time_period' => '',
-                'nomor_pp' => '',
-                'nomor_po' => '',
-                'plan_start_repair_subcont' => '',
-                'plan_finish_repair_subcont' => '',
-                'actual_start_repair_subcont' => '',
-                'actual_finish_repair_subcont' => '',
-            ]);
-        }
+        // if ($progressrepair2 == null) {
+        //     $progressrepair2 = (object) ([
+        //         'place_of_repair' => '',
+        //         'analisa' => '',
+        //         'action' => '',
+        //         'pic_repair' => '',
+        //         'judgement' => '',
+        //         'plan_start_repair' => '',
+        //         'plan_finish_repair' => '',
+        //         'actual_start_repair' => '',
+        //         'actual_finish_repair' => '',
+        //         'total_time_repair' => '',
+        //         'labour_cost' => '',
+        //         'subcont_name' => '',
+        //         'judgement' => '',
+        //         'quotation' => '',
+        //         'subcont_cost' => '',
+        //         'lead_time' => '',
+        //         'time_period' => '',
+        //         'nomor_pp' => '',
+        //         'nomor_po' => '',
+        //         'plan_start_repair_subcont' => '',
+        //         'plan_finish_repair_subcont' => '',
+        //         'actual_start_repair_subcont' => '',
+        //         'actual_finish_repair_subcont' => '',
+        //     ]);
+        // }
 
-        // form 3
-        $progresspemakaian = Progresspemakaian::where('form_input_id', $waitingrepair->id)->get();
-        $countid = Progresspemakaian::where('form_input_id', $waitingrepair->id)->count();
-        $mastersparepart = MasterSparePart::all();
-        $maker = Maker::all();
-        $ready = Progresspemakaian::where('status_part', '=', 'Ready')
-            ->where('form_input_id', $waitingrepair->id)
-            ->count();
-        $countid = Progresspemakaian::where('form_input_id', $waitingrepair->id)->count();
+        // // form 3
+        // $progresspemakaian = Progresspemakaian::where('form_input_id', $waitingrepair->id)->get();
+        // $countid = Progresspemakaian::where('form_input_id', $waitingrepair->id)->count();
+        // $mastersparepart = MasterSparePart::all();
+        // $maker = Maker::all();
+        // $ready = Progresspemakaian::where('status_part', '=', 'Ready')
+        //     ->where('form_input_id', $waitingrepair->id)
+        //     ->count();
+        // $countid = Progresspemakaian::where('form_input_id', $waitingrepair->id)->count();
 
-        // form 4
-        $join = Progresstrial::where('form_input_id', $waitingrepair->id)
-            ->join('item_standards', 'item_standards.id', '=', 'progresstrials.item_check_id')
-            ->select('progresstrials.*', 'item_standards.item_standard')
-            ->get();
+        // // form 4
+        // $join = Progresstrial::where('form_input_id', $waitingrepair->id)
+        //     ->join('item_standards', 'item_standards.id', '=', 'progresstrials.item_check_id')
+        //     ->select('progresstrials.*', 'item_standards.item_standard')
+        //     ->get();
 
-        $itemstandard = ItemStandard::all();
+        // $itemstandard = ItemStandard::all();
 
-        // form 5
-        $progressrepair = $progresspemakaian->first();
-        $formFinish_waitingrepair = Waitingrepair::where('id', $id)->first();
-        $formFinish_progressrepair = Progressrepair::where('form_input_id', $formFinish_waitingrepair->id)->first();
-        $formFinish_progresspemakaian = Progresspemakaian::where('form_input_id', $formFinish_waitingrepair->id)->get();
-        $formFinish_progresstrial = Progresstrial::join('dbo.item_standards', 'progresstrials.item_check_id', '=', 'item_standards.id')
-            ->where('form_input_id', $formFinish_waitingrepair->id)
-            ->select('progresstrials.*', 'item_standards.item_standard')
-            ->get();
+        // // form 5
+        // $progressrepair = $progresspemakaian->first();
+        // $formFinish_waitingrepair = Waitingrepair::where('id', $id)->first();
+        // $formFinish_progressrepair = Progressrepair::where('form_input_id', $formFinish_waitingrepair->id)->first();
+        // $formFinish_progresspemakaian = Progresspemakaian::where('form_input_id', $formFinish_waitingrepair->id)->get();
+        // $formFinish_progresstrial = Progresstrial::join('dbo.item_standards', 'progresstrials.item_check_id', '=', 'item_standards.id')
+        //     ->where('form_input_id', $formFinish_waitingrepair->id)
+        //     ->select('progresstrials.*', 'item_standards.item_standard')
+        //     ->get();
 
-        if ($formFinish_progressrepair == null) {
-            $formFinish_progressrepair = (object) [
-                'id' => '',
-                'place_of_repair' => '',
-                'subcont_cost' => 0,
-                'labour_cost' => 0,
-                'analisa' => '',
-                'action' => '',
-            ];
-        }
+        // if ($formFinish_progressrepair == null) {
+        //     $formFinish_progressrepair = (object) [
+        //         'id' => '',
+        //         'place_of_repair' => '',
+        //         'subcont_cost' => 0,
+        //         'labour_cost' => 0,
+        //         'analisa' => '',
+        //         'action' => '',
+        //     ];
+        // }
 
-        $formFinish_totalFinish = Finishrepair::where('form_input_id', $formFinish_waitingrepair->id)->first();
-        if ($formFinish_totalFinish == null) {
-            $formFinish_totalFinish = (object) [
-                'code_part_repair' => '',
-                'delivery_date' => '',
-                'pic_delivery' => '',
-            ];
-        }
+        // $formFinish_totalFinish = Finishrepair::where('form_input_id', $formFinish_waitingrepair->id)->first();
+        // if ($formFinish_totalFinish == null) {
+        //     $formFinish_totalFinish = (object) [
+        //         'code_part_repair' => '',
+        //         'delivery_date' => '',
+        //         'pic_delivery' => '',
+        //     ];
+        // }
 
-        // form 1
-        $sectionAll = Section::all();
-        $section = $sectionAll->where('name', $waitingrepair->section)->first();
-        $lineAll = Line::where('section_id', $section->id)->get();
-        $line = Line::where('name', $waitingrepair->line)->first();
-        $machineAll = Machine::where('line_id', $line->id)->get();
-        $categoryAll = CategoryCode::all();
-        $test = 123;
+        // // form 1
+        // $sectionAll = Section::all();
+        // $section = $sectionAll->where('name', $waitingrepair->section)->first();
+        // $lineAll = Line::where('section_id', $section->id)->get();
+        // $line = Line::where('name', $waitingrepair->line)->first();
+        // $machineAll = Machine::where('line_id', $line->id)->get();
+        // $categoryAll = CategoryCode::all();
+        // $test = 123;
 
-        return view('partrepair.progress', [
-            'waitingrepair'    => $waitingrepair,
-            'user'    => $user,
-            'subcont'    => $subcont,
-            'tradeincost'    => $tradeincost,
+        // return view('partrepair.progress', [
+        //     'waitingrepair'    => $waitingrepair,
+        //     'user'    => $user,
+        //     'subcont'    => $subcont,
+        //     'tradeincost'    => $tradeincost,
 
-            'progresspemakaian'    => $progresspemakaian,
-            'countid'    => $countid,
-            'mastersparepart'    => $mastersparepart,
-            'maker'    => $maker,
-            'ready'    => $ready,
-            'countid'    => $countid,
+        //     'progresspemakaian'    => $progresspemakaian,
+        //     'countid'    => $countid,
+        //     'mastersparepart'    => $mastersparepart,
+        //     'maker'    => $maker,
+        //     'ready'    => $ready,
+        //     'countid'    => $countid,
 
-            'asu'    => $waitingrepair,
-            'join'    => $join,
-            'itemstandard'    => $itemstandard,
+        //     'asu'    => $waitingrepair,
+        //     'join'    => $join,
+        //     'itemstandard'    => $itemstandard,
 
-            'progressrepair'    => $progressrepair,
-            'progressrepair2' => $progressrepair2,
-            'formFinish_waitingrepair' => $formFinish_waitingrepair,
-            'formFinish_progressrepair' => $formFinish_progressrepair,
-            'formFinish_progresspemakaian' => $formFinish_progresspemakaian,
-            'formFinish_progresstrial' => $formFinish_progresstrial,
-            'formFinish_totalFinish' => $formFinish_totalFinish,
+        //     'progressrepair'    => $progressrepair,
+        //     'progressrepair2' => $progressrepair2,
+        //     'formFinish_waitingrepair' => $formFinish_waitingrepair,
+        //     'formFinish_progressrepair' => $formFinish_progressrepair,
+        //     'formFinish_progresspemakaian' => $formFinish_progresspemakaian,
+        //     'formFinish_progresstrial' => $formFinish_progresstrial,
+        //     'formFinish_totalFinish' => $formFinish_totalFinish,
 
-            'section' => $sectionAll,
-            'line' => $lineAll,
-            'machine' => $machineAll,
-            'category' => $categoryAll,
-            'test' => $test,
+        //     'section' => $sectionAll,
+        //     'line' => $lineAll,
+        //     'machine' => $machineAll,
+        //     'category' => $categoryAll,
+        //     'test' => $test,
 
-        ]);
+        // ]);
     }
 
     /**
@@ -304,37 +339,50 @@ class WaitingrepairController extends Controller
     public function destroy(Request $request, $id)
     {
 
-        $data = $request->all();
+        // $data = $request->all();
         $data['deleted'] = 1;
         $data['reason'] = "Deleted: " . $request->reason;
         $data['deleted_by'] = $request->deleted_by;
-        Waitingrepair::find($id)->update($data);
+        // Waitingrepair::find($id)->update($data);
+        DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->update($data);
 
         return redirect()->route('partrepair.waitingtable.index')->with('success', 'Task removed successfully');
     }
 
     public function waitingRepairForm1($id)
     {
-        $waitingrepair = Waitingrepair::find($id);
+        // $waitingrepair = Waitingrepair::find($id);
+        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
 
         // form 1
-        $sectionAll = Section::all();
+        // $sectionAll = Section::all();
+        $sectionAll = DB::table('sparepartrepair.dbo.sections')->get();
         $section = $sectionAll->where('name', $waitingrepair->section)->first();
-        $lineAll = Line::where('section_id', $section->id)->get();
-        $line = Line::where('name', $waitingrepair->line)->first();
-        $machineAll = Machine::where('line_id', $line->id)->get();
-        $categoryAll = CategoryCode::all();
-        $test = 123;
-        $maker = Maker::all();
-        $user = User::all();
+
+        // $lineAll = Line::where('section_id', $section->id)->get();
+        // $line = Line::where('name', $waitingrepair->line)->first();
+        // $machineAll = Machine::where('line_id', $line->id)->get();
+
+        $lineAll = DB::table('sparepartrepair.dbo.lines')->where('section_id', $section->id)->get();
+        $line = $lineAll->where('name', $waitingrepair->line)->first();
+        $machineAll = DB::table('sparepartrepair.dbo.machines')->where('line_id', $line->id)->get();
+
+        // $categoryAll = CategoryCode::all();
+        // $categoryAll = DB::table('sparepartrepair.dbo.category_codes')->get();
+        // $test = 123;
+        // $maker = Maker::all();
+        // $user = User::all();
+
+        $maker = DB::table('sparepartrepair.dbo.makers')->get();
+        $user = DB::table('sparepartrepair.dbo.users')->get(['name', 'NPK']);
 
         return view('partrepair.new.progress-form1', [
             'waitingrepair'    => $waitingrepair,
             'section' => $sectionAll,
             'line' => $lineAll,
             'machine' => $machineAll,
-            'category' => $categoryAll,
-            'test' => $test,
+            // 'category' => $categoryAll,
+            // 'test' => $test,
             'maker' => $maker,
             'user' => $user,
         ]);
@@ -343,14 +391,17 @@ class WaitingrepairController extends Controller
     public function waitingRepairForm2($id)
     {
         // form 2
-        $subcont = Subcont::all();
-        $user = User::all();
-        $waitingrepair = Waitingrepair::find($id);
+        // $subcont = Subcont::all();
+        // $user = User::all();
+        $subcont = DB::table('sparepartrepair.dbo.subconts')->get();
+        $user = DB::table('sparepartrepair.dbo.users')->get('name');
+        // $waitingrepair = Waitingrepair::find($id);
+        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
         $tradeinddisc = 0.3;
         $price = $waitingrepair->price;
-        $price = $waitingrepair->price;
         $tradeincost = $tradeinddisc * $price;
-        $progressrepair2 = Progressrepair::where('form_input_id', $waitingrepair->id)->first();
+        // $progressrepair2 = Progressrepair::where('form_input_id', $waitingrepair->id)->first();
+        $progressrepair2 = DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $waitingrepair->id)->first();
 
         if ($progressrepair2 == null) {
             $progressrepair2 = (object) ([
@@ -392,14 +443,19 @@ class WaitingrepairController extends Controller
     public function waitingRepairForm3($id)
     {
         // form 3
-        $waitingrepair = Waitingrepair::find($id);
-        $progresspemakaian = Progresspemakaian::where('form_input_id', $waitingrepair->id)->get();
+        // $waitingrepair = Waitingrepair::find($id);
+        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $waitingrepair->id)->get();
 
-        $maker = Maker::all();
-        $ready = Progresspemakaian::where('status_part', '=', 'Ready')
+        // $maker = Maker::all();
+        $maker = DB::table('sparepartrepair.dbo.makers')->get();
+        $ready = DB::table('sparepartrepair.dbo.progresspemakaians')
+            ->where('status_part', '=', 'Ready')
             ->where('form_input_id', $waitingrepair->id)
             ->count();
-        $countid = Progresspemakaian::where('form_input_id', $waitingrepair->id)->count();
+        $countid = DB::table('sparepartrepair.dbo.progresspemakaians')
+            ->where('form_input_id', $waitingrepair->id)
+            ->count();
 
         return view('partrepair.new.progress-form3', [
             'waitingrepair'    => $waitingrepair,
@@ -413,7 +469,8 @@ class WaitingrepairController extends Controller
     public function waitingRepairForm4($id)
     {
         // form 4
-        $waitingrepair = Waitingrepair::find($id);
+        // $waitingrepair = Waitingrepair::find($id);
+        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
         // $join = Progresstrial::where('form_input_id', $waitingrepair->id)
         //     ->join('item_standards', 'item_standards.id', '=', 'progresstrials.item_check_id')
         //     ->select('progresstrials.*', 'item_standards.item_standard')
@@ -423,7 +480,9 @@ class WaitingrepairController extends Controller
             ->select('progresstrials.*', 'item_standards.item_standard')
             ->get();
 
-        $itemstandard = ItemStandard::all();
+        // $itemstandard = ItemStandard::all();
+        $itemstandard = DB::table('sparepartrepair.dbo.item_standards')->get();
+
         return view('partrepair.new.progress-form4', [
             'waitingrepair'    => $waitingrepair,
             'asu'    => $waitingrepair,
@@ -435,11 +494,12 @@ class WaitingrepairController extends Controller
     public function waitingRepairForm5($id)
     {
         // form 5
-        $waitingrepair = Waitingrepair::find($id);
-        $progresspemakaian = Progresspemakaian::where('form_input_id', $waitingrepair->id)->get();
-        $formFinish_waitingrepair = Waitingrepair::where('id', $id)->first();
-        $formFinish_progressrepair = Progressrepair::where('form_input_id', $formFinish_waitingrepair->id)->first();
-        $formFinish_progresspemakaian = Progresspemakaian::where('form_input_id', $formFinish_waitingrepair->id)->get();
+        // $waitingrepair = Waitingrepair::find($id);
+        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $waitingrepair->id)->get();
+        $formFinish_waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $formFinish_progressrepair = DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $formFinish_waitingrepair->id)->first();
+        $formFinish_progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $formFinish_waitingrepair->id)->get();
         $formFinish_progresstrial = DB::table('progresstrials')->join('item_standards', 'progresstrials.item_check_id', '=', 'item_standards.id')
             ->where('form_input_id', $formFinish_waitingrepair->id)
             ->select('progresstrials.*', 'item_standards.item_standard')
@@ -456,7 +516,7 @@ class WaitingrepairController extends Controller
             ];
         }
 
-        $formFinish_totalFinish = Finishrepair::where('form_input_id', $formFinish_waitingrepair->id)->first();
+        $formFinish_totalFinish = DB::table('sparepartrepair.dbo.finishrepairs')->where('form_input_id', $formFinish_waitingrepair->id)->first();
         if ($formFinish_totalFinish == null) {
             $formFinish_totalFinish = (object) [
                 'code_part_repair' => '',
@@ -471,7 +531,7 @@ class WaitingrepairController extends Controller
             $category_repair = Str::replace($number_category_repair, '', $formFinish_totalFinish->code_part_repair);
         }
 
-        $progressrepair2 = Progressrepair::where('form_input_id', $waitingrepair->id)->first();
+        $progressrepair2 = DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $waitingrepair->id)->first();
 
         if ($progressrepair2 == null) {
             $progressrepair2 = (object) ([
@@ -500,8 +560,10 @@ class WaitingrepairController extends Controller
                 'actual_finish_repair_subcont' => '',
             ]);
         }
-        $categoryAll = CategoryCode::all();
-        $user = User::all();
+        // $categoryAll = CategoryCode::all();
+        // $user = User::all();
+        $categoryAll = DB::table('sparepartrepair.dbo.category_codes')->get();
+        $user = DB::table('sparepartrepair.dbo.users')->get('name');
 
         return view('partrepair.new.progress-form5', [
             'waitingrepair'    => $waitingrepair,

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use Illuminate\Support\Carbon;
 use App\Models\Progresspemakaian;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class ProgresspemakaianController extends Controller
@@ -19,10 +20,10 @@ class ProgresspemakaianController extends Controller
      */
     public function index()
     {
-        $partr = Progresspemakaian::all()->sortByDesc('id');
-        return view('partrepair.progresspemakaiantable', [
-            'reqtzy' => $partr,
-        ]);
+        // $partr = Progresspemakaian::all()->sortByDesc('id');
+        // return view('partrepair.progresspemakaiantable', [
+        //     'reqtzy' => $partr,
+        // ]);
     }
 
     /**
@@ -60,9 +61,13 @@ class ProgresspemakaianController extends Controller
         }
         Progresspemakaian::create($data);
 
-        $request2 = Waitingrepair::find($request->form_input_id);
-        $request2->progress = 'Seal Kit';
-        $request2->save();
+        // $request2 = Waitingrepair::find($request->form_input_id);
+        // $request2->progress = 'Seal Kit';
+        // $request2->save();
+
+        DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $request->form_input_id)->update([
+            'progress' => 'Seal Kit'
+        ]);
 
         return redirect()->back()->with('success', 'Task added successfully');
     }
@@ -75,10 +80,10 @@ class ProgresspemakaianController extends Controller
      */
     public function show($id)
     {
-        $request2 = Waitingrepair::find($id);
-        $request2->progress = 'Seal Kit';
-        $request2->save();
-        return redirect()->back()->with('success', 'Task added successfully');
+        // $request2 = Waitingrepair::find($id);
+        // $request2->progress = 'Seal Kit';
+        // $request2->save();
+        // return redirect()->back()->with('success', 'Task added successfully');
     }
 
     /**
@@ -106,7 +111,8 @@ class ProgresspemakaianController extends Controller
         ]);
 
         // create new task
-        $data = $request->all();
+        // $data = $request->all();
+        $data['status_part'] = $request->status_part;
         $data['price'] = intval(preg_replace('/[^\d.]/', '', $request->price));
         $data['total_price'] = intval(preg_replace('/[^\d.]/', '', $request->total_price));
 
@@ -120,7 +126,22 @@ class ProgresspemakaianController extends Controller
             $data['estimasi_kedatangan'] = null;
         }
 
-        Progresspemakaian::find($id)->update($data);
+        // Progresspemakaian::find($id)->update($data);
+        DB::table('sparepartrepair.dbo.progresspemakaians')->where('id', $id)->update([
+            'form_input_id' => $request->form_input_id,
+            'item_code' => $request->item_code,
+            'item_name' => $request->item_name,
+            'description' => $request->description,
+            'maker' => $request->maker,
+            'qty' => $request->qty,
+            'price' => $data['price'],
+            'total_price' => $data['total_price'],
+            'status_part' => $data['status_part'],
+            'quotation' => null,
+            'nomor_pp' => null,
+            'nomor_po' => null,
+            'estimasi_kedatangan' => $data['estimasi_kedatangan'],
+        ]);
 
         return redirect()->back()->with('success', 'Task added successfully');
     }
@@ -133,7 +154,8 @@ class ProgresspemakaianController extends Controller
      */
     public function destroy($id)
     {
-        Progresspemakaian::find($id)->delete();
+        // Progresspemakaian::find($id)->delete();
+        DB::table('sparepartrepair.dbo.progresspemakaians')->where('id', $id)->delete();
         return redirect()->back()->with('success', 'Task removed successfully');
     }
 }

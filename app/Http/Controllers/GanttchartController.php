@@ -95,7 +95,7 @@ class GanttchartController extends Controller
         } else {
             return redirect()->back()->with('no_waiting_part', 'No Schedule Waiting Part Repair');
         }
-        return view('partrepair/ganttchart', [
+        return view('partrepair.ganttchart', [
             'count' => $count,
             'data' => $data
         ]);

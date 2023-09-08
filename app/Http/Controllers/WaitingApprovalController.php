@@ -38,7 +38,8 @@ class WaitingApprovalController extends Controller
             ->get();
         $currentUser = Auth::user()->name;
 
-        $user = User::all();
+        // $user = User::all();
+        $user = DB::table('users')->get(['email', 'name']);
 
         return view('partrepair.waitingapprove', [
             'reqtzy' => $partr,
@@ -99,9 +100,10 @@ class WaitingApprovalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
+        // $data = $request->all();
         $data['approval'] = $request->approval;
-        Waitingrepair::find($id)->update($data);
+        // Waitingrepair::find($id)->update($data);
+        DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->update($data);
 
         return redirect()->back()->with('success', 'Ticket Approved successfully');
     }
@@ -114,12 +116,14 @@ class WaitingApprovalController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $data = $request->all();
+        // $data = $request->all();
         $data['deleted'] = 1;
         $data['reason'] = "Rejected: " . $request->reason;
         $data['deleted_by'] = $request->deleted_by;
-        Waitingrepair::find($id)->update($data);
+        // Waitingrepair::find($id)->update($data);
+        DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->update($data);
 
-        return redirect()->route('partrepair.waitingtable.index')->with('success', 'Task removed successfully');
+        // return redirect()->route('partrepair.waitingtable.index')->with('success', 'Task removed successfully');
+        return redirect()->back()->with('success', 'Task removed successfully');
     }
 }

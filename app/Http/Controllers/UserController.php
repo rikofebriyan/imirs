@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -14,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $partr = User::all()->sortByDesc('id');
+        // $partr = User::all()->sortByDesc('id');
+        $partr = DB::table('sparepartrepair.dbo.users')->orderByDesc('id')->get();
         return view('matrix.user', [
             'reqtzy' => $partr,
         ]);
@@ -81,7 +83,14 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        User::find($id)->update($request->all());
+        // User::find($id)->update($request->all());
+        DB::table('sparepartrepair.dbo.users')->where('id', $id)->update([
+            'name' => $request->name,
+            'jabatan' => $request->jabatan,
+            'email' => $request->email,
+            'NPK' => $request->NPK,
+        ]);
+
         return redirect()->route('user.index')->with('success', 'User updated successfully');
     }
 
@@ -93,7 +102,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
+        // User::find($id)->delete();
+        DB::table('sparepartrepair.dbo.users')->where('id', $id)->delete();
         return redirect()->route('user.index')->with('success', 'Task removed successfully');
     }
 }

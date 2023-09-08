@@ -27,11 +27,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $waitingRepairData = Waitingrepair::all();
-        $progressRepairData = Progressrepair::all();
-        $progressPemakaianData = Progresspemakaian::all();
-        $progressTrialData = Progresstrial::all();
-        $finishRepairData = Finishrepair::all();
+        // $waitingRepairData = Waitingrepair::all();
+        // $progressRepairData = Progressrepair::all();
+        // $progressPemakaianData = Progresspemakaian::all();
+        // $progressTrialData = Progresstrial::all();
+        // $finishRepairData = Finishrepair::all();
+        $waitingRepairData = DB::table('sparepartrepair.dbo.waitingrepairs')->get();
+        $progressRepairData = DB::table('sparepartrepair.dbo.progressrepairs')->get();
+        $progressPemakaianData = DB::table('sparepartrepair.dbo.progresspemakaians')->get();
+        $progressTrialData = DB::table('sparepartrepair.dbo.progresstrials')->get();
+        $finishRepairData = DB::table('sparepartrepair.dbo.finishrepairs')->get();
 
         $stepProgress = ['Waiting', 'On Progress', 'Seal Kit', 'Trial', 'Finish'];
         // counting data

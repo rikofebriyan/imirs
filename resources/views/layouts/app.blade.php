@@ -67,7 +67,7 @@
                                         {{ Auth::user() ? Auth::user()->jabatan : '' }}</p>
                                 </div> --}}
                                 <div class="text">
-                                    <h6 class="user-dropdown-name">{{ $loginUser->name}}</h6>
+                                    <h6 class="user-dropdown-name">{{ $loginUser->name }}</h6>
                                     <p class="user-dropdown-status text-sm text-muted">
                                         {{ $loginUser->jabatan }}</p>
                                 </div>
@@ -169,83 +169,80 @@
                             </a>
                         </li>
                         {{-- @if (Auth::user()) --}}
-                            @if ($loginUser->jabatan == 'ADMIN')
-                                <li class="menu-item  has-sub">
-                                    <a href="#" class='menu-link'>
-                                        <span><i class="fas fa-database"></i> Master Data</span>
-                                    </a>
-                                    <div class="submenu ">
-                                        <div class="submenu-group-wrapper">
-                                            <ul class="submenu-group">
+                        @if ($loginUser->jabatan == 'ADMIN')
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <span><i class="fas fa-database"></i> Master Data</span>
+                                </a>
+                                <div class="submenu ">
+                                    <div class="submenu-group-wrapper">
+                                        <ul class="submenu-group">
 
-                                                @can('AdminSupervisor')
-                                                    <li class="submenu-item  ">
-                                                        <a class="list-group-item list-group-item-action list-group-item-light"
-                                                            href="{{ route('user.index') }}"
-                                                            class='submenu-link'>User</a>
-                                                    </li>
-                                                @endcan
-
+                                            @can('AdminSupervisor')
                                                 <li class="submenu-item  ">
                                                     <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('section.index') }}"
-                                                        class='submenu-link'>Section</a>
+                                                        href="{{ route('user.index') }}" class='submenu-link'>User</a>
                                                 </li>
-                                                <li class="submenu-item  ">
-                                                    <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('line.index') }}"
-                                                        class='submenu-link'>Line</a>
-                                                </li>
-                                                <li class="submenu-item  ">
-                                                    <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('machine.index') }}"
-                                                        class='submenu-link'>Machine</a>
-                                                </li>
+                                            @endcan
 
-                                                <!-- <li class="submenu-item  ">
-                                            <a class="list-group-item list-group-item-action list-group-item-light"
-                                                href="{{ route('master_spare_part.index') }}"
-                                                class='submenu-link'>Master Spare Part</a>
-                                        </li> -->
-                                                <li class="submenu-item  ">
+                                            <li class="submenu-item  ">
+                                                <a class="list-group-item list-group-item-action list-group-item-light"
+                                                    href="{{ route('section.index') }}"
+                                                    class='submenu-link'>Section</a>
+                                            </li>
+                                            <li class="submenu-item  ">
+                                                <a class="list-group-item list-group-item-action list-group-item-light"
+                                                    href="{{ route('line.index') }}" class='submenu-link'>Line</a>
+                                            </li>
+                                            <li class="submenu-item  ">
+                                                <a class="list-group-item list-group-item-action list-group-item-light"
+                                                    href="{{ route('machine.index') }}"
+                                                    class='submenu-link'>Machine</a>
+                                            </li>
+
+                                            {{-- <li class="submenu-item  ">
+                                                <a class="list-group-item list-group-item-action list-group-item-light"
+                                                    href="{{ route('master_spare_part.index') }}"
+                                                    class='submenu-link'>Master Spare Part</a>
+                                            </li> --}}
+                                            {{-- <li class="submenu-item  ">
                                                     <a class="list-group-item list-group-item-action list-group-item-light"
                                                         href="{{ route('standard_pengecekan.index') }}"
                                                         class='submenu-link'>Standard Pengecekan</a>
-                                                </li>
-                                                <li class="submenu-item  ">
-                                                    <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('repair_kit.index') }}"
-                                                        class='submenu-link'>Repair
-                                                        Kit</a>
-                                                </li>
-                                                <li class="submenu-item  ">
-                                                    <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('item_standard.index') }}"
-                                                        class='submenu-link'>Item
-                                                        Standard</a>
-                                                </li>
-                                                <li class="submenu-item  ">
-                                                    <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('category_code.index') }}"
-                                                        class='submenu-link'>Category
-                                                        Code</a>
-                                                </li>
-                                                <li class="submenu-item  ">
-                                                    <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('maker.index') }}"
-                                                        class='submenu-link'>Maker</a>
-                                                </li>
+                                                </li> --}}
+                                            <li class="submenu-item  ">
+                                                <a class="list-group-item list-group-item-action list-group-item-light"
+                                                    href="{{ route('repair_kit.index') }}"
+                                                    class='submenu-link'>Repair
+                                                    Kit</a>
+                                            </li>
+                                            <li class="submenu-item  ">
+                                                <a class="list-group-item list-group-item-action list-group-item-light"
+                                                    href="{{ route('item_standard.index') }}"
+                                                    class='submenu-link'>Item
+                                                    Standard</a>
+                                            </li>
+                                            <li class="submenu-item  ">
+                                                <a class="list-group-item list-group-item-action list-group-item-light"
+                                                    href="{{ route('category_code.index') }}"
+                                                    class='submenu-link'>Category
+                                                    Code</a>
+                                            </li>
+                                            <li class="submenu-item  ">
+                                                <a class="list-group-item list-group-item-action list-group-item-light"
+                                                    href="{{ route('maker.index') }}" class='submenu-link'>Maker</a>
+                                            </li>
 
-                                                <li class="submenu-item  ">
-                                                    <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('subcont.index') }}"
-                                                        class='submenu-link'>Subcont</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                            <li class="submenu-item  ">
+                                                <a class="list-group-item list-group-item-action list-group-item-light"
+                                                    href="{{ route('subcont.index') }}"
+                                                    class='submenu-link'>Subcont</a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </li>
-                            @endif
+                                </div>
+                            </li>
+                        @endif
                         {{-- @endif --}}
 
                         <li class="menu-item  ">

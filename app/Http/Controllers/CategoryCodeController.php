@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoryCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CategoryCodeController extends Controller
@@ -15,7 +16,8 @@ class CategoryCodeController extends Controller
      */
     public function index()
     {
-        $partr = CategoryCode::all()->sortByDesc('id');
+        // $partr = CategoryCode::all()->sortByDesc('id');
+        $partr = DB::table('sparepartrepair.dbo.category_codes')->orderByDesc('id')->get();
         return view('matrix.category_code', [
             'reqtzy' => $partr,
         ]);
@@ -72,9 +74,14 @@ class CategoryCodeController extends Controller
      * @param  \App\Models\CategoryCode  $categoryCode
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryCodeRequest $request, CategoryCode $categoryCode, $id)
+    public function update(Request $request, $id)
     {
-        CategoryCode::find($id)->update($request->all());
+        // CategoryCode::find($id)->update($request->all());
+        DB::table('sparepartrepair.dbo.category_codes')->where('id', $id)->update([
+            'category' => $request->category,
+            'category_code' => $request->category_code,
+        ]);
+
         return redirect()->route('category_code.index')->with('success', 'CategoryCode updated successfully');
     }
 
@@ -86,7 +93,9 @@ class CategoryCodeController extends Controller
      */
     public function destroy($id)
     {
-        CategoryCode::find($id)->delete();
+        // CategoryCode::find($id)->delete();
+        DB::table('sparepartrepair.dbo.category_codes')->where('id', $id)->delete();
+
         return redirect()->route('category_code.index')->with('success', 'Task removed successfully');
     }
 }

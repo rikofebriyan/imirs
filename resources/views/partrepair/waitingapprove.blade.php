@@ -39,13 +39,17 @@
                                 <td>{{ $req->section }}</td>
                                 <td class="d-flex d-inline justify-content-center">
                                     @can('AdminSupervisor')
-                                        <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}"
-                                            method="POST">
+                                        <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}" method="POST">
                                             @csrf
                                             @method('PATCH')
                                             <input type="hidden" id="approval" name="approval" value="{{ $currentUser }}">
-                                            <button type="submit" class="btn btn-sm btn-success rounded-pill mx-2">Approve</button>
+                                            <button type="submit"
+                                                class="btn btn-sm btn-success rounded-pill mx-2">Approve</button>
                                         </form>
+                                        <button type="button" class="btn icon btn-danger btn-sm rounded-pill mx-2"
+                                            data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
+                                            Reject
+                                        </button>
                                     @else
                                         <span class="rounded-pill bg-danger text-white text-center px-2 bg-opacity-50"> Not
                                             Authorized</span>
@@ -64,7 +68,7 @@
             </div>
         </div>
     </div>
-    @can('Supervisor')
+    {{-- @can('Supervisor')
         <button type="button" class="rounded-pill btn btn-danger btn-sm col-5" data-bs-toggle="modal"
             data-bs-target="#modaldelete{{ $req->id }}">
             Reject
@@ -75,7 +79,7 @@
             data-bs-target="#modaldelete{{ $req->id }}">
             Reject
         </button>
-    @endcan
+    @endcan --}}
     <form action="{{ route('partrepair.waitingapprove.destroy', $req->id) }}" method="POST">
         @csrf
         @method('DELETE')
@@ -188,7 +192,9 @@
     <script>
         $(document).ready(function() {
             var table = $('#myTable').DataTable({
-                order: [[0, 'desc']],
+                order: [
+                    [0, 'desc']
+                ],
             });
 
             $('#allinput').click(function() {

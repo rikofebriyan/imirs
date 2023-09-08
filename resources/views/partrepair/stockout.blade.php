@@ -28,7 +28,7 @@
                             @forelse ($reqtzy as $req)
                                 <tr>
                                     <td>{{ substr($req->reg_sp, -6, 6) }}</td>
-                                    <td>{{ Carbon\Carbon::parse($req->plan_finish_repair)->format('Y-m-d') }}</td>
+                                    <td>{{ Carbon\Carbon::parse($req->date)->format('Y-m-d') }}</td>
                                     <td>{{ $req->item_name }}</td>
                                     <td>{{ $req->item_code }}</td>
                                     <td>{{ $req->item_type }}</td>

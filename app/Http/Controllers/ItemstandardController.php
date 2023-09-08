@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ItemStandard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class ItemstandardController extends Controller
@@ -19,7 +20,9 @@ class ItemstandardController extends Controller
      */
     public function index()
     {
-        $partr = ItemStandard::all()->sortByDesc('id');
+        // $partr = ItemStandard::all()->sortByDesc('id');
+        $partr = DB::table('sparepartrepair.dbo.item_standards')->orderByDesc('id')->get();
+
         return view('matrix.item_standard', [
             'reqtzy' => $partr,
         ]);
@@ -86,7 +89,12 @@ class ItemstandardController extends Controller
         $this->validate($request, [
             'item_standard' => 'required',
         ]);
-        ItemStandard::find($id)->update($request->all());
+        // ItemStandard::find($id)->update($request->all());
+        DB::table('sparepartrepair.dbo.item_standards')->where('id', $id)->update([
+            'item_standard' => $request->item_standard,
+            'unit_measurement' => $request->unit_measurement,
+        ]);
+
         return redirect()->route('item_standard.index')->with('success', 'ItemStandard updated successfully');
     }
 
@@ -98,7 +106,9 @@ class ItemstandardController extends Controller
      */
     public function destroy($id)
     {
-        ItemStandard::find($id)->delete();
+        // ItemStandard::find($id)->delete();
+        DB::table('sparepartrepair.dbo.item_standards')->where('id', $id)->delete();
+
         return redirect()->route('item_standard.index')->with('success', 'Task removed successfully');
     }
 }
