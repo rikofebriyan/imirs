@@ -16,13 +16,13 @@ class LoginController extends Controller
 
     public function submitLogin(Request $request)
     {
-        if (Auth::attempt(['npk' => $request->NPK, 'password' => $request->password])) {
+        if (Auth::attempt(['NPK' => $request->NPK, 'password' => $request->password])) {
             $request->session()->regenerate();
             return redirect('/');
         }
 
         return back()->with([
-            'loginError' => 'Login Failer!'
+            'loginError' => 'Login Failed!'
         ])->onlyInput('loginError');
     }
 
