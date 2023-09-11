@@ -70,8 +70,8 @@ Route::prefix('partrepair')->name('partrepair.')->group(function () {
     Route::resource('/finishrepair', FinishrepairController::class);
     Route::resource('/stockout', StockoutController::class);
     Route::resource('/waitingapprove', WaitingApprovalController::class);
+    Route::get('/progress-subcont-table', [WaitingrepairController::class, 'progressSubcontTable'])->name('progress-subcont-table');
 });
-
 
 Route::resource('matrix/user', UserController::class)->middleware('adminsupervisor');
 Route::resource('matrix/section', SectionController::class)->middleware('auth');
@@ -86,7 +86,6 @@ Route::resource('matrix/item_standard', ItemstandardController::class)->middlewa
 Route::resource('matrix/code_part_repair', CodepartrepairController::class)->middleware('auth');
 Route::resource('matrix/category_code', CategoryCodeController::class)->middleware('auth');
 Route::resource('Auth/profile', ProfileController::class)->middleware('auth');
-
 
 Route::get('/ajax', [InfoController::class, 'index'])->name('ajax');
 Route::get('/getline', [InfoController::class, 'getline'])->name('get-line');
