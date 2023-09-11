@@ -20,6 +20,8 @@ use App\Models\Progresspemakaian;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
+use Cartalyst\Sentinel\Native\Facades\Sentinel;
 
 class WaitingrepairController extends Controller
 {
