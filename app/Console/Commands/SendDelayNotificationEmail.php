@@ -80,12 +80,6 @@ class SendDelayNotificationEmail extends Command
                 $message->from('pe-digitalization@outlook.com', 'PE-Digitalization');
             });
 
-            // Mail::send('emails.demo', $data, function ($message) use ($repair) {
-            //     $message->to('pe-digitalization@taci.toyota-industries.com', 'PE-Digitalization')
-            //         ->subject('I-Mirs Delay Notification for Your Repair');
-            //     $message->from('pe-digitalization@outlook.com', 'PE-Digitalization');
-            // });
-
             $notified = Progressrepair::find($repair->progressid);
             $notified->notified_at = Carbon::now();
             $notified->save();

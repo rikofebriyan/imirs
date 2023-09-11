@@ -16,7 +16,6 @@ class MastersparepartController extends Controller
      */
     public function index()
     {
-        // $partr = MasterSparePart::all()->sortByDesc('id');
         $partr = DB::table('sparepartrepair.dbo.master_spare_parts')->orderByDesc('id')->get();
 
         return view('matrix.master_spare_part', [
@@ -74,7 +73,7 @@ class MastersparepartController extends Controller
      */
     public function edit($id)
     {
-        dd('ok');
+        //
     }
 
     /**
@@ -103,7 +102,6 @@ class MastersparepartController extends Controller
      */
     public function destroy($id)
     {
-        // MasterSparePart::find($id)->delete();
         DB::table('sparepartrepair.dbo.master_spare_parts')->where('id', $id)->delete();
 
         return redirect()->route('matrix.master_spare_part.index')->with('success', 'Task removed successfully');

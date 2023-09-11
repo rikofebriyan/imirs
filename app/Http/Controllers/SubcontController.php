@@ -16,7 +16,6 @@ class SubcontController extends Controller
      */
     public function index()
     {
-        // $partr = Subcont::all()->sortByDesc('id');
         $partr = DB::table('sparepartrepair.dbo.subconts')->orderByDesc('id')->get();
 
         return view('matrix.subcont', [
@@ -85,7 +84,7 @@ class SubcontController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        // Subcont::find($id)->update($request->all());
+
         DB::table('sparepartrepair.dbo.subconts')->where('id', $id)->update([
             'name' => $request->name,
             'alamat' => $request->alamat,
@@ -104,7 +103,6 @@ class SubcontController extends Controller
      */
     public function destroy($id)
     {
-        // Subcont::find($id)->delete();
         DB::table('sparepartrepair.dbo.subconts')->where('id', $id)->delete();
 
         return redirect()->route('subcont.index')->with('success', 'Task removed successfully');

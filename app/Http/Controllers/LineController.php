@@ -17,18 +17,11 @@ class LineController extends Controller
      */
     public function index(Request $request)
     {
-
-
-        // $join = Line::join('sections', 'lines.id', '=', 'sections.id')
-        //     ->select('lines.*', 'sections.name as section')
-        //     ->get();
         $join = DB::table('sparepartrepair.dbo.lines')
             ->leftJoin('sections', 'lines.section_id', '=', 'sections.id')
             ->select('lines.*', 'sections.name as section')
             ->get();
 
-        // $sectionr = Section::all();
-        // $partr = Line::all()->sortByDesc('id');
         $sectionr = DB::table('sparepartrepair.dbo.sections')->get();
         $partr = DB::table('sparepartrepair.dbo.lines')->orderByDesc('id')->get();
 
@@ -101,7 +94,7 @@ class LineController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        // Line::find($id)->update($request->all());
+
         DB::table('sparepartrepair.dbo.lines')->where('id', $id)->update([
             'section_id' => $request->section_id,
             'bu' => $request->bu,
@@ -119,7 +112,6 @@ class LineController extends Controller
      */
     public function destroy($id)
     {
-        // Line::find($id)->delete();
         DB::table('sparepartrepair.dbo.lines')->where('id', $id)->delete();
         return redirect()->route('line.index')->with('success', 'Task removed successfully');
     }

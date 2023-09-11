@@ -72,13 +72,6 @@
                             </select>
                         </div>
                     </div>
-
-                    <!-- <div class="mb-3 row">
-                        <label for="photo" class="col-sm-3 col-form-label">Photo</label>
-                        <div class="col-sm-9">
-                            <input type="file" class="form-control" name="photo" id="photo" value="">
-                        </div>
-                    </div> -->
                 </div>
             </div>
 
@@ -216,26 +209,6 @@
                                     value="{{ $progressrepair2->plan_finish_repair }}">
                             </div>
                         </div>
-
-                        {{-- <div class="mb-3 row">
-                            <label for="actual_start_repair_subcont" class="col-sm-3 col-form-label">Actual Start
-                                Repair</label>
-                            <div class="col-sm-9">
-                                <input type="datetime-local" class="form-control" name="actual_start_repair_subcont"
-                                    id="actual_start_repair_subcont"
-                                    value="{{ $progressrepair2->actual_start_repair }}">
-                            </div>
-                        </div>
-
-                        <div class="mb-3 row">
-                            <label for="actual_finish_repair_subcont" class="col-sm-3 col-form-label">Actual Finish
-                                Repair</label>
-                            <div class="col-sm-9">
-                                <input type="datetime-local" class="form-control" id="actual_finish_repair_subcont"
-                                    name="actual_finish_repair_subcont"
-                                    value="{{ $progressrepair2->actual_finish_repair }}">
-                            </div>
-                        </div> --}}
                     </div>
 
                     @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')

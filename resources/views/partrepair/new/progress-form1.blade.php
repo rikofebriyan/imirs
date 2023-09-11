@@ -146,20 +146,4 @@
         </script>
     @endif
 
-    {{-- <script>
-        $(document).ready(function() {
-            $('#btnCetakTiket').on('click', function() {
-                alert('oke')
-                $.ajax({
-                    type: 'POST',
-                    url: `{{ route('ticket') }}`,
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        reg_sp: '{{ $waitingrepair->reg_sp }}',
-                    },
-                    dataType: 'JSON',
-                });
-            });
-        });
-    </script> --}}
 @endsection

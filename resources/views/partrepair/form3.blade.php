@@ -220,40 +220,11 @@
 
 
     <div class="d-flex justify-content-end">
-        {{-- <div class="col-6">
-            <div class="alert fw-bold m-0 @if ($progresspemakaian->count() > 0) d-none @endif"
-                style="background-color: #8fffd8">
-                <center>APAKAH PART REPAIR BUTUH ORDER SEAL KIT?</center>
-                <center>
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="radio1" id="ya" value=""
-                            @if ($countid > 0) checked @endif>
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            YA
-                        </label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="radio1" id="tidak" value=""
-                            @if ($countid == 0) checked @endif>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            TIDAK
-                        </label>
-                    </div>
-                </center>
-            </div>
-        </div> --}}
-
-
         @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
             <div class="me-1">
                 <button id="fieldsealkit" class="btn btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif"
                     data-bs-toggle="modal" data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
             </div>
-            {{-- <div class=" @if ($countid == 0) d-block @else d-none @endif"
-                id="fieldrepair">
-                <a href="{{ route('partrepair.progresspemakaian.show', $waitingrepair->id) }}"
-                    class="btn btn-success">SELESAI</a>
-            </div> --}}
         @else
             <div class="">
                 <button id="" class="btn btn-primary disabled" data-bs-toggle="modal"
@@ -261,19 +232,6 @@
             </div>
             <center><span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span></center>
         @endif
-
-
-        {{-- @if ($countid == 0)
-        @elseif ($countid > $ready)
-            <div class="d-grid gap-2 col">
-                <button class="btn btn-primary disabled text-center">PART BELUM READY</button>
-            </div>
-        @elseif ($countid == $ready)
-            <div class="d-grid gap-2 col">
-                <a href="{{ route('partrepair.progresspemakaian.show', $waitingrepair->id) }}"
-                    class="btn btn-success">SELESAI</a>
-            </div>
-        @endif --}}
     </div>
 </div>
 

@@ -9,11 +9,9 @@
                 <thead>
                     <tr>
                         <th scope="col">Action</th>
-                        {{-- <th scope="col">ID</th> --}}
                         <th scope="col">Item Pengecekan</th>
                         <th scope="col">Operation</th>
                         <th scope="col">Standard</th>
-                        {{-- <th scope="col">Standard Max</th> --}}
                         <th scope="col">Unit Measurement</th>
                         <th scope="col">Actual</th>
                         <th scope="col">Judgement</th>
@@ -30,8 +28,6 @@
                             value="{{ $joi->operation }}">
                         <input type="hidden" name="data[{{ $joi->id }}][standard_pengecekan_min]"
                             value="{{ $joi->standard_pengecekan_min }}">
-                        {{-- <input type="hidden" name="data[{{ $joi->id }}][standard_pengecekan_max]"
-                            value="{{ $joi->standard_pengecekan_max }}"> --}}
                         <input type="hidden" name="data[{{ $joi->id }}][unit_measurement]"
                             value="{{ $joi->unit_measurement }}">
                         <input type="hidden" name="data[{{ $joi->id }}][standard_pengecekan_id]"
@@ -52,11 +48,9 @@
                                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem"
                                     onclick="return confirm('Yakin?')">Delete</a>
                             </td>
-                            {{-- <td>{{ $joi->id }}</td> --}}
                             <td>{{ $joi->item_standard }}</td>
                             <td>{{ $joi->operation }}</td>
                             <td>{{ $joi->standard_pengecekan_min }}</td>
-                            {{-- <td>{{ $joi->standard_pengecekan_max }}</td> --}}
                             <td>{{ $joi->unit_measurement }}</td>
                             <td>
                                 <input type="text" name="data[{{ $joi->id }}][actual_pengecekan]"
@@ -64,9 +58,6 @@
                                     value="{{ $joi->actual_pengecekan }}" required>
                             </td>
                             <td>
-                                {{-- <input type="text" name="data[{{ $joi->id }}][judgement]"
-                                    id="judgement{{ $joi->id }}" class="form-control disabledriko" placeholder="Judgement"
-                                    value="{{ $joi->judgement }}" required readonly> --}}
                                 <select id="judgement{{ $joi->id }}" name="data[{{ $joi->id }}][judgement]"
                                     class="form-control @if ($joi->judgement == 'OK') bg-success text-white @elseif ($joi->judgement == 'NG') bg-warning @else '' @endif"
                                     required>
@@ -171,18 +162,6 @@
     </div>
 @endforeach
 
-{{-- <div class="row">
-    <div class="col-9"></div>
-    <div class="col d-grid gap-2 px-3">
-        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
-            <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal"
-                data-bs-target="#modalAddPengecekan">
-                ADD STANDARD PENGECEKAN
-            </button>
-        @endif
-    </div>
-</div> --}}
-
 <!-- Modal Add-->
 <form action="{{ route('standard_pengecekan.store') }}" method="POST">
     @csrf
@@ -250,12 +229,6 @@
                         <input type="text" id="standard_pengecekan_min" name="standard_pengecekan_min"
                             class="form-control" value="" required>
                     </div>
-
-                    {{-- <div id="standard_pengecekan_max_div" class="form-group mt-2">
-                        <label for="standard_pengecekan_max">Standard Max</label>
-                        <input type="text" id="standard_pengecekan_max" name="standard_pengecekan_max"
-                            class="form-control" value="">
-                    </div> --}}
 
                     <div class="form-group mt-2">
                         <label for="unit_measurement">Unit Measurement</label>

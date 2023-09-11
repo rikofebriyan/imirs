@@ -17,12 +17,6 @@ class MachineController extends Controller
      */
     public function index()
     {
-
-        // $join = Machine::join('lines', 'machines.line_id', '=', 'lines.id')
-        //     ->select('machines.*', 'lines.name as line')
-        //     ->get();
-        // $tabel2 = Line::all();
-        // $partr = Machine::all()->sortByDesc('id');
         $join = DB::table('sparepartrepair.dbo.machines')
             ->leftJoin('lines', 'machines.line_id', '=', 'lines.id')
             ->select('machines.*', 'lines.name as line')
@@ -99,7 +93,7 @@ class MachineController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        // Machine::find($id)->update($request->all());
+
         DB::table('sparepartrepair.dbo.machines')->where('id', $id)->update([
             'line_id' => $request->line_id,
             'name' => $request->name,
@@ -115,7 +109,6 @@ class MachineController extends Controller
      */
     public function destroy($id)
     {
-        // Machine::find($id)->delete();
         DB::table('sparepartrepair.dbo.lines')->where('id', $id)->delete();
         return redirect()->route('machine.index')->with('success', 'Task removed successfully');
     }

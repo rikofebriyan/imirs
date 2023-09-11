@@ -64,23 +64,6 @@
                         <label for="item_code" class="col-sm-3 col-form-label">Spare
                             Part</label>
                         <div class="col-sm-9">
-                            {{-- <div class="input-group">
-                                <input type="text" class="form-control" id="item_code" name="item_code"
-                                    placeholder="Item Code" value="{{ $waitingrepair->item_code }}">
-                                <input type="text" class="form-control" id="item_name" name="item_name"
-                                    placeholder="Item Name" value="{{ $waitingrepair->item_name }}">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="description" name="item_type"
-                                    placeholder="Item Type" value="{{ $waitingrepair->item_type }}">
-                            </div>
-
-                            <div class="input-group">
-                                <input type="text" class="form-control number" id="price" name="price"
-                                    placeholder="Price" value="{{ $waitingrepair->price }}">
-                                <input type="text" class="form-control" id="qty" name="stock_spare_part"
-                                    placeholder="Stock" value="{{ $waitingrepair->stock_spare_part }}">
-                            </div> --}}
                             <div class="input-group">
                                 <input type="hidden" class="form-control" name="item_id" id="item_id">
                             </div>

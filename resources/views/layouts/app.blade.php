@@ -15,7 +15,6 @@
     @yield('css')
 
 </head>
-{{-- <script src="{{ asset('assets/js/initTheme.js') }}"></script> --}}
 
 <body id="app">
 
@@ -61,11 +60,6 @@
                                 <div class="avatar avatar-md2">
                                     <img src="{{ asset('assets/images/faces/1.jpg') }}" alt="Avatar">
                                 </div>
-                                {{-- <div class="text">
-                                    <h6 class="user-dropdown-name">{{ Auth::user() ? Auth::user()->name : '' }}</h6>
-                                    <p class="user-dropdown-status text-sm text-muted">
-                                        {{ Auth::user() ? Auth::user()->jabatan : '' }}</p>
-                                </div> --}}
                                 <div class="text">
                                     <h6 class="user-dropdown-name">{{ $loginUser->name }}</h6>
                                     <p class="user-dropdown-status text-sm text-muted">
@@ -172,7 +166,7 @@
                                 <span><i class="fas fa-calendar-alt"></i> Schedule Chart</span>
                             </a>
                         </li>
-                        {{-- @if (Auth::user()) --}}
+
                         @if ($loginUser->jabatan == 'ADMIN')
                             <li class="menu-item  has-sub">
                                 <a href="#" class='menu-link'>
@@ -204,16 +198,6 @@
                                                     class='submenu-link'>Machine</a>
                                             </li>
 
-                                            {{-- <li class="submenu-item  ">
-                                                <a class="list-group-item list-group-item-action list-group-item-light"
-                                                    href="{{ route('master_spare_part.index') }}"
-                                                    class='submenu-link'>Master Spare Part</a>
-                                            </li> --}}
-                                            {{-- <li class="submenu-item  ">
-                                                    <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('standard_pengecekan.index') }}"
-                                                        class='submenu-link'>Standard Pengecekan</a>
-                                                </li> --}}
                                             <li class="submenu-item  ">
                                                 <a class="list-group-item list-group-item-action list-group-item-light"
                                                     href="{{ route('repair_kit.index') }}"

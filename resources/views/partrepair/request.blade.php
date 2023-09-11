@@ -60,13 +60,6 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="form-group">
-                                    <label for="select2">Pilih Opsi:</label>
-                                    <select class="form-control select2" id="select2" name="opsi" style="width: 100%;">
-                                        <option value="">Pilih Opsi</option>
-                                    </select>
-                                </div> --}}
-
                                 {{-- Pemilihan Storage Item --}}
                                 <div class="mb-3 row" id="storageDiv">
                                     <label for="storage" class="col-sm-3 col-form-label">Warehouse</label>
@@ -307,18 +300,6 @@
                                     <tbody>
                                         @forelse ($itemstandard as $tabw)
                                             <tr>
-                                                {{-- <td>
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#"
-                                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size:
-                                                    .75rem">
-                                                        Update
-                                                    </button>
-
-                                                    <a href="" class="btn btn-danger"
-                                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem"
-                                                        onclick="return confirm('Yakin?')">Delete</a>
-                                                </td> --}}
                                                 <td>
                                                     <input type="hidden"
                                                         name="standard[{{ $tabw->id }}][item_check_id]"
@@ -356,13 +337,6 @@
                                         @endforelse
                                     </tbody>
                                 </table>
-
-                                {{-- <div class="d-flex justify-content-end mb-3">
-                                    <button type="button" class="btn btn-md btn-success me-1" data-bs-toggle="modal"
-                                        data-bs-target="#modalAddPengecekan">
-                                        Tambah Item Pengecekan
-                                    </button>
-                                </div> --}}
                             </div>
                         </div>
 
@@ -693,22 +667,6 @@
                                 $('#type_of_part').append(`<option value="${id}" ` +
                                     selected + `>${part}</option>`)
                             });
-
-                            // if (result['dataPart'].qty == 0) {
-                            //     $('#status_repair').empty()
-                            //     $('#status_repair').append(`
-                            //         <option disabled>Pilih ...</option>
-                            //         <option value="Normal">Normal</option>
-                            //         <option value="Urgent" selected>Urgent</option>
-                            //     `)
-                            // } else {
-                            //     $('#status_repair').empty()
-                            //     $('#status_repair').append(`
-                            //         <option disabled>Pilih ...</option>
-                            //         <option value="Normal" selected>Normal</option>
-                            //         <option value="Urgent">Urgent</option>
-                            //     `)
-                            // }
                         }
                     }
                 });

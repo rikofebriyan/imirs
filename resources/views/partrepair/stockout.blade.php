@@ -111,33 +111,6 @@
         </div>
     @endsection
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @section('script')
         @if ($message = Session::get('success'))
             <script>

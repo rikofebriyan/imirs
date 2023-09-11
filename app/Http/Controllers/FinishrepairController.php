@@ -24,7 +24,6 @@ class FinishrepairController extends Controller
      */
     public function index()
     {
-        // $partr = Finishrepair::all()->sortByDesc('id');
         $partr = DB::table('sparepartrepair.dbo.finishrepairs')->get();
         return view('partrepair.waitingtablefinish', [
             'reqtzy' => $partr,
@@ -76,32 +75,23 @@ class FinishrepairController extends Controller
             $data['code_part_repair'] = 'N/A';
         }
 
-        // $finish = Finishrepair::where('form_input_id', $request->form_input_id)->first();
         $finish = DB::table('sparepartrepair.dbo.finishrepairs')->where('form_input_id', $request->form_input_id)->first();
 
         if ($finish == null) {
             Finishrepair::create($data);
         } else {
-            // Finishrepair::find($finish->id)->update($data);
             DB::table('sparepartrepair.dbo.finishrepairs')->where('id', $finish->id)->update($data);
         }
 
-        // $request2 = Waitingrepair::find($request->form_input_id);
-        // $request2->progress = 'Finish';
-        // $request2->save();
         DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $request->form_input_id)->update([
             'progress' => 'Finish',
         ]);
 
-        // $query = Finishrepair::where('code_part_repair', $request->code_part_repair)->first();
-
-        // if ($query == null) {
-            $request3 = new CodePartRepair;
-            $request3->category = $request->category;
-            $request3->number = $request->number;
-            $request3->code_part_repair = $request->code_part_repair;
-            $request3->save();
-        // }
+        $request3 = new CodePartRepair;
+        $request3->category = $request->category;
+        $request3->number = $request->number;
+        $request3->code_part_repair = $request->code_part_repair;
+        $request3->save();
 
         return redirect()->route('finishtable')->with('success', 'Your task added successfully!');
     }
@@ -114,22 +104,7 @@ class FinishrepairController extends Controller
      */
     public function show($id)
     {
-        // $mastersparepart = MasterSparePart::all();
-        // $maker = Maker::all();
-        // $subcont = Subcont::all();
-        // $user = User::all();
-        // $progresspemakaian = Progresspemakaian::all();
-        // $waitingrepair = Waitingrepair::find($id);
-        // $progressrepair = Progresspemakaian::where('form_input_id', $id)->first();
-        // return view('partrepair.formfinishrepair', [
-        //     'waitingrepair'    => $waitingrepair,
-        //     'progressrepair'    => $progressrepair,
-        //     'user'    => $user,
-        //     'subcont'    => $subcont,
-        //     'maker'    => $maker,
-        //     'mastersparepart'    => $mastersparepart,
-        //     'progresspemakaian'    => $progresspemakaian,
-        // ]);
+        //
     }
 
     /**

@@ -21,7 +21,6 @@ class MakerController extends Controller
      */
     public function index()
     {
-        // $partr = Maker::all()->sortByDesc('id');
         $partr = DB::table('sparepartrepair.dbo.makers')->orderByDesc('id')->get();
 
         return view('matrix.maker', [
@@ -90,7 +89,7 @@ class MakerController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        // Maker::find($id)->update($request->all());
+
         DB::table('sparepartrepair.dbo.makers')->where('id', $id)->update([
             'name' => $request->name,
         ]);
@@ -106,7 +105,6 @@ class MakerController extends Controller
      */
     public function destroy($id)
     {
-        // Maker::find($id)->delete();
         DB::table('sparepartrepair.dbo.makers')->where('id', $id)->delete();
         return redirect()->route('maker.index')->with('success', 'Task removed successfully');
     }

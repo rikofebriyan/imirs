@@ -16,7 +16,6 @@ class SectionController extends Controller
      */
     public function index()
     {
-        // $partr = Section::all()->sortByDesc('id');
         $partr = DB::table('sparepartrepair.dbo.sections')->orderbyDesc('id')->get();
 
         return view('matrix.section', [
@@ -85,7 +84,7 @@ class SectionController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        // Section::find($id)->update($request->all());
+
         DB::table('sparepartrepair.dbo.sections')->where('id', $id)->update([
             'name' => $request->name,
         ]);
@@ -100,7 +99,6 @@ class SectionController extends Controller
      */
     public function destroy($id)
     {
-        // Section::find($id)->delete();
         DB::table('sparepartrepair.dbo.sections')->where('id', $id)->delete();
 
         return redirect()->route('section.index')->with('success', 'Task removed successfully');

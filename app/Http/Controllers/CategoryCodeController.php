@@ -16,7 +16,6 @@ class CategoryCodeController extends Controller
      */
     public function index()
     {
-        // $partr = CategoryCode::all()->sortByDesc('id');
         $partr = DB::table('sparepartrepair.dbo.category_codes')->orderByDesc('id')->get();
         return view('matrix.category_code', [
             'reqtzy' => $partr,
@@ -76,7 +75,6 @@ class CategoryCodeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // CategoryCode::find($id)->update($request->all());
         DB::table('sparepartrepair.dbo.category_codes')->where('id', $id)->update([
             'category' => $request->category,
             'category_code' => $request->category_code,
@@ -93,7 +91,6 @@ class CategoryCodeController extends Controller
      */
     public function destroy($id)
     {
-        // CategoryCode::find($id)->delete();
         DB::table('sparepartrepair.dbo.category_codes')->where('id', $id)->delete();
 
         return redirect()->route('category_code.index')->with('success', 'Task removed successfully');

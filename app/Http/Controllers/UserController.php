@@ -83,7 +83,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        // User::find($id)->update($request->all());
+
         DB::table('sparepartrepair.dbo.users')->where('id', $id)->update([
             'name' => $request->name,
             'jabatan' => $request->jabatan,
@@ -102,7 +102,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        // User::find($id)->delete();
         DB::table('sparepartrepair.dbo.users')->where('id', $id)->delete();
         return redirect()->route('user.index')->with('success', 'Task removed successfully');
     }

@@ -17,13 +17,6 @@ class StockoutController extends Controller
      */
     public function index()
     {
-        // $partr = Waitingrepair::leftjoin('sparepartrepair.dbo.stockouts', 'waitingrepairs.id', '=', 'stockouts.form_input_id')
-        //     ->select('waitingrepairs.id as waitingrepairid', 'waitingrepairs.*', 'stockouts.*')
-        //     ->where('deleted', null)
-        //     ->where('progress', 'finish')
-        //     ->where('form_input_id', null)
-        //     ->get();
-
         $partr = DB::table('sparepartrepair.dbo.waitingrepairs')->leftjoin('sparepartrepair.dbo.stockouts', 'waitingrepairs.id', '=', 'stockouts.form_input_id')
             ->select('waitingrepairs.id as waitingrepairid', 'waitingrepairs.*', 'stockouts.*')
             ->where('deleted', null)

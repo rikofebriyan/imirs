@@ -68,18 +68,7 @@
             </div>
         </div>
     </div>
-    {{-- @can('Supervisor')
-        <button type="button" class="rounded-pill btn btn-danger btn-sm col-5" data-bs-toggle="modal"
-            data-bs-target="#modaldelete{{ $req->id }}">
-            Reject
-        </button>
-    @endcan
-    @can('ADMIN')
-        <button type="button" class="rounded-pill btn btn-danger btn-sm col-5" data-bs-toggle="modal"
-            data-bs-target="#modaldelete{{ $req->id }}">
-            Reject
-        </button>
-    @endcan --}}
+
     <form action="{{ route('partrepair.waitingapprove.destroy', $req->id) }}" method="POST">
         @csrf
         @method('DELETE')

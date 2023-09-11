@@ -28,10 +28,7 @@ class ProgressrepairController extends Controller
      */
     public function index(Request $request)
     {
-        // $partr = Progressrepair::all()->sortByDesc('id');
-        // return view('partrepair.progresstable', [
-        //     'reqtzy' => $partr,
-        // ]);
+        //
     }
 
     /**
@@ -121,15 +118,12 @@ class ProgressrepairController extends Controller
             }
         }
 
-        // $query = Progressrepair::where('form_input_id', $request->form_input_id)->first();
         $query = DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $request->form_input_id)->first();
         if ($query != null) {
-            // Progressrepair::where('form_input_id', $request->form_input_id)->update($submit);
             DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $request->form_input_id)->update($submit);
         } else {
             Progressrepair::create($submit);
         }
-        // $request2 = Waitingrepair::find($request->form_input_id);
         $request2 = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $request->form_input_id)->first();
 
         if ($request->judgement == 'Scrap') {
@@ -157,39 +151,7 @@ class ProgressrepairController extends Controller
      */
     public function show($id)
     {
-        // // $ready = Progresspemakaian::where('status_part', '=', 'Ready')
-        // //     ->where('form_input_id', $id)
-        // //     ->count();
-        // $ready = DB::table('sparepartrepair.dbo.progresspemakaians')->where('status_part', '=', 'Ready')
-        //     ->where('form_input_id', $id)
-        //     ->count();
-        // // $countid = Progresspemakaian::where('form_input_id', $id)->count();
-        // $countid = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $id)->count();
-        // // $mastersparepart = MasterSparePart::all();
-        // // $maker = Maker::all();
-        // // $subcont = Subcont::all();
-        // // $user = User::all();
-        // $maker = DB::table('sparepartrepair.dbo.makers')->get();
-        // $subcont = DB::table('sparepartrepair.dbo.subconts')->get();
-        // $user = DB::table('sparepartrepair.dbo.users')->get(['name', 'NPK']);
-        // // $progresspemakaian = Progresspemakaian::where('form_input_id', $id)->get();
-        // $progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $id)->get();
-        // // $waitingrepair = Waitingrepair::find($id);
-        // $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
-        // // $progressrepair = Progressrepair::where('form_input_id', $id)->first();
-        // $progressrepair = DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $id)->first();
-
-        // return view('partrepair.progresspemakaian', [
-        //     'waitingrepair'    => $waitingrepair,
-        //     'progressrepair'    => $progressrepair,
-        //     'user'    => $user,
-        //     'subcont'    => $subcont,
-        //     'maker'    => $maker,
-        //     // 'mastersparepart'    => $mastersparepart,
-        //     'progresspemakaian'    => $progresspemakaian,
-        //     'ready'    => $ready,
-        //     'countid'    => $countid,
-        // ]);
+        //
     }
 
     /**
@@ -200,11 +162,7 @@ class ProgressrepairController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        // $this->validate($request, [
-        //     'reason_revision' => 'required',
-        // ]);
-        // Progressrepair::find($id)->update($request->all());
-        // return redirect()->back()->with('success', 'Section updated successfully');
+        //
     }
 
     /**
@@ -216,13 +174,7 @@ class ProgressrepairController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $data = $request->all();
-        // $data['judgement'] = $request->judgement;
-        // dd($data);
-        // Waitingrepair::find($id)->update($data);
-
-
-        // return redirect()->route('partrepair.waitingtable.index')->with('success', 'Task removed successfully');
+        //
     }
 
     /**
@@ -233,10 +185,9 @@ class ProgressrepairController extends Controller
      */
     public function destroy($id)
     {
-
-        // Progressrepair::find($id)->delete();
-        // return redirect()->route('partrepair.progresstable.index')->with('success', 'Task removed successfully');
+        //
     }
+
     public function revision(Request $request, $id)
     {
         $this->validate($request, [
@@ -247,8 +198,6 @@ class ProgressrepairController extends Controller
         $data['plan_finish_revision'] = Carbon::parse($request->plan_finish_revision)->format('Y-m-d H:i:s');
 
         progressrepair::where('form_input_id', $id)->first()->update($data);
-
-
 
         return redirect()->back()->with('success', 'Task updated successfully');
     }
@@ -261,8 +210,6 @@ class ProgressrepairController extends Controller
         $data['reason_delay'] = $request->reason_delay;
 
         progressrepair::where('form_input_id', $id)->first()->update($data);
-
-
 
         return redirect()->back()->with('success', 'Task updated successfully');
     }
