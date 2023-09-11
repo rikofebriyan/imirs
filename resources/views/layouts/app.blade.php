@@ -140,6 +140,10 @@
                                         </li>
                                         <li class="submenu-item  ">
                                             <a class="list-group-item list-group-item-action list-group-item-light"
+                                                href="{{ route('partrepair.progres-subcont-table') }}" class='submenu-link'>Progress Subcont Table</a>
+                                        </li>
+                                        <li class="submenu-item  ">
+                                            <a class="list-group-item list-group-item-action list-group-item-light"
                                                 href="{{ route('finishtable') }}" class='submenu-link'>Finish
                                                 Table</a>
                                         </li>

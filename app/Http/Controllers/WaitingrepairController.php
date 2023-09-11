@@ -20,6 +20,8 @@ use App\Models\Progresspemakaian;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
+use Cartalyst\Sentinel\Native\Facades\Sentinel;
 
 class WaitingrepairController extends Controller
 {
@@ -579,6 +581,25 @@ class WaitingrepairController extends Controller
             'category' => $categoryAll,
             'category_repair' => $category_repair,
             'number_category_repair' => $number_category_repair,
+        ]);
+    }
+
+    public function progressSubcontTable(Request $request)
+    {
+        dd(Sentinel::check());
+        $partr = DB::table('sparepartrepair.dbo.waitingrepairs')->leftJoin('sparepartrepair.dbo.progressrepairs', 'progressrepairs.form_input_id', '=', 'waitingrepairs.id')
+            ->select('waitingrepairs.*', 'progressrepairs.plan_start_repair', 'progressrepairs.plan_finish_repair', 'progressrepairs.place_of_repair', 'progressrepairs.subcont_name', 'progressrepairs.quotation')
+            ->where('waitingrepairs.deleted', null)
+            ->where('waitingrepairs.progress', '<>', 'finish')
+            ->where('waitingrepairs.progress', '<>', 'Scrap')
+            ->where('waitingrepairs.approval', '<>', null)
+            ->where('progressrepairs.place_of_repair', '<>', 'In House')
+            ->orderBy('id')
+            ->get();
+
+        return view('partrepair.waitingtablesubcont', [
+            'reqtzy' => $partr,
+            'progress' => $request->progress,
         ]);
     }
 }
