@@ -173,7 +173,7 @@ class ExportController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        $users = DB::table('sparepartrepair.dbo.waitingrepairs')
+        $users = DB::table('sparepartrepair.dbo.finishrepairs')
             ->leftJoin('sparepartrepair.dbo.progressrepairs', function ($join) {
                 $join->on('finishrepairs.progressrepair_id', '=', 'progressrepairs.id');
             })
