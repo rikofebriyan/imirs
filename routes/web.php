@@ -106,5 +106,6 @@ Route::post('/export', [ExportController::class, 'export'])->name('export');
 Route::post('/export_finish', [ExportController::class, 'export_finish'])->name('export_finish');
 Route::post('/export_waiting', [ExportController::class, 'export_waiting'])->name('export_waiting');
 Route::post('/ticket', [ExportController::class, 'ticket'])->name('ticket');
+Route::get('/ticket_finish/{id}', [ExportController::class, 'ticket_finish'])->name('ticket_finish');
 Route::post('/sendemail', [EmailController::class, 'sendEmail'])->name('sendemail');
 Route::get('/getUnitMeasurement', [InfoController::class, 'getUnitMeasurement'])->name('get-unit-measurement');

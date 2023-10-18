@@ -217,7 +217,8 @@
                             Repair</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="code_part_repair2"
-                                name="code_part_repair" value="@if ($formFinish_totalFinish->code_part_repair) {{ $formFinish_totalFinish->code_part_repair }} @else {{ $waitingrepair->code_part_repair }} @endif"
+                                name="code_part_repair"
+                                value="@if ($formFinish_totalFinish->code_part_repair) {{ $formFinish_totalFinish->code_part_repair }} @else {{ $waitingrepair->code_part_repair }} @endif"
                                 @if ($formFinish_totalFinish->code_part_repair) readonly @endif>
                         </div>
                     </div>
@@ -257,6 +258,9 @@
                                 class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
                             <a href="{{ route('partrepair.waitingtable.index') }}"
                                 class="btn btn-md btn-secondary @if ($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
+
+                            <a href="{{ route('ticket_finish', $waitingrepair->id) }}"
+                                class="btn icon btn-warning">Cetak Tiket</a>
                         @else
                             <a class="btn btn-md btn-secondary disabled">Save</a>
                             <a href="{{ route('partrepair.waitingtable.index') }}"

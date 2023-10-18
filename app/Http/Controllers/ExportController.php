@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 
 class ExportController extends Controller
@@ -349,6 +350,191 @@ class ExportController extends Controller
         $fileName = "I-Mirs Export Waiting Table " . $start_date_formatted . " sampai " . $end_date_formatted . ".xlsx";
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        return response()->stream(function () use ($writer) {
+            $writer->save('php://output');
+        }, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+        ]);
+    }
+
+    public function ticket_finish($id)
+    {
+        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $waitingrepair->id)->get();
+        $formFinish_waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $formFinish_progressrepair = DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $formFinish_waitingrepair->id)->first();
+        $formFinish_progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $formFinish_waitingrepair->id)->get();
+        $formFinish_progresstrial = DB::table('progresstrials')->join('item_standards', 'progresstrials.item_check_id', '=', 'item_standards.id')
+            ->where('form_input_id', $formFinish_waitingrepair->id)
+            ->select('progresstrials.*', 'item_standards.item_standard')
+            ->get();
+
+        if ($formFinish_progressrepair == null) {
+            $formFinish_progressrepair = (object) [
+                'id' => '',
+                'place_of_repair' => '',
+                'subcont_cost' => 0,
+                'labour_cost' => 0,
+                'analisa' => '',
+                'action' => '',
+            ];
+        }
+
+        $formFinish_totalFinish = DB::table('sparepartrepair.dbo.finishrepairs')->where('form_input_id', $formFinish_waitingrepair->id)->first();
+        if ($formFinish_totalFinish == null) {
+            $formFinish_totalFinish = (object) [
+                'code_part_repair' => '',
+                'delivery_date' => '',
+                'pic_delivery' => '',
+            ];
+
+            $number_category_repair = '';
+            $category_repair = '';
+        } else {
+            $number_category_repair = preg_replace('/[^\d.0123456789]/', '', $formFinish_totalFinish->code_part_repair);
+            $category_repair = Str::replace($number_category_repair, '', $formFinish_totalFinish->code_part_repair);
+        }
+
+        $progressrepair2 = DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $waitingrepair->id)->first();
+
+        if ($progressrepair2 == null) {
+            $progressrepair2 = (object) ([
+                'place_of_repair' => '',
+                'analisa' => '',
+                'action' => '',
+                'pic_repair' => '',
+                'judgement' => '',
+                'plan_start_repair' => '',
+                'plan_finish_repair' => '',
+                'actual_start_repair' => '',
+                'actual_finish_repair' => '',
+                'total_time_repair' => '',
+                'labour_cost' => '',
+                'subcont_name' => '',
+                'judgement' => '',
+                'quotation' => '',
+                'subcont_cost' => '',
+                'lead_time' => '',
+                'time_period' => '',
+                'nomor_pp' => '',
+                'nomor_po' => '',
+                'plan_start_repair_subcont' => '',
+                'plan_finish_repair_subcont' => '',
+                'actual_start_repair_subcont' => '',
+                'actual_finish_repair_subcont' => '',
+            ]);
+        }
+
+        if ($formFinish_totalFinish->code_part_repair) {
+            $code_part_repair = $formFinish_totalFinish->code_part_repair;
+        } else {
+            $code_part_repair =  $waitingrepair->code_part_repair;
+        }
+
+        if ($category_repair) {
+            $total_cost_saving = $formFinish_totalFinish->f_total_cost_saving;
+        } else {
+            $total_cost_saving = ($waitingrepair->price - ($formFinish_progressrepair->subcont_cost + $formFinish_progressrepair->labour_cost + $formFinish_progresspemakaian->sum('total_price'))) * 0.7;
+        }
+
+        // generate data untuk diwrite ke sheet export
+        $data = [
+            'reg_sp' => $waitingrepair->reg_sp,
+            'date' => $waitingrepair->date,
+            'item_name' => $waitingrepair->item_name,
+            'item_type' => $waitingrepair->item_type,
+            'maker' => $waitingrepair->maker,
+            'price' => $waitingrepair->price,
+            'nama_pic' => $waitingrepair->nama_pic,
+            'place_of_repair' => $formFinish_progressrepair->place_of_repair,
+            'subcont_name' => $formFinish_progressrepair->subcont_name,
+            'no_quotation' => $formFinish_progressrepair->quotation,
+            'analisa' => $formFinish_progressrepair->analisa,
+            'action' => $formFinish_progressrepair->action,
+            'subcont_cost' => $formFinish_progressrepair->subcont_cost,
+            'result' => $formFinish_progressrepair->judgement,
+            'labour_cost' => $formFinish_progressrepair->labour_cost,
+            'seal_kit_cost' => $formFinish_progresspemakaian->sum('total_price'),
+            'total_cost_repair' => $formFinish_progressrepair->subcont_cost + $formFinish_progressrepair->labour_cost + $formFinish_progresspemakaian->sum('total_price'),
+            'total_cost_saving' => $total_cost_saving,
+            'code_part_repair' => $code_part_repair,
+            'delivery_date' => $formFinish_totalFinish->delivery_date,
+            'pic_delivery' => $formFinish_totalFinish->pic_delivery,
+        ];
+
+        // generate header untuk nama kolom
+        $header = array(
+            'reg_sp',
+            'date',
+            'item_name',
+            'item_type',
+            'maker',
+            'price',
+            'nama_pic',
+            'place_of_repair',
+            'subcont_name',
+            'no_quotation',
+            'analisa',
+            'action',
+            'subcont_cost',
+            'result',
+            'labour_cost',
+            'seal_kit_cost',
+            'total_cost_repair',
+            'total_cost_saving',
+            'code_part_repair',
+            'delivery_date',
+            'pic_delivery',
+        );
+
+        $header_trial = [
+            'item_standard',
+            'operation',
+            'standard_pengecekan_min',
+            'unit_measurement',
+            'actual_pengecekan',
+            'judgement',
+        ];
+
+        // write data finish ke sheet export
+        $spreadsheet = IOFactory::load(public_path('Ticket Finish.xlsx'));
+        $sheet = $spreadsheet->getSheetByName('Sheet Export');
+        if ($sheet == null) {
+            $sheet = new Worksheet($spreadsheet, 'Sheet Export');
+            $spreadsheet->addSheet($sheet);
+        }
+
+        $sheet->fromArray([$header], null, 'A1');
+        $sheet->fromArray($data, null, 'A2');
+
+        // write data trial ke sheet trial
+        $sheet2 = $spreadsheet->getSheetByName('Sheet Trial');
+        if ($sheet2 == null) {
+            $sheet2 = new Worksheet($spreadsheet, 'Sheet Export');
+            $spreadsheet->addSheet($sheet2);
+        }
+        $sheet2->fromArray($header_trial, null, 'A1');
+
+        $i = 2;
+        foreach ($formFinish_progresstrial as $trial) {
+            $data_trial = [
+                'item_standard' => $trial->item_standard,
+                'operation' => $trial->operation,
+                'standard_pengecekan_min' => $trial->standard_pengecekan_min,
+                'unit_measurement' => $trial->unit_measurement,
+                'actual_pengecekan' => $trial->actual_pengecekan,
+                'judgement' => $trial->judgement,
+            ];
+
+            $sheet2->fromArray($data_trial, null, 'A' . $i);
+            $i++;
+        }
+
+        // export to file
+        $fileName = "Ticket Finish " . $waitingrepair->reg_sp .  ".xlsx";
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+
         return response()->stream(function () use ($writer) {
             $writer->save('php://output');
         }, 200, [

@@ -35,8 +35,8 @@
                             <tr>
                                 <td>{{ $req->id }}</td>
                                 <td>{{ $req->name }}</td>
-                                <td>{{ $req->created_at->format('d-m-Y H:i:s') }}</td>
-                                <td>{{ $req->updated_at->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ $req->created_at }}</td>
+                                <td>{{ $req->updated_at }}</td>
                                 <td class="text-center d-flex d-inline">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn icon btn-primary btn-sm me-1" data-bs-toggle="modal"
@@ -76,7 +76,7 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" class="btn icon btn-danger btn-sm"><i
+                                        <button type="submit" class="btn icon btn-danger btn-sm" onclick="return confirm('Yakin?')"><i
                                                 class="bi bi-trash3"></i></button>
                                     </form>
                                 </td>
