@@ -44,7 +44,7 @@
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn icon btn-primary btn-sm me-1" data-bs-toggle="modal"
                                         data-bs-target="#asu{{ $req->id }}">
-                                        <i class="bi bi-pencil"></i>
+                                        <i class="fa fa-pencil"></i>
                                     </button>
                                     <form action="{{ route('user.update', $req->id) }}" method="POST">
                                         @csrf
@@ -119,7 +119,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn icon btn-danger btn-sm" onclick="return confirm('Yakin?')"><i
-                                                class="bi bi-trash3"></i></button>
+                                                class="fa fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>

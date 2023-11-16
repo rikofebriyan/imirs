@@ -38,11 +38,14 @@
                                 </td>
                                 <td>{{ $req->section }}</td>
                                 <td class="d-flex d-inline justify-content-center">
-                                    @can('AdminSupervisor')
-                                        <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}" method="POST">
+
+                                    @if ($loginUser->jabatan == 'ADMIN' || $loginUser == 'Supervisor')
+                                        <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}"
+                                            method="POST">
                                             @csrf
                                             @method('PATCH')
-                                            <input type="hidden" id="approval" name="approval" value="{{ $currentUser }}">
+                                            <input type="hidden" id="approval" name="approval"
+                                                value="{{ $loginUser->name }}">
                                             <button type="submit"
                                                 class="btn btn-sm btn-success rounded-pill mx-2">Approve</button>
                                         </form>
@@ -53,16 +56,17 @@
                                     @else
                                         <span class="rounded-pill bg-danger text-white text-center px-2 bg-opacity-50"> Not
                                             Authorized</span>
-                                    @endcan
+                                    @endif
+
                                     <form action="{{ route('ticket', $req->reg_sp) }}" method="POST"
                                         style="display:inline">
                                         @csrf
                                         <input type="hidden" name="reg_sp" value="{{ $req->reg_sp }}">
-                                        <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2">Cetak
+                                        <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2" @if($loginUser->jabatan == '') disabled @endif>Cetak
                                             Tiket</button>
                                     </form>
                                     <button type="button" class="btn btn-sm btn-primary rounded-pill mx-2"
-                                        data-bs-toggle="modal" data-bs-target="#modalemail{{ $req->id }}">
+                                        data-bs-toggle="modal" data-bs-target="#modalemail{{ $req->id }}" @if($loginUser->jabatan == '') disabled @endif>
                                         Send Email
                                     </button>
             </div>
@@ -96,13 +100,13 @@
                                     </span>
                                 @endif
 
-                                <i class="bi bi-c-circle"></i>
+                                <i class="fa fa-circle"></i>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Reject</button>
                     </div>
                 </div>
             </div>

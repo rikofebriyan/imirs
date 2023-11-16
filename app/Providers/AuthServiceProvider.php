@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,44 +27,44 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('AdminSupervisor', function (User $user) {
-            if ($user->jabatan == 'ADMIN' || $user->jabatan == 'Supervisor') {
-                return true;
-            } else {
-                return false;
-            }
-        });
+        // Gate::define('AdminSupervisor', function (User $user) {
+        //     if ($user->jabatan == 'ADMIN' || $user->jabatan == 'Supervisor') {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // });
 
-        Gate::define('Supervisor', function (User $user) {
-            if ($user->jabatan == 'Supervisor') {
-                return true;
-            } else {
-                return false;
-            }
-        });
+        // Gate::define('Supervisor', function (User $user) {
+        //     if ($user->jabatan == 'Supervisor') {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // });
 
-        Gate::define('Maintenance', function (User $user) {
-            if ($user->jabatan == 'Maintenance') {
-                return true;
-            } else {
-                return false;
-            }
-        });
+        // Gate::define('Maintenance', function (User $user) {
+        //     if ($user->jabatan == 'Maintenance') {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // });
 
-        Gate::define('RepairMan', function (User $user) {
-            if ($user->jabatan == 'RepairMan') {
-                return true;
-            } else {
-                return false;
-            }
-        });
+        // Gate::define('RepairMan', function (User $user) {
+        //     if ($user->jabatan == 'RepairMan') {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // });
 
-        Gate::define('Facility', function (User $user) {
-            if ($user->jabatan == 'Facility') {
-                return true;
-            } else {
-                return false;
-            }
-        });
+        // Gate::define('Facility', function (User $user) {
+        //     if ($user->jabatan == 'Facility') {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // });
     }
 }

@@ -52,8 +52,8 @@ class GlobalComposerServiceProvider extends ServiceProvider
                 $loginUser = Auth::user();
             } else {
                 $loginUser = (object) [
-                    'name' => 'Mr. X',
-                    'jabatan' => 'Any',
+                    'name' => '',
+                    'jabatan' => '',
                 ];
             }
 

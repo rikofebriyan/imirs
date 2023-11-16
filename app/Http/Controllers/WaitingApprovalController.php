@@ -27,14 +27,12 @@ class WaitingApprovalController extends Controller
             ->where('approval', null)
             ->orderBy('reg_sp', 'DESC')
             ->get();
-        $currentUser = Auth::user()->name;
 
         $user = DB::table('users')->get(['email', 'name']);
 
         return view('partrepair.waitingapprove', [
             'reqtzy' => $partr,
             'user' => $user,
-            'currentUser' => $currentUser,
         ]);
     }
 

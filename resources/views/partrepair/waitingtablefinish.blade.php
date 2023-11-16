@@ -50,11 +50,11 @@
                                 </td>
                                 <td class="text-center">
                                     @if ($req->progress == 'Scrap')
-                                        <a class="rounded-pill btn btn-danger btn-sm col"
-                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}">Detail</a>
+                                        <a class="rounded-pill btn btn-danger btn-sm col @if($loginUser->jabatan == '') disabled @endif"
+                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}" @if($loginUser->jabatan == '') aria-disabled="true" @endif>Detail</a>
                                     @elseif($req->progress == 'Finish')
-                                        <a class="rounded-pill btn btn-success btn-sm col"
-                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}">Detail</a>
+                                        <a class="rounded-pill btn btn-success btn-sm col @if($loginUser->jabatan == '') disabled @endif"
+                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}" @if($loginUser->jabatan == '') aria-disabled="true" @endif>Detail</a>
                                     @endif
                                 </td>
                             </tr>

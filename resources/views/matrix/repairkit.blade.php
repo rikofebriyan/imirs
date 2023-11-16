@@ -49,7 +49,7 @@
                                     <form action="{{ route('repair_kit.destroy', $req->id) }}" method="POST"
                                         style="display:inline">
                                         <button type="submit" class="btn icon btn-danger btn-sm"><i
-                                                class="bi bi-trash3"></i></button>
+                                                class="fa fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>

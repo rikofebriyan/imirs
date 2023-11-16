@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('css')
-
 @endsection
 
 @section('content')
@@ -59,34 +58,33 @@
                                 <td class="text-center" style="min-width: 130px;">
 
                                     @if ($req->progress == 'Waiting')
-                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}">To Ticket</a>
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7 @if($loginUser->jabatan == '') disabled @endif"
+                                            href="{{ route('partrepair.waitingtable.show', $req->id) }}" @if($loginUser->jabatan == '') aria-disabled="true" @endif>To Ticket</a>
                                     @elseif($req->progress == 'On Progress')
-                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                            href="{{ route('partrepair.waitingtable.show.form2', $req->id) }}">To
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7 @if($loginUser->jabatan == '') disabled @endif"
+                                            href="{{ route('partrepair.waitingtable.show.form2', $req->id) }}" @if($loginUser->jabatan == '') aria-disabled="true" @endif>To
                                             Progress</a>
                                     @elseif($req->progress == 'Seal Kit')
-                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                            href="{{ route('partrepair.waitingtable.show.form3', $req->id) }}">To Seal
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7 @if($loginUser->jabatan == '') disabled @endif"
+                                            href="{{ route('partrepair.waitingtable.show.form3', $req->id) }}" @if($loginUser->jabatan == '') aria-disabled="true" @endif>To Seal
                                             Kit</a>
                                     @elseif($req->progress == 'Trial')
-                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                            href="{{ route('partrepair.waitingtable.show.form4', $req->id) }}">To
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7 @if($loginUser->jabatan == '') disabled @endif"
+                                            href="{{ route('partrepair.waitingtable.show.form4', $req->id) }}" @if($loginUser->jabatan == '') aria-disabled="true" @endif>To
                                             Trial</a>
                                     @elseif($req->progress == 'Finish')
-                                        <a class="rounded-pill btn btn-primary btn-sm col-7"
-                                            href="{{ route('partrepair.waitingtable.show.form5', $req->id) }}">To
+                                        <a class="rounded-pill btn btn-primary btn-sm col-7 @if($loginUser->jabatan == '') disabled @endif"
+                                            href="{{ route('partrepair.waitingtable.show.form5', $req->id) }}" @if($loginUser->jabatan == '') aria-disabled="true" @endif>To
                                             Finish</a>
                                     @endif
 
-                                    {{-- @if (Auth::user()) --}}
-                                        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan ==  'Supervisor')
-                                            <button type="button" class="rounded-pill btn btn-danger btn-sm"
-                                                data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
-                                                Delete
-                                            </button>
-                                        @endif
-                                    {{-- @endif --}}
+                                    @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'Supervisor')
+                                        <button type="button" class="rounded-pill btn btn-danger btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->id }}">
+                                            Delete
+                                        </button>
+                                    @endif
+
                                     <form action="{{ route('partrepair.waitingtable.destroy', $req->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

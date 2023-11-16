@@ -155,11 +155,11 @@
                 <div class="row m-1">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-danger col m-1" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal2">
+                        data-bs-target="#exampleModal2" @if($loginUser->jabatan == '') disabled @endif>
                         Delay Reason
                     </button>
                     <button type="button" class="btn btn-primary col m-1" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal1">
+                        data-bs-target="#exampleModal1" @if($loginUser->jabatan == '') disabled @endif>
                         Revision Plan
                     </button>
 

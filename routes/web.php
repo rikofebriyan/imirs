@@ -23,6 +23,7 @@ use App\Http\Controllers\ItemstandardController;
 use App\Http\Controllers\ProgresstrialController;
 use App\Http\Controllers\WaitingrepairController;
 use App\Http\Controllers\CodepartrepairController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProgressrepairController;
 use App\Http\Controllers\MastersparepartController;
 use App\Http\Controllers\WaitingApprovalController;
@@ -42,9 +43,14 @@ use App\Http\Controllers\StandardpengecekanController;
 */
 
 
-Auth::routes();
+// Auth::routes();
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/register', [LoginController::class, 'register'])->name('register');
+Route::post('/login', [LoginController::class, 'submitLogin'])->name('login');
 
-Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
+// Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/partrepair/request', [PartrepairController::class, 'request'])->name('request');
 Route::get('/partrepair/ganttchart', [GanttchartController::class, 'index'])->name('ganttchart');
 Route::get('/partrepair/deletedtable', [WaitingrepairController::class, 'deleted'])->name('deletedtable');
@@ -72,19 +78,33 @@ Route::prefix('partrepair')->name('partrepair.')->group(function () {
     Route::get('/progress-subcont-table', [WaitingrepairController::class, 'progressSubcontTable'])->name('progress-subcont-table');
 });
 
-Route::resource('matrix/user', UserController::class)->middleware('adminsupervisor');
-Route::resource('matrix/section', SectionController::class)->middleware('auth');
-Route::resource('matrix/line', LineController::class)->middleware('auth');
-Route::resource('matrix/machine', MachineController::class)->middleware('auth');
-Route::resource('matrix/maker', MakerController::class)->middleware('auth');
-Route::resource('matrix/master_spare_part', MastersparepartController::class)->middleware('auth');
-Route::resource('matrix/standard_pengecekan', StandardpengecekanController::class)->middleware('auth');
-Route::resource('matrix/repair_kit', RepairkitController::class)->middleware('auth');
-Route::resource('matrix/subcont', SubcontController::class)->middleware('auth');
-Route::resource('matrix/item_standard', ItemstandardController::class)->middleware('auth');
-Route::resource('matrix/code_part_repair', CodepartrepairController::class)->middleware('auth');
-Route::resource('matrix/category_code', CategoryCodeController::class)->middleware('auth');
-Route::resource('Auth/profile', ProfileController::class)->middleware('auth');
+// Route::resource('matrix/user', UserController::class)->middleware('adminsupervisor');
+// Route::resource('matrix/section', SectionController::class)->middleware('auth');
+// Route::resource('matrix/line', LineController::class)->middleware('auth');
+// Route::resource('matrix/machine', MachineController::class)->middleware('auth');
+// Route::resource('matrix/maker', MakerController::class)->middleware('auth');
+// Route::resource('matrix/master_spare_part', MastersparepartController::class)->middleware('auth');
+// Route::resource('matrix/standard_pengecekan', StandardpengecekanController::class)->middleware('auth');
+// Route::resource('matrix/repair_kit', RepairkitController::class)->middleware('auth');
+// Route::resource('matrix/subcont', SubcontController::class)->middleware('auth');
+// Route::resource('matrix/item_standard', ItemstandardController::class)->middleware('auth');
+// Route::resource('matrix/code_part_repair', CodepartrepairController::class)->middleware('auth');
+// Route::resource('matrix/category_code', CategoryCodeController::class)->middleware('auth');
+// Route::resource('Auth/profile', ProfileController::class)->middleware('auth');
+
+Route::resource('matrix/user', UserController::class);
+Route::resource('matrix/section', SectionController::class);
+Route::resource('matrix/line', LineController::class);
+Route::resource('matrix/machine', MachineController::class);
+Route::resource('matrix/maker', MakerController::class);
+Route::resource('matrix/master_spare_part', MastersparepartController::class);
+Route::resource('matrix/standard_pengecekan', StandardpengecekanController::class);
+Route::resource('matrix/repair_kit', RepairkitController::class);
+Route::resource('matrix/subcont', SubcontController::class);
+Route::resource('matrix/item_standard', ItemstandardController::class);
+Route::resource('matrix/code_part_repair', CodepartrepairController::class);
+Route::resource('matrix/category_code', CategoryCodeController::class);
+Route::resource('Auth/profile', ProfileController::class);
 
 Route::get('/ajax', [InfoController::class, 'index'])->name('ajax');
 Route::get('/getline', [InfoController::class, 'getline'])->name('get-line');

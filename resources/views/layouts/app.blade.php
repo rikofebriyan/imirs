@@ -58,7 +58,11 @@
                                 class="user-dropdown d-flex align-items-center dropend dropdown-toggle "
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="avatar avatar-md2">
-                                    <img src="{{ asset('assets/images/faces/1.jpg') }}" alt="Avatar">
+                                    @if ($loginUser->jabatan != '')
+                                        <img src="{{ asset('assets/images/faces/1.jpg') }}" alt="Avatar">
+                                    @else
+                                        <img src="{{ asset('assets/images/faces/favicon.png') }}" alt="Avatar">
+                                    @endif
                                 </div>
                                 <div class="text">
                                     <h6 class="user-dropdown-name">{{ $loginUser->name }}</h6>
@@ -67,17 +71,23 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="topbarUserDropdown">
-                                <li><a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        class="d-none">
-                                        @csrf
-                                    </form>
-
-                                </li>
+                                @if ($loginUser->jabatan != '')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('login') }}">Login</a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                         <!-- Burger button responsive -->
@@ -134,7 +144,8 @@
                                         </li>
                                         <li class="submenu-item  ">
                                             <a class="list-group-item list-group-item-action list-group-item-light"
-                                                href="{{ route('partrepair.progress-subcont-table') }}" class='submenu-link'>Progress Subcont</a>
+                                                href="{{ route('partrepair.progress-subcont-table') }}"
+                                                class='submenu-link'>Progress Subcont</a>
                                         </li>
                                         <li class="submenu-item  ">
                                             <a class="list-group-item list-group-item-action list-group-item-light"
@@ -176,12 +187,13 @@
                                     <div class="submenu-group-wrapper">
                                         <ul class="submenu-group">
 
-                                            @can('AdminSupervisor')
+                                            @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'Supervisor')
                                                 <li class="submenu-item  ">
                                                     <a class="list-group-item list-group-item-action list-group-item-light"
-                                                        href="{{ route('user.index') }}" class='submenu-link'>User</a>
+                                                        href="{{ route('user.index') }}"
+                                                        class='submenu-link'>User</a>
                                                 </li>
-                                            @endcan
+                                            @endif
 
                                             <li class="submenu-item  ">
                                                 <a class="list-group-item list-group-item-action list-group-item-light"
@@ -230,8 +242,8 @@
                                     </div>
                                 </div>
                             </li>
+                            {{-- @endif --}}
                         @endif
-                        {{-- @endif --}}
 
                         <li class="menu-item  ">
                             <a href="{{ route('report') }}" class='menu-link'>

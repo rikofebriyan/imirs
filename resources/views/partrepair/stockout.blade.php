@@ -36,7 +36,7 @@
 
 
                                         <button type="button" class="rounded-pill btn btn-primary btn-sm col"
-                                            data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->waitingrepairid }}">
+                                            data-bs-toggle="modal" data-bs-target="#modaldelete{{ $req->waitingrepairid }}" @if($loginUser->jabatan == '') disabled @endif>
                                             Stock Out
                                         </button>
                                         <form action="{{ route('partrepair.stockout.store') }}" method="POST">

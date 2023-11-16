@@ -56,14 +56,14 @@
                                         @csrf
                                         @method('GET')
                                         <button type="submit" class="btn icon btn-primary btn-sm me-1">
-                                            <i class="bi bi-pencil"></i></button>
+                                            <i class="fa fa-pencil"></i></button>
                                     </form>
                                     <form action="{{ route('standard_pengecekan.destroy', $req->id) }}" method="POST"
                                         style="display:inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn icon btn-danger btn-sm"><i
-                                                class="bi bi-trash3"></i></button>
+                                                class="fa fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>

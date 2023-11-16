@@ -60,15 +60,15 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-
         // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'sparepartrepair.dbo.users',
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\User::class,
         // ],
+
+        'users' => [
+            'driver' => 'database',
+            'table' => 'sparepartrepair.dbo.users',
+        ],
     ],
 
     /*

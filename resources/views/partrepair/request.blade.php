@@ -341,10 +341,17 @@
                         </div>
 
                         <div class="mt-2 mb-5">
-                            <button type="submit" id="btnSubmitFormInput" class="btn btn-md btn-primary">Save
-                                Ticket</button>
-                            <a href="{{ route('partrepair.waitingtable.index') }}"
-                                class="btn btn-md btn-secondary">Back</a>
+                            @if ($loginUser->jabatan != null)
+                                <button type="submit" id="btnSubmitFormInput" class="btn btn-md btn-primary">Save
+                                    Ticket</button>
+                                <a href="{{ route('partrepair.waitingtable.index') }}"
+                                    class="btn btn-md btn-secondary">Back</a>
+                            @else
+                                <button type="submit" id="btnSubmitFormInput" class="btn btn-md btn-primary" disabled>Save
+                                    Ticket</button>
+                                <button href="{{ route('partrepair.waitingtable.index') }}"
+                                    class="btn btn-md btn-secondary" disabled>Back</button>
+                            @endif
                         </div>
                     </div>
 
