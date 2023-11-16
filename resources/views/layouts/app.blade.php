@@ -73,7 +73,9 @@
                             <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="topbarUserDropdown">
                                 @if ($loginUser->jabatan != '')
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                        <a class="dropdown-item" href="{{ route('logout') }}">Logout
+                                        </a>
+                                        {{-- <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
@@ -81,7 +83,7 @@
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                             class="d-none">
                                             @csrf
-                                        </form>
+                                        </form> --}}
                                     </li>
                                 @else
                                     <li>
@@ -314,6 +316,24 @@
             gravity: "top",
             position: "center",
             backgroundColor: "#4fbe87",
+        }).showToast()
+    </script>
+@endif
+
+@if ($loginUser->name == '')
+    <script>
+        Toastify({
+            text: `Anda saat ini sedang logout. Klik untuk login`,
+            duration: 25000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            style: {
+                backgroundColor: "#4fbe87",
+            },
+            onClick: function() {
+                window.location.href = "{{ route('login') }}";
+            }
         }).showToast()
     </script>
 @endif
