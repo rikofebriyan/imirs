@@ -28,7 +28,7 @@ class WaitingApprovalController extends Controller
             ->orderBy('reg_sp', 'DESC')
             ->get();
 
-        $user = DB::table('users')->get(['email', 'name']);
+        $user = DB::table('sparepartrepair.dbo.users')->get(['email', 'name']);
 
         return view('partrepair.waitingapprove', [
             'reqtzy' => $partr,
