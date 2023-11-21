@@ -48,6 +48,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/login', [LoginController::class, 'submitLogin'])->name('login');
+Route::post('/register', [LoginController::class, 'submitRegister'])->name('submit-register');
 
 // Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/', [HomeController::class, 'index'])->name('home');

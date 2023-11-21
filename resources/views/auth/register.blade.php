@@ -44,7 +44,7 @@
                             <strong>{{ session('success') }}</strong>
                         </div>
                     @endif
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('submit-register') }}">
                         @csrf
 
 
