@@ -39,7 +39,7 @@
                                 <td>{{ $req->section }}</td>
                                 <td class="d-flex d-inline justify-content-center">
 
-                                    @if ($loginUser->jabatan == 'ADMIN' || $loginUser == 'Supervisor')
+                                    @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'Supervisor')
                                         <form action="{{ route('partrepair.waitingapprove.update', $req->id) }}"
                                             method="POST">
                                             @csrf
