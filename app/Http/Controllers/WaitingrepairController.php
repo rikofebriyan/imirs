@@ -225,8 +225,8 @@ class WaitingrepairController extends Controller
         $line = $lineAll->where('name', $waitingrepair->line)->first();
         $machineAll = DB::table('sparepartrepair.dbo.machines')->where('line_id', $line->id)->get();
 
-        $maker = DB::table('sparepartrepair.dbo.makers')->get();
-        $user = DB::table('sparepartrepair.dbo.users')->get(['name', 'NPK']);
+        $maker = DB::table('sparepartrepair.dbo.makers')->orderBy('name')->get();
+        $user = DB::table('sparepartrepair.dbo.users')->orderBy('name')->get(['id', 'name', 'NPK', 'jabatan']);
 
         return view('partrepair.new.progress-form1', [
             'waitingrepair'    => $waitingrepair,

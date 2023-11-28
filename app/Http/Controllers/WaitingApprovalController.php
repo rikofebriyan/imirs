@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Cache\RedisTaggedCache;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class WaitingApprovalController extends Controller
 {
@@ -20,7 +22,7 @@ class WaitingApprovalController extends Controller
     {
         $partr = DB::table('sparepartrepair.dbo.waitingrepairs')
             ->leftJoin('sparepartrepair.dbo.users', 'users.name', '=', 'waitingrepairs.nama_pic')
-            ->select('waitingrepairs.*', 'users.jabatan')
+            ->select('waitingrepairs.*', 'users.jabatan', 'users.id as user_id')
             ->where('deleted', null)
             ->where('progress', '<>', 'finish')
             ->where('progress', '<>', 'Scrap')
@@ -91,6 +93,29 @@ class WaitingApprovalController extends Controller
         $data['approval'] = $request->approval;
         DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->update($data);
 
+        $ticket = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $user = DB::table('sparepartrepair.dbo.users')->where('id', $request->user_id)->first();
+        $email = (object) [
+            'email' => $user->email,
+            'subject' => $ticket->reg_sp
+        ];
+
+        $dataSend = [
+            'reg_sp' => $ticket->reg_sp,
+            'item_name' => $ticket->item_name,
+            'item_type' => $ticket->item_type,
+            'problem' => $ticket->problem,
+            'section' => $ticket->section,
+            'status' => 'Approved',
+            'link' => route('partrepair.waitingtable.show', $ticket->id),
+        ];
+
+        Mail::send('emails.notifApprove', $dataSend, function ($message) use ($email) {
+            $message->to($email->email, 'PE-Digitalization')
+                ->subject('I-MIRS Ticket Approved - ' . $email->subject);
+            $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
+        });
+
         return redirect()->back()->with('success', 'Ticket Approved successfully');
     }
 
@@ -106,6 +131,29 @@ class WaitingApprovalController extends Controller
         $data['reason'] = "Rejected: " . $request->reason;
         $data['deleted_by'] = $request->deleted_by;
         DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->update($data);
+
+        $ticket = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $user = DB::table('sparepartrepair.dbo.users')->where('id', $request->user_id)->first();
+        $email = (object) [
+            'email' => $user->email,
+            'subject' => $ticket->reg_sp
+        ];
+
+        $dataSend = [
+            'reg_sp' => $ticket->reg_sp,
+            'item_name' => $ticket->item_name,
+            'item_type' => $ticket->item_type,
+            'problem' => $ticket->problem,
+            'section' => $ticket->section,
+            'status' => 'Rejected',
+            'reason' => $request->reason
+        ];
+
+        Mail::send('emails.notifReject', $dataSend, function ($message) use ($email) {
+            $message->to($email->email, 'PE-Digitalization')
+                ->subject('I-MIRS Ticket Rejected - ' . $email->subject);
+            $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
+        });
 
         return redirect()->back()->with('success', 'Task removed successfully');
     }

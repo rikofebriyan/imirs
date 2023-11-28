@@ -30,6 +30,13 @@
 
                         <p>Silahkan Login menggunakan NPK anda</p>
                     </center>
+
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
@@ -56,20 +63,21 @@
 
 
                         </div>
-                        <div class="form-check form-check-lg d-flex align-items-end">
+                        {{-- <div class="form-check form-check-lg d-flex align-items-end">
                             <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault"
                                 name="remember">
                             <label class="form-check-label text-gray-600" for="remember">
                                 {{ __('Remember Me') }}
                             </label>
-                        </div>
+                        </div> --}}
                         <button type="submit"
                             class="btn btn-primary btn-block btn-lg shadow-lg mt-5">{{ __('Login') }}</button>
                     </form>
                     <div class="text-center mt-5 text-lg fs-5">
                         <p class="text-gray-600">Don't have an account? <a href="{{ route('register') }}"
                                 class="font-bold">Signup</a>.</p>
-                        <p><a class="font-bold" href="{{ url('/password/reset') }}">Forgot password?</a>.</p>
+                        {{-- <p><a class="font-bold" href="{{ url('/password/reset') }}">Forgot password?</a>.</p> --}}
+                        <p><a class="font-bold" href="{{ route('reset-password') }}">Forgot password?</a>.</p>
                     </div>
                 </div>
             </div>

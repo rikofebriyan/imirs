@@ -59,8 +59,9 @@ class PartrepairController extends Controller
         }
 
         $maker = DB::table('sparepartrepair.dbo.makers')->orderBy('name')->get();
-        $user = DB::table('sparepartrepair.dbo.users')->orderBy('name')->get();
+        $user = DB::table('sparepartrepair.dbo.users')->orderBy('name')->get(['id', 'name', 'NPK', 'jabatan']);
         $section = DB::table('sparepartrepair.dbo.sections')->orderBy('name')->get();
+        $finishRepair = DB::table('sparepartrepair.dbo.finishrepairs')->orderBy('code_part_repair')->get(['id', 'code_part_repair', 'f_item_name', 'f_item_type', 'f_maker']);
 
         return view('partrepair.request', [
             'section' => $section,
@@ -68,6 +69,7 @@ class PartrepairController extends Controller
             'user' => $user,
             'maker' => $maker,
             'itemstandard' => $itemstandard,
+            'finishRepair' => $finishRepair,
         ]);
     }
 }

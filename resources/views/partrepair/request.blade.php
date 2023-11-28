@@ -73,14 +73,20 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3 row" id="field2" style="display: none">
+                                <div class="mb-3 row" id="field2">
                                     <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
                                         Repair <sup class="text-danger">*</sup></label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control mb-3" placeholder="Input Kode Part Repair"
-                                            id="code_part_repair" name="code_part_repair">
+                                        {{-- <input type="text" class="form-control mb-3" placeholder="Input Kode Part Repair"
+                                            id="code_part_repair" name="code_part_repair"> --}}
+                                            <select class="form-select" name="code_part_repair" id="code_part_repair">
+                                                <option value="0" selected>Pilih ...</option>
+                                                @foreach ($finishRepair as $data)
+                                                    <option value="{{ $data->code_part_repair }}">{{ $data->code_part_repair }}|{{ $data->f_item_name }}|{{ $data->f_item_type }}</option>
+                                                @endforeach
+                                            </select>
 
-                                        <div class="input-group">
+                                        <div class="input-group mt-4">
                                             <input type="text" class="form-control disabledriko" id="number_of_repair"
                                                 name="number_of_repair" placeholder="Number of Repair" readonly>
                                             <label for="number_of_repair" class="col-sm-3 col-form-label ms-3">Times</label>
@@ -154,7 +160,7 @@
                                     <label for="maker" class="col-sm-3 col-form-label">Maker & Type <sup
                                             class="text-danger">*</sup></label>
                                     <div class="col">
-                                        <select class="form-control choices" id="maker" name="maker" required>
+                                        <select class="form-control" id="maker" name="maker" required>
                                             <option selected disabled>Maker ...</option>
                                             @foreach ($maker as $mak)
                                                 <option value="{{ $mak->name }}">{{ $mak->name }}
@@ -163,7 +169,7 @@
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <select class="form-control choices" id="type_of_part" name="type_of_part"
+                                        <select class="form-control" id="type_of_part" name="type_of_part"
                                             required>
                                             <option selected disabled>Type Of Part ...</option>
                                             <option value="1">Mechanic</option>
@@ -233,11 +239,11 @@
                                     <label for="nama_pic" class="col-sm-3 col-form-label">PIC User <sup
                                             class="text-danger">*</sup></label>
                                     <div class="col-sm-9">
-                                        <select class="form-control choices" id="nama_pic" name="nama_pic" required>
+                                        <select class="form-control" id="nama_pic" name="nama_pic" required>
                                             <option value="" selected disabled>Pilih ...</option>
                                             @foreach ($user as $us)
                                                 @if ($us->jabatan != 'ADMIN' || 'Supervisor')
-                                                    <option value="{{ $us->name }}">{{ $us->name }} |
+                                                    <option value="{{ $us->name }}">{{ $us->name }} ({{ $us->jabatan }}) |
                                                         {{ $us->NPK }}
                                                     </option>
                                                 @endif
@@ -420,8 +426,8 @@
     <script>
         function formChoice(x) {
             if (x == 0) {
-                $('#field2').css('display', 'none');
-                $('#code_part_repair').val('')
+                $('#field2').addClass('d-none');
+                $('#code_part_repair').val(0).trigger('change')
                 $('#number_of_repair').val('')
                 $('#field3').removeClass('d-none')
 
@@ -438,7 +444,7 @@
                 getTypeOfPart()
                 return
             } else {
-                $('#field2').css('display', 'flex');
+                $('#field2').removeClass('d-none');
                 $('#field3').addClass('d-none')
 
                 $('#storageDiv').addClass('d-none')
@@ -583,7 +589,7 @@
                     success: function(result) {
                         $('#lineline').empty()
                         $('#lineline').append(
-                            '<option value="" disabled selected>Choose</option>')
+                            '<option value="" disabled selected>Pilih ...</option>')
                         $.each(result, function(index, value) {
                             $('#lineline').append('<option value="' + value.id + '">' +
                                 value.name + '</option>');
@@ -617,7 +623,7 @@
                     success: function(result) {
                         $('#machine').empty()
                         $('#machine').append(
-                            '<option value="" disabled selected>Choose</option>')
+                            '<option value="" disabled selected>Pilih ...</option>')
                         $.each(result, function(id, value) {
                             $('#machine').append('<option value="' + value + '">' +
                                 value + '</option>');
@@ -789,6 +795,10 @@
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
+            $('#nama_pic').select2();
+            $('#maker').select2();
+            $('#type_of_part').select2();
+            $('#code_part_repair').select2();
 
             $('#item_check_id').on('change', function() {
                 var itemCheck = $(this).val()

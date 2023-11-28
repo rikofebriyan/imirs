@@ -109,7 +109,7 @@
                         <label for="maker" class="col-sm-3 col-form-label">Maker & Type <sup
                                 class="text-danger">*</sup></label>
                         <div class="col">
-                            <select class="form-control choices" id="maker" name="maker" required>
+                            <select class="form-control" id="maker" name="maker" required>
                                 <option selected disabled>Maker ...</option>
                                 @foreach ($maker as $mak)
                                     <option value="{{ $mak->name }}"
@@ -120,7 +120,7 @@
                             </select>
                         </div>
                         <div class="col">
-                            <select class="form-control choices" id="type_of_part" name="type_of_part" required>
+                            <select class="form-control" id="type_of_part" name="type_of_part" required>
                                 <option disabled>Type Of Part ...</option>
                                 <option value="1" @if ($waitingrepair->type_of_part == 1) selected @endif>Mechanic
                                 </option>
@@ -226,12 +226,12 @@
                         <label for="nama_pic" class="col-sm-3 col-form-label">PIC User <sup
                                 class="text-danger">*</sup></label>
                         <div class="col-sm-9">
-                            <select class="form-control choices" id="nama_pic" name="nama_pic">
+                            <select class="form-control" id="nama_pic" name="nama_pic">
                                 <option value="" disabled>Pilih ...</option>
                                 @foreach ($user as $us)
                                     <option value="{{ $us->name }}"
                                         @if ($waitingrepair->nama_pic == $us->name) selected @endif>
-                                        {{ $us->name }} | {{ $us->NPK }}
+                                        {{ $us->name }} ({{ $us->jabatan }}) | {{ $us->NPK }}
                                     </option>
                                 @endforeach
                             </select>
@@ -262,14 +262,15 @@
                             class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif">Update</button>
                         <a href="{{ route('partrepair.waitingtable.index') }}"
                             class="btn btn-md btn-secondary @if ($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
-                        <button id="btnCetakTiket" type="button" class="btn icon btn-warning" data-bs-toggle="modal"
+                        {{-- <button id="btnCetakTiket" type="button" class="btn icon btn-warning" data-bs-toggle="modal"
                             data-bs-target="#modalCetakTicket">Cetak
-                            Tiket</button>
+                            Tiket</button> --}}
+                            <a type="button" class="btn icon btn-warning" href="{{ route('ticket', 'reg_sp=' . $waitingrepair->reg_sp) }}">Cetak Ticket</a>
                     @else
                         <a class="btn btn-md btn-secondary disabled">Update</a>
                         <a href="/" class="btn btn-md btn-secondary">Back</a>
                         <span class="m-2"> Anda tidak punya hak akses untuk Edit Ticket</span>
-                        <button type="submit" class="btn icon btn-warning">Cetak
+                        <button type="submit" class="btn icon btn-warning disabled">Cetak
                             Tiket</button>
                     @endif
                 </div>

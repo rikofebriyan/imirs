@@ -80,8 +80,8 @@
                     <div id="inHouse"
                         @if ($progressrepair2->place_of_repair == 'In House') style="display: block;" @else style="display: none;" @endif>
                         <div class="mb-3 row">
-                            <label for="plan_start_repair" class="col-sm-3 col-form-label">Plan Start
-                                Repair <sup class="text-danger">*</sup></label>
+                            <label class="col-form-label col-sm-12 bg-secondary text-white rounded-3 text-center mb-2">Plan Repair</label>
+                            <label for="plan_start_repair" class="col-sm-3 col-form-label">Start <sup class="text-danger">*</sup></label>
                             <div class="col-sm-9">
                                 <input type="datetime-local" class="form-control" name="plan_start_repair"
                                     id="plan_start_repair" value="{{ $progressrepair2->plan_start_repair }}">
@@ -89,8 +89,7 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="plan_finish_repair" class="col-sm-3 col-form-label">Plan
-                                Finish Repair <sup class="text-danger">*</sup></label>
+                            <label for="plan_finish_repair" class="col-sm-3 col-form-label">Finish <sup class="text-danger">*</sup></label>
                             <div class="col-sm-9">
                                 <input type="datetime-local" class="form-control" name="plan_finish_repair"
                                     id="plan_finish_repair" value="{{ $progressrepair2->plan_finish_repair }}">
@@ -98,8 +97,8 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="actual_start_repair" class="col-sm-3 col-form-label">Actual
-                                Start Repair <sup class="text-danger">*</sup></label>
+                            <label class="col-form-label col-sm-12 bg-success text-white rounded-3 text-center mb-2">Actual Repair</label>
+                            <label for="actual_start_repair" class="col-sm-3 col-form-label">Start <sup class="text-danger">*</sup></label>
                             <div class="col-sm-9">
                                 <input type="datetime-local" class="form-control asu" id="datepicker"
                                     name="actual_start_repair" value="{{ $progressrepair2->actual_start_repair }}">
@@ -107,8 +106,7 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="actual_finish_repair" class="col-sm-3 col-form-label">Actual
-                                Finish Repair <sup class="text-danger">*</sup></label>
+                            <label for="actual_finish_repair" class="col-sm-3 col-form-label">Finish <sup class="text-danger">*</sup></label>
                             <div class="col-sm-9">
                                 <input type="datetime-local" class="form-control asu" id="datepicker2"
                                     name="actual_finish_repair" value="{{ $progressrepair2->actual_finish_repair }}">
@@ -116,7 +114,7 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="total_time_repair" class="col-sm-3 col-form-label">Actual Time
+                            <label for="total_time_repair" class="col-sm-3 col-form-label">Time
                                 Repair <sup class="text-danger">*</sup></label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control disabledriko" id="selisih"
@@ -192,8 +190,8 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="plan_start_repair" class="col-sm-3 col-form-label">Plan Start
-                                Repair <sup class="text-danger">*</sup></label>
+                            <label class="col-form-label col-sm-12 bg-secondary text-white rounded-3 text-center mb-2">Plan Repair</label>
+                            <label for="plan_start_repair" class="col-sm-3 col-form-label">Start <sup class="text-danger">*</sup></label>
                             <div class="col-sm-9">
                                 <input type="datetime-local" class="form-control" name="plan_start_repair_subcont"
                                     id="plan_start_repair_subcont" value="{{ $progressrepair2->plan_start_repair }}">
@@ -201,8 +199,7 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="plan_finish_repair_subcont" class="col-sm-3 col-form-label">Plan Finish
-                                Repair <sup class="text-danger">*</sup></label>
+                            <label for="plan_finish_repair_subcont" class="col-sm-3 col-form-label">Finish <sup class="text-danger">*</sup></label>
                             <div class="col-sm-9">
                                 <input type="datetime-local" class="form-control" id="plan_finish_repair_subcont"
                                     name="plan_finish_repair_subcont"

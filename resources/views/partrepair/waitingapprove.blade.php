@@ -15,6 +15,7 @@
                 <table id="myTable" class="table table-striped nowrap overflow-auto display">
                     <thead>
                         <tr>
+                            <th class="text-center" scope="col">Action</th>
                             <th scope="col">Ticket No</th>
                             <th scope="col">Nama Requester</th>
                             <th scope="col">Name Part</th>
@@ -22,21 +23,11 @@
                             <th scope="col">Problem</th>
                             <th class="text-center" scope="col">Status Repair</th>
                             <th class="text-center" scope="col">Section</th>
-                            <th class="text-center" scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($reqtzy as $req)
                             <tr>
-                                <td>{{ $req->reg_sp }}</td>
-                                <td>{{ $req->nama_pic . ' ( ' . $req->jabatan . ' )' }}</td>
-                                <td>{{ $req->item_name }}</td>
-                                <td>{{ $req->item_type }}</td>
-                                <td>{{ $req->problem }}</td>
-                                <td class="text-center"><span
-                                        class="@if ($req->status_repair == 'Urgent') bg-danger text-white px-3 py-2 rounded-pill @endif">{{ $req->status_repair }}</span>
-                                </td>
-                                <td>{{ $req->section }}</td>
                                 <td class="d-flex d-inline justify-content-center">
 
                                     @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'Supervisor')
@@ -46,6 +37,7 @@
                                             @method('PATCH')
                                             <input type="hidden" id="approval" name="approval"
                                                 value="{{ $loginUser->name }}">
+                                            <input type="hidden" id="user_id" name="user_id" value="{{ $req->user_id }}">
                                             <button type="submit"
                                                 class="btn btn-sm btn-success rounded-pill mx-2">Approve</button>
                                         </form>
@@ -62,11 +54,13 @@
                                         style="display:inline">
                                         @csrf
                                         <input type="hidden" name="reg_sp" value="{{ $req->reg_sp }}">
-                                        <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2" @if($loginUser->jabatan == '') disabled @endif>Cetak
+                                        <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2"
+                                            @if ($loginUser->jabatan == '') disabled @endif>Cetak
                                             Tiket</button>
                                     </form>
                                     <button type="button" class="btn btn-sm btn-primary rounded-pill mx-2"
-                                        data-bs-toggle="modal" data-bs-target="#modalemail{{ $req->id }}" @if($loginUser->jabatan == '') disabled @endif>
+                                        data-bs-toggle="modal" data-bs-target="#modalemail{{ $req->id }}"
+                                        @if ($loginUser->jabatan == '') disabled @endif>
                                         Send Email
                                     </button>
             </div>
@@ -88,6 +82,7 @@
                     <div class="modal-body">
 
                         <input type="hidden" name="deleted_by" value="{{ $loginUser->name }}">
+                        <input type="hidden" id="user_id" name="user_id" value="{{ $req->user_id }}">
 
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="text" id="reason" name="reason" class="form-control form-control-xl"
@@ -158,6 +153,15 @@
     </form>
 
     </td>
+    <td>{{ $req->reg_sp }}</td>
+    <td>{{ $req->nama_pic . ' ( ' . $req->jabatan . ' )' }}</td>
+    <td>{{ $req->item_name }}</td>
+    <td>{{ $req->item_type }}</td>
+    <td>{{ $req->problem }}</td>
+    <td class="text-center"><span
+            class="@if ($req->status_repair == 'Urgent') bg-danger text-white px-3 py-2 rounded-pill @endif">{{ $req->status_repair }}</span>
+    </td>
+    <td>{{ $req->section }}</td>
     </tr>
 @empty
     @endforelse
@@ -186,7 +190,7 @@
         $(document).ready(function() {
             var table = $('#myTable').DataTable({
                 order: [
-                    [0, 'desc']
+                    [1, 'desc']
                 ],
             });
 

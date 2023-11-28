@@ -40,7 +40,7 @@
                                     data-bs-toggle="modal" data-bs-target="#asu{{ $joi->id }}"
                                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size:
                                 .75rem">
-                                    Update
+                                    Edit
                                 </button>
 
                                 <a href="{{ route('partrepair.progresstrial.delete', $joi->id) }}"

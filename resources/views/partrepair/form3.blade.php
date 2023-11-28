@@ -243,7 +243,10 @@
                 @csrf
                 <div class="container-fluid justify-content-center py-0">
                     <div class="container-fluid">
-                        <h4 class="modal-title text-center mt-2">Add Seal Kit</h4>
+                        <div class="modal-header border-0">
+                            <h4 class="modal-title text-center mt-2">Add Seal Kit</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
                         <div class="row gx-0 px-3">
                             <div class="col mb-3">
                                 <div class="p-3 my-0 border">
@@ -323,7 +326,7 @@
                                     <div class="input-group mb-3">
                                         <label for="maker" class="col-sm-3 col-form-label">Maker <sup
                                             class="text-danger">*</sup></label>
-                                        <div class="col">
+                                        <div class="col-sm-9">
                                             <select class="form-control choices" id="maker" name="maker"
                                                 required>
                                                 <option selected disabled>Maker ...</option>

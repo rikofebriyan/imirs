@@ -47,6 +47,16 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        $(document).ready(function() {
+            $('#maker').select2()
+            $('#type_of_part').select2()
+            $('#section').select2()
+            $('#lineline').select2()
+            $('#machine').select2()
+            $('#nama_pic').select2()
+        });
+    </script>
     <script type="text/javascript">
         function isi_otomatis() {
             var labour_id = $("#isiotomatis").val();
@@ -145,5 +155,4 @@
             }).showToast()
         </script>
     @endif
-
 @endsection

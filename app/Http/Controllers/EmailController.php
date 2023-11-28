@@ -9,7 +9,10 @@ class EmailController extends Controller
 {
     public function sendEmail(Request $request)
     {
-        $email = $request->email;
+        $email = (object) [
+            'email' => $request->email,
+            'subject' => $request->reg_sp,
+        ];
         $data = [
             'reg_sp' => $request->reg_sp,
             'name' => $request->name,
@@ -20,11 +23,10 @@ class EmailController extends Controller
         ];
 
         Mail::send('emails.emailrequest', $data, function ($message) use ($email) {
-            $message->to($email, 'PE-Digitalization')
-                ->subject('I-Mirs Approval Notification');
-            $message->from('pe-digitalization@outlook.com', 'PE-Digitalization');
+            $message->to($email->email, 'PE-Digitalization')
+                ->subject('I-Mirs Approval Notification - ' . $email->subject);
+            $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
         });
-
 
         return redirect()->back()->with('success', 'Email Notifikasi Approval sudah dikirim');
     }

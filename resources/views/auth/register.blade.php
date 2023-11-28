@@ -24,7 +24,7 @@
             <div class="col-lg-6 col-12">
 
                 <div id="auth-left" class="py-3">
-                    <a href="home" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+                    <a href="{{ route('login') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
                     <div class="card">
                         <a href="{{ route('home') }}"><img class="rounded mx-auto d-block"
                                 src="{{ asset('assets/images/logo/logo.png') }}" width="160" alt="Logo"></a>
