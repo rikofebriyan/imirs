@@ -110,11 +110,11 @@ class WaitingApprovalController extends Controller
             'link' => route('partrepair.waitingtable.show', $ticket->id),
         ];
 
-        Mail::send('emails.notifApprove', $dataSend, function ($message) use ($email) {
-            $message->to($email->email, 'PE-Digitalization')
-                ->subject('I-MIRS Ticket Approved - ' . $email->subject);
-            $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
-        });
+        // Mail::send('emails.notifApprove', $dataSend, function ($message) use ($email) {
+        //     $message->to($email->email, 'PE-Digitalization')
+        //         ->subject('I-MIRS Ticket Approved - ' . $email->subject);
+        //     $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
+        // });
 
         return redirect()->back()->with('success', 'Ticket Approved successfully');
     }
@@ -149,11 +149,11 @@ class WaitingApprovalController extends Controller
             'reason' => $request->reason
         ];
 
-        Mail::send('emails.notifReject', $dataSend, function ($message) use ($email) {
-            $message->to($email->email, 'PE-Digitalization')
-                ->subject('I-MIRS Ticket Rejected - ' . $email->subject);
-            $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
-        });
+        // Mail::send('emails.notifReject', $dataSend, function ($message) use ($email) {
+        //     $message->to($email->email, 'PE-Digitalization')
+        //         ->subject('I-MIRS Ticket Rejected - ' . $email->subject);
+        //     $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
+        // });
 
         return redirect()->back()->with('success', 'Task removed successfully');
     }

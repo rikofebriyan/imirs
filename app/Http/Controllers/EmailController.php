@@ -22,11 +22,11 @@ class EmailController extends Controller
             'problem' => $request->problem,
         ];
 
-        Mail::send('emails.emailrequest', $data, function ($message) use ($email) {
-            $message->to($email->email, 'PE-Digitalization')
-                ->subject('I-Mirs Approval Notification - ' . $email->subject);
-            $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
-        });
+        // Mail::send('emails.emailrequest', $data, function ($message) use ($email) {
+        //     $message->to($email->email, 'PE-Digitalization')
+        //         ->subject('I-Mirs Approval Notification - ' . $email->subject);
+        //     $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
+        // });
 
         return redirect()->back()->with('success', 'Email Notifikasi Approval sudah dikirim');
     }
