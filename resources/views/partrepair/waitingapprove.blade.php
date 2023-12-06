@@ -50,9 +50,8 @@
                                             Authorized</span>
                                     @endif
 
-                                    <form action="{{ route('ticket', $req->reg_sp) }}" method="POST"
+                                    <form action="{{ route('ticket', 'reg_sp=' . $req->reg_sp) }}" method="get"
                                         style="display:inline">
-                                        @csrf
                                         <input type="hidden" name="reg_sp" value="{{ $req->reg_sp }}">
                                         <button type="submit" class="btn icon btn-warning btn-sm rounded-pill mx-2"
                                             @if ($loginUser->jabatan == '') disabled @endif>Cetak

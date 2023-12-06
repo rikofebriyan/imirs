@@ -378,6 +378,9 @@ class ExportController extends Controller
                 'labour_cost' => 0,
                 'analisa' => '',
                 'action' => '',
+                'subcont_name' => '',
+                'quotation' => '',
+                'judgement' => '',
             ];
         }
 

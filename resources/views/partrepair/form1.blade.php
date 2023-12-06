@@ -278,7 +278,7 @@
         </div>
     </div>
 </form>
-<form action="{{ route('ticket', $waitingrepair->reg_sp) }}" method="POST" style="display:inline">
+{{-- <form action="{{ route('ticket', $waitingrepair->reg_sp) }}" method="POST" style="display:inline">
     <div class="modal fade" id="modalCetakTicket" tabindex="-1" aria-labelledby="modalCetakTicketLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -296,4 +296,4 @@
                 </div>
             </div>
         </div>
-</form>
+</form> --}}
