@@ -19,6 +19,7 @@ use App\Models\MasterSparePart;
 use App\Models\Progresspemakaian;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\KeteranganMtbf;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
@@ -142,7 +143,8 @@ class WaitingrepairController extends Controller
             $formInput = Waitingrepair::create($data);
 
             foreach ($request->get('standard') as $standard) {
-                if ($standard['operation'] != null || $standard['standard_pengecekan_min'] != null) {
+                // if ($standard['operation'] != null || $standard['standard_pengecekan_min'] != null) {
+                if ($standard['checkbox'] == 1) {
                     $submit['item_check_id'] = $standard['item_check_id'];
                     $submit['form_input_id'] = $formInput->id;
                     $submit['standard_pengecekan_id'] = null;
@@ -155,6 +157,31 @@ class WaitingrepairController extends Controller
 
                     Progresstrial::create($submit);
                 }
+            }
+
+            if ($request->jenisPenggantian == 'MTBF' && $request->mauRekondisi == 'Non Rekondisi') {
+                // input history MTBF ke tabel
+                $fileName = $request->file('ReconditionSheet')->getClientOriginalName();
+                $keteranganMtbf = (array) [
+                    'form_input_id' => $formInput->id,
+                    'jenis_penggantian' => $request->jenisPenggantian,
+                    'mau_rekondisi' => $request->mauRekondisi,
+                    'recondition_sheet' => 'ReconditionSheet/' . $formInput->reg_sp . '/' . $fileName,
+                ];
+
+                // upload file recondition sheet ke tabel
+                $request->file('ReconditionSheet')->storeAs('ReconditionSheet/' . $formInput->reg_sp, $fileName);
+
+                KeteranganMtbf::create($keteranganMtbf);
+            } else {
+                $keteranganMtbf = (array) [
+                    'form_input_id' => $formInput->id,
+                    'jenis_penggantian' => $request->jenisPenggantian,
+                    'mau_rekondisi' => $request->mauRekondisi,
+                    'recondition_sheet' => '',
+                ];
+
+                KeteranganMtbf::create($keteranganMtbf);
             }
         }
 
@@ -216,6 +243,17 @@ class WaitingrepairController extends Controller
     public function waitingRepairForm1($id)
     {
         $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $keteranganMtbf = DB::table('sparepartrepair.dbo.keterangan_mtbfs')->where('form_input_id', $waitingrepair->id)->first();
+
+        if ($keteranganMtbf == null) {
+            $keteranganMtbf = (object) [
+                'id' => '',
+                'form_input_id' => '',
+                'jenis_penggantian' => '',
+                'mau_rekondisi' => '',
+                'recondition_sheet' => '',
+            ];
+        }
 
         // form 1
         $sectionAll = DB::table('sparepartrepair.dbo.sections')->get();
@@ -235,6 +273,7 @@ class WaitingrepairController extends Controller
             'machine' => $machineAll,
             'maker' => $maker,
             'user' => $user,
+            'keteranganMtbf' => $keteranganMtbf,
         ]);
     }
 
@@ -401,6 +440,8 @@ class WaitingrepairController extends Controller
 
         $categoryAll = DB::table('sparepartrepair.dbo.category_codes')->get();
         $user = DB::table('sparepartrepair.dbo.users')->get('name');
+        $nomor_code_repair = (preg_replace('/[^\d.0123456789]/', '', $waitingrepair->code_part_repair));
+        $code_repair_huruf = Str::replace($nomor_code_repair, '', $waitingrepair->code_part_repair);
 
         return view('partrepair.new.progress-form5', [
             'waitingrepair'    => $waitingrepair,
@@ -416,6 +457,8 @@ class WaitingrepairController extends Controller
             'category' => $categoryAll,
             'category_repair' => $category_repair,
             'number_category_repair' => $number_category_repair,
+            'code_repair_huruf' => $code_repair_huruf,
+            'nomor_code_repair' => $nomor_code_repair
         ]);
     }
 

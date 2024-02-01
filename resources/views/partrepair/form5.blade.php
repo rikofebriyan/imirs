@@ -197,12 +197,12 @@
                             <label for="category" class="col-form-label">Category</label>
                         </div>
                         <div class="col-sm-9">
-                            <select class="form-select choices" onchange="categorycodeajax()" id="categorycodejs"
-                                name="category" @if ($category_repair) readonly @endif>
+                            <select class="form-select @if ($formFinish_totalFinish->code_part_repair || $waitingrepair->code_part_repair) disabledriko @endif" onchange="categorycodeajax()" id="categorycodejs"
+                                name="category" @if ($category_repair) readonly @endif @if ($formFinish_totalFinish->code_part_repair || $waitingrepair->code_part_repair) style="pointer-events: none;" @endif>
                                 <option value="">Pilih ...</option>
                                 @foreach ($category as $cat)
                                     <option value="{{ $cat->category_code }}"
-                                        @if ($category_repair == $cat->category_code) selected @endif>
+                                        @if ($code_repair_huruf == $cat->category_code) selected @endif>
                                         {{ $cat->category }}
                                     </option>
                                 @endforeach
@@ -210,16 +210,16 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="number" id="number">
+                    <input type="hidden" name="number" id="number" value="{{ $nomor_code_repair }}">
 
                     <div class="mb-3 row" @if ($progressrepair2->place_of_repair == 'Trade In') style="display:none;" @endif>
                         <label for="code_part_repair" class="col-sm-3 col-form-label">Code Part
                             Repair</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="code_part_repair2"
+                            <input type="text" class="form-control @if ($formFinish_totalFinish->code_part_repair || $waitingrepair->code_part_repair) disabledriko @endif" id="code_part_repair2"
                                 name="code_part_repair"
                                 value="@if ($formFinish_totalFinish->code_part_repair) {{ $formFinish_totalFinish->code_part_repair }} @else {{ $waitingrepair->code_part_repair }} @endif"
-                                @if ($formFinish_totalFinish->code_part_repair) readonly @endif>
+                                @if ($formFinish_totalFinish->code_part_repair || $waitingrepair->code_part_repair) readonly @endif>
                         </div>
                     </div>
 
