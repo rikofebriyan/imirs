@@ -440,6 +440,8 @@ class WaitingrepairController extends Controller
 
         $categoryAll = DB::table('sparepartrepair.dbo.category_codes')->get();
         $user = DB::table('sparepartrepair.dbo.users')->get('name');
+
+        // TAMBAH INTERLOCK MISAL UDAH PERNAH REPAIR
         $nomor_code_repair = (preg_replace('/[^\d.0123456789]/', '', $waitingrepair->code_part_repair));
         $code_repair_huruf = Str::replace($nomor_code_repair, '', $waitingrepair->code_part_repair);
 
