@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Mail\notifapprove;
+use App\Mail\notifreject;
 use Illuminate\Cache\RedisTaggedCache;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+use App\Models\Email;
 
 class WaitingApprovalController extends Controller
 {
@@ -22,7 +26,8 @@ class WaitingApprovalController extends Controller
     {
         $partr = DB::table('sparepartrepair.dbo.waitingrepairs')
             ->leftJoin('sparepartrepair.dbo.users', 'users.name', '=', 'waitingrepairs.nama_pic')
-            ->select('waitingrepairs.*', 'users.jabatan', 'users.id as user_id')
+            ->leftJoin('sparepartrepair.dbo.keterangan_mtbfs', 'waitingrepairs.id', '=', 'keterangan_mtbfs.form_input_id')
+            ->select('waitingrepairs.*', 'users.jabatan', 'users.id as user_id', 'keterangan_mtbfs.jenis_penggantian', 'keterangan_mtbfs.mau_rekondisi', 'keterangan_mtbfs.recondition_sheet')
             ->where('deleted', null)
             ->where('progress', '<>', 'finish')
             ->where('progress', '<>', 'Scrap')
@@ -108,15 +113,46 @@ class WaitingApprovalController extends Controller
             'section' => $ticket->section,
             'status' => 'Approved',
             'link' => route('partrepair.waitingtable.show', $ticket->id),
+            'subject' => $ticket->reg_sp,
         ];
 
-        // Mail::send('emails.notifApprove', $dataSend, function ($message) use ($email) {
-        //     $message->to($email->email, 'PE-Digitalization')
-        //         ->subject('I-MIRS Ticket Approved - ' . $email->subject);
-        //     $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
-        // });
+        $notifikasiEmail = 0;
 
-        return redirect()->back()->with('success', 'Ticket Approved successfully');
+        if ($notifikasiEmail == 1) {
+            $dataEmail = DB::table('sparepartrepair.dbo.emails')->get()->last();
+            $diffTime = Carbon::now()->diffInMinutes($dataEmail->send_time);
+
+            if ($diffTime > 1 && Carbon::parse(now())->gt($dataEmail->send_time)) {
+                Mail::to($email->email)
+                    ->later(now(), new notifapprove($dataSend));
+
+                Email::create([
+                    'email' => $email->email,
+                    'status' => 'Email Ticket Approved sudah dikirim - ' . $ticket->reg_sp,
+                    'is_send' => 0,
+                    'send_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+
+                $note = 'Email Ticket Approved telah dikirim';
+            } else {
+                sleep(15);
+                Mail::to($email->email)
+                    ->later(Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s'), new notifapprove($dataSend));
+
+                Email::create([
+                    'email' => $email->email,
+                    'status' => 'Email Ticket Approved sudah dikirim - ' . $ticket->reg_sp,
+                    'is_send' => 0,
+                    'send_time' => Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s'),
+                ]);
+
+                $note = 'Email Ticket Approved akan dikirim pada pukul ' . Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s');
+            }
+        } else {
+            $note = 'Ticket Approved. (Notifikasi email disabled)';
+        }
+
+        return redirect()->back()->with('success', $note);
     }
 
     /**
@@ -146,15 +182,46 @@ class WaitingApprovalController extends Controller
             'problem' => $ticket->problem,
             'section' => $ticket->section,
             'status' => 'Rejected',
-            'reason' => $request->reason
+            'reason' => $request->reason,
+            'subject' => $ticket->reg_sp,
         ];
 
-        // Mail::send('emails.notifReject', $dataSend, function ($message) use ($email) {
-        //     $message->to($email->email, 'PE-Digitalization')
-        //         ->subject('I-MIRS Ticket Rejected - ' . $email->subject);
-        //     $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
-        // });
+        $notifikasiEmail = 0;
 
-        return redirect()->back()->with('success', 'Task removed successfully');
+        if ($notifikasiEmail == 1) {
+            $dataEmail = DB::table('sparepartrepair.dbo.emails')->get()->last();
+            $diffTime = Carbon::now()->diffInMinutes($dataEmail->send_time);
+
+            if ($diffTime > 1 && Carbon::parse(now())->gt($dataEmail->send_time)) {
+                Mail::to($email->email)
+                    ->later(now(), new notifreject($dataSend));
+
+                Email::create([
+                    'email' => $email->email,
+                    'status' => 'Email ticket rejected sudah dikirim - ' . $ticket->reg_sp,
+                    'is_send' => 0,
+                    'send_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+
+                $note = 'Email ticket rejected telah dikirim';
+            } else {
+                sleep(15);
+                Mail::to($email->email)
+                    ->later(Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s'), new notifreject($dataSend));
+
+                Email::create([
+                    'email' => $email->email,
+                    'status' => 'Email ticket rejected sudah dikirim - ' . $ticket->reg_sp,
+                    'is_send' => 0,
+                    'send_time' => Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s'),
+                ]);
+
+                $note = 'Email ticket rejected akan dikirim pada pukul ' . Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s');
+            }
+        } else {
+            $note = 'Ticket rejected. (Notifikasi email disabled)';
+        }
+
+        return redirect()->back()->with('success', $note);
     }
 }

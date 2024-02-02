@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
+use App\Models\Finishrepair;
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
-use App\Models\Finishrepair;
+use App\Models\KeteranganMtbf;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 
 class ExportController extends Controller
@@ -544,5 +546,17 @@ class ExportController extends Controller
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
         ]);
+    }
+
+    public function reconditionSheet(Request $request)
+    {
+        $keteranganMtbf = KeteranganMtbf::find($request->id);
+
+        if ($keteranganMtbf == null) {
+            return redirect()->back()->with('success', 'Recondition Sheet Tidak Ditemukan');
+        } else {
+            return Storage::download($keteranganMtbf->recondition_sheet);
+        }
+
     }
 }

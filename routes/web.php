@@ -54,7 +54,6 @@ Route::post('/send-reset-password', [LoginController::class, 'sendResetPassword'
 Route::get('/recovery-password', [LoginController::class, 'recoveryPassword'])->name('recovery-password');
 Route::post('/password-update', [LoginController::class, 'passwordRecovery'])->name('password-recovery');
 
-// Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/partrepair/request', [PartrepairController::class, 'request'])->name('request');
 Route::get('/partrepair/ganttchart', [GanttchartController::class, 'index'])->name('ganttchart');
@@ -83,20 +82,6 @@ Route::prefix('partrepair')->name('partrepair.')->group(function () {
     Route::get('/progress-subcont-table', [WaitingrepairController::class, 'progressSubcontTable'])->name('progress-subcont-table');
 });
 
-// Route::resource('matrix/user', UserController::class)->middleware('adminsupervisor');
-// Route::resource('matrix/section', SectionController::class)->middleware('auth');
-// Route::resource('matrix/line', LineController::class)->middleware('auth');
-// Route::resource('matrix/machine', MachineController::class)->middleware('auth');
-// Route::resource('matrix/maker', MakerController::class)->middleware('auth');
-// Route::resource('matrix/master_spare_part', MastersparepartController::class)->middleware('auth');
-// Route::resource('matrix/standard_pengecekan', StandardpengecekanController::class)->middleware('auth');
-// Route::resource('matrix/repair_kit', RepairkitController::class)->middleware('auth');
-// Route::resource('matrix/subcont', SubcontController::class)->middleware('auth');
-// Route::resource('matrix/item_standard', ItemstandardController::class)->middleware('auth');
-// Route::resource('matrix/code_part_repair', CodepartrepairController::class)->middleware('auth');
-// Route::resource('matrix/category_code', CategoryCodeController::class)->middleware('auth');
-// Route::resource('Auth/profile', ProfileController::class)->middleware('auth');
-
 Route::resource('matrix/user', UserController::class);
 Route::resource('matrix/section', SectionController::class);
 Route::resource('matrix/line', LineController::class);
@@ -118,7 +103,7 @@ Route::get('/getmachine', [InfoController::class, 'getmachine'])->name('get-mach
 Route::get('/getlabour', [InfoController::class, 'getlabour'])->name('get-labour');
 Route::get('/get-number-of-repair', [InfoController::class, 'getNumberOfRepair'])->name('get-number-of-repair');
 Route::get('/getMaker', [InfoController::class, 'getmaker'])->name('get-maker');
-Route::get('/getTypeOfPart', [InfoController::class, 'getTyoeOfPart'])->name('get-type-of-part');
+Route::get('/getTypeOfPart', [InfoController::class, 'getTypeOfPart'])->name('get-type-of-part');
 Route::get('/getSubcont', [InfoController::class, 'getSubcont'])->name('get-subcont');
 Route::get('/getcategory', [InfoController::class, 'getcategory'])->name('get-category');
 Route::get('/report', [HomeController::class, 'reportHome'])->name('report');
@@ -134,3 +119,5 @@ Route::get('/ticket', [ExportController::class, 'ticket'])->name('ticket');
 Route::get('/ticket_finish/{id}', [ExportController::class, 'ticket_finish'])->name('ticket_finish');
 Route::post('/sendemail', [EmailController::class, 'sendEmail'])->name('sendemail');
 Route::get('/getUnitMeasurement', [InfoController::class, 'getUnitMeasurement'])->name('get-unit-measurement');
+Route::get('/reconditionSheet', [ExportController::class, 'reconditionSheet'])->name('recondition_sheet');
+Route::get('/getStandardPengecekan', [PartrepairController::class, 'getStandardPengecekan'])->name('get-standard-pengecekan');

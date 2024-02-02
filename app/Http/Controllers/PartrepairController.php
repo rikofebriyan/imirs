@@ -72,4 +72,51 @@ class PartrepairController extends Controller
             'finishRepair' => $finishRepair,
         ]);
     }
+
+    public function getStandardPengecekan(Request $request)
+    {
+        $itemCode = $request->itemCode;
+
+        $dataRepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('item_code', $itemCode)->orderByDesc('id')->first();
+        $itemStandard = DB::table('sparepartrepair.dbo.item_standards')->get();
+
+        if ($dataRepair == null) {
+            return response()->json([
+                'status' => 'empty',
+                'waiting_repair_id' => '',
+                'data' => $itemStandard,
+            ]);
+        }
+        $progressTrial = DB::table('sparepartrepair.dbo.progresstrials')->where('form_input_id', $dataRepair->id)->get();
+
+        if ($progressTrial->count() > 0) {
+            foreach ($itemStandard as $std) {
+                $standard[$std->id]['item_standard'] = $std->item_standard;
+                $standard[$std->id]['unit_measurement'] = $std->unit_measurement;
+
+                foreach ($progressTrial as $trial) {
+                    if ($std->id == $trial->item_check_id) {
+                        $standard[$std->id]['operation'] = $trial->operation;
+                        $standard[$std->id]['standard_pengecekan_min'] = $trial->standard_pengecekan_min;
+                        break;
+                    } else {
+                        $standard[$std->id]['operation'] = null;
+                        $standard[$std->id]['standard_pengecekan_min'] = null;
+                    }
+                }
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'waiting_repair_id' => $dataRepair->id,
+                'data' => $standard,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'empty',
+                'waiting_repair_id' => $dataRepair->id,
+                'data' => $itemStandard,
+            ]);
+        }
+    }
 }

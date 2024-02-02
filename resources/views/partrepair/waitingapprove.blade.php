@@ -23,6 +23,7 @@
                             <th scope="col">Problem</th>
                             <th class="text-center" scope="col">Status Repair</th>
                             <th class="text-center" scope="col">Section</th>
+                            <th class="text-center" scope="col">Jenis Penggantian</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,6 +162,7 @@
             class="@if ($req->status_repair == 'Urgent') bg-danger text-white px-3 py-2 rounded-pill @endif">{{ $req->status_repair }}</span>
     </td>
     <td>{{ $req->section }}</td>
+    <td>{{ $req->jenis_penggantian }}</td>
     </tr>
 @empty
     @endforelse

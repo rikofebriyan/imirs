@@ -12,7 +12,11 @@ use App\Models\MasterSparePart;
 use App\Models\Progresspemakaian;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Mail\notifreject;
+use App\Mail\notifscrap;
 use Illuminate\Foundation\Auth\User;
+use App\Models\Email;
+use Illuminate\Support\Facades\Mail;
 
 class ProgressrepairController extends Controller
 {
@@ -136,8 +140,63 @@ class ProgressrepairController extends Controller
             'progress' => $request2->progress,
         ]);
 
+        $user = DB::table('sparepartrepair.dbo.users')->where('name', $request->user_id)->first();
+        $email = (object) [
+            'email' => $user->email,
+            'subject' => $request2->reg_sp
+        ];
+
+        $dataSend = [
+            'reg_sp' => $request2->reg_sp,
+            'item_name' => $request2->item_name,
+            'item_type' => $request2->item_type,
+            'problem' => $request2->problem,
+            'section' => $request2->section,
+            'status' => 'Scrap',
+            'link' => route('partrepair.waitingtable.show', $request2->id),
+            'subject' => $request2->reg_sp,
+        ];
+
         if ($request->judgement == 'Scrap') {
-            return redirect()->route('partrepair.waitingtable.index')->with('success', 'Your task added successfully!');
+            // notifikasi email bila ticket discrap
+
+            $notifikasiEmail = 0;
+
+            if ($notifikasiEmail == 1) {
+                $dataEmail = DB::table('sparepartrepair.dbo.emails')->get()->last();
+                $diffTime = Carbon::now()->diffInMinutes($dataEmail->send_time);
+
+                if ($diffTime > 1 && Carbon::parse(now())->gt($dataEmail->send_time)) {
+                    Mail::to($email->email)
+                        ->later(now(), new notifscrap($dataSend));
+
+                    Email::create([
+                        'email' => $email->email,
+                        'status' => 'Email Ticket Approved sudah dikirim - ' . $request2->reg_sp,
+                        'is_send' => 0,
+                        'send_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                    ]);
+
+                    $note = 'Email Ticket Scrap telah dikirim';
+                } else {
+                    sleep(15);
+                    Mail::to($email->email)
+                        ->later(Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s'), new notifscrap($dataSend));
+
+                    Email::create([
+                        'email' => $email->email,
+                        'status' => 'Email Ticket Scrap sudah dikirim - ' . $request2->reg_sp,
+                        'is_send' => 0,
+                        'send_time' => Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s'),
+                    ]);
+
+                    $note = 'Email Ticket Scrap akan dikirim pada pukul ' . Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s');
+                }
+            } else {
+                $note = 'Ticket telah discrap. (Notifitkasi email disabled)';
+            }
+
+            return redirect()->route('partrepair.waitingtable.index')->with('success', $note);
         } else {
             return redirect()->back()->with('success', 'Your task added successfully!');
         }

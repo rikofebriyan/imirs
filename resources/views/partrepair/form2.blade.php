@@ -5,6 +5,7 @@
             <div class="col card border mx-2">
                 <div class="p-3">
                     <input type="hidden" name="form_input_id" id="form_input_id" value="{{ $waitingrepair->id }}">
+                    <input type="hidden" id="user_id" name="user_id" value="{{ $waitingrepair->nama_pic }}">
 
                     <div class="mb-3 row">
                         <label for="place_of_repair" class="col-sm-3 col-form-label">Place

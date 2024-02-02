@@ -44,11 +44,6 @@
                     <h3>{{ $dataSend['status'] }}</h3>
                 </td>
             </tr>
-            <tr>
-                <th>Reason</th>
-                <td>:</td>
-                <td>{{ $dataSend['reason'] }}</td>
-            </tr>
         </tbody>
     </table>
 

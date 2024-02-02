@@ -15,33 +15,33 @@
             <tr>
                 <th>No Ticket</th>
                 <td>:</td>
-                <td>{{ $reg_sp }}</td>
+                <td>{{ $dataSend['reg_sp'] }}</td>
             </tr>
             <tr>
                 <th>Item Name</th>
                 <td>:</td>
-                <td>{{ $item_name }}</td>
+                <td>{{ $dataSend['item_name'] }}</td>
             </tr>
             <tr>
                 <th>Item Type</th>
                 <td>:</td>
-                <td>{{ $item_type }}</td>
+                <td>{{ $dataSend['item_type'] }}</td>
             </tr>
             <tr>
                 <th>Problem</th>
                 <td>:</td>
-                <td>{{ $problem }}</td>
+                <td>{{ $dataSend['problem'] }}</td>
             </tr>
             <tr>
                 <th>Section</th>
                 <td>:</td>
-                <td>{{ $section }}</td>
+                <td>{{ $dataSend['section'] }}</td>
             </tr>
             <tr>
                 <th>Status</th>
                 <td>:</td>
                 <td>
-                    <h3>{{ $status }}</h3>
+                    <h3>{{ $dataSend['status'] }}</h3>
                 </td>
             </tr>
         </tbody>
@@ -49,7 +49,7 @@
 
     <p>
         Silahkan klik link berikut untuk detail informasi :
-    <h3><a href="{{ $link }}">Please click this link to detail information</a></h3>
+    <h3><a href="{{ $dataSend['link'] }}">Please click this link to detail information</a></h3>
     </p>
 
     <br><br>

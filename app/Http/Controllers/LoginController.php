@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Mail\resetpassword;
+use App\Models\Email;
 
 class LoginController extends Controller
 {
@@ -105,20 +107,46 @@ class LoginController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'link' => route('recovery-password', 'token=' . $token),
+                'subject' => $user->NPK,
             ];
 
-            Mail::send('emails.resetPassword', $dataSend, function ($message) use ($email) {
-                $message->to($email, 'PE-Digitalization')
-                    ->subject('I-MIRS reset password link');
-                $message->from('pe-digitalization2@outlook.com', 'PE-Digitalization');
-            });
+            $dataEmail = DB::table('sparepartrepair.dbo.emails')->get()->last();
+            $diffTime = Carbon::now()->diffInMinutes($dataEmail->send_time);
+
+            if ($diffTime > 1 && Carbon::parse(now())->gt($dataEmail->send_time)) {
+                Mail::to($email)
+                    ->later(now(), new resetpassword($dataSend));
+
+                Email::create([
+                    'email' => $email,
+                    'status' => 'Link Reset Password Telah Dikirim ke Email - ' . $user->NPK,
+                    'is_send' => 0,
+                    'send_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+
+                $note = 'Link reset password telah dikirim ke email';
+            } else {
+                sleep(15);
+                Mail::to($email)
+                    ->later(Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s'), new resetpassword($dataSend));
+
+                Email::create([
+                    'email' => $email,
+                    'status' => 'Link Reset Password Telah Dikirim ke Email - ' . $user->NPK,
+                    'is_send' => 0,
+                    'send_time' => Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s'),
+                ]);
+
+                $note = 'Link reset password akan dikirim pada pukul ' . Carbon::parse($dataEmail->send_time)->addMinutes(1)->format('Y-m-d H:i:s');
+            }
+
 
             ResetPasswordLink::create([
                 'user_id' => $user->id,
                 'token' => $token
             ]);
 
-            return redirect()->back()->with('status', 'Link Reset Password Telah Dikirim ke Email');
+            return redirect()->back()->with('status', $note);
         }
     }
 

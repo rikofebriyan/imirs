@@ -55,6 +55,15 @@
             $('#lineline').select2()
             $('#machine').select2()
             $('#nama_pic').select2()
+
+            var jenisPenggantian = $('#jenisPenggantian option:selected').val()
+            var mauRekondisi = $('#mauRekondisi option:selected').val()
+
+            if (jenisPenggantian == 'MTBF' && mauRekondisi == 'Non Rekondisi') {
+                $('#ReconditionSheet_div').removeClass('d-none')
+            } else {
+                $('#ReconditionSheet_div').addClass('d-none')
+            }
         });
     </script>
     <script type="text/javascript">

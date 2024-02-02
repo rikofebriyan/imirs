@@ -257,6 +257,42 @@
                         </div>
                     </div>
 
+                    <div class="mb-3 row">
+                        <label for="jenisPenggantian" class="col-sm-3 col-form-label">Jenis Penggantian <sup
+                                class="text-danger">*</sup></label>
+                        <div class="col-sm-9">
+                            <select class="form-select disabledriko" id="jenisPenggantian" name="jenisPenggantian" required>
+                                <option disabled @if ($keteranganMtbf->jenis_penggantian == null) selected @else disabled @endif>Pilih ...</option>
+                                <option value="Non MTBF" @if ($keteranganMtbf->jenis_penggantian == 'Non MTBF') selected @else disabled @endif>Non MTBF
+                                </option>
+                                <option value="MTBF" @if ($keteranganMtbf->jenis_penggantian == 'MTBF') selected @else disabled @endif>MTBF
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="mauRekondisi_div" class="mb-3 row">
+                        <label for="mauRekondisi" class="col-sm-3 col-form-label">Mau Rekondisi <sup
+                                class="text-danger">*</sup></label>
+                        <div class="col-sm-9">
+                            <select class="form-select disabledriko" id="mauRekondisi" name="mauRekondisi" required>
+                                <option disabled @if ($keteranganMtbf->mau_rekondisi == null) selected @else disabled @endif>Pilih ...</option>
+                                <option value="Non Rekondisi" @if ($keteranganMtbf->mau_rekondisi == 'Non Rekondisi') selected @else disabled @endif>Non
+                                    Rekondisi</option>
+                                <option value="Rekondisi" @if ($keteranganMtbf->mau_rekondisi == 'Rekondisi') selected @else disabled @endif>Rekondisi
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="ReconditionSheet_div" class="mb-3 row">
+                        <label for="ReconditionSheet" class="col-sm-3 col-form-label">Recondition Sheet <sup
+                                class="text-danger">*</sup></label>
+                        <div class="col-sm-9">
+                            <a id="btnKeteranganMtbf" type="button" class="btn icon btn-secondary" href="{{ route('recondition_sheet', 'id=' . $keteranganMtbf->id . '&reg_sp=' . $waitingrepair->reg_sp) }}">Klik Untuk Download Recondition Sheet</a>
+                        </div>
+                    </div>
+
                     @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                         <button type="submit"
                             class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif">Update</button>
@@ -265,7 +301,8 @@
                         {{-- <button id="btnCetakTiket" type="button" class="btn icon btn-warning" data-bs-toggle="modal"
                             data-bs-target="#modalCetakTicket">Cetak
                             Tiket</button> --}}
-                            <a type="button" class="btn icon btn-warning" href="{{ route('ticket', 'reg_sp=' . $waitingrepair->reg_sp) }}">Cetak Ticket</a>
+                        <a type="button" class="btn icon btn-warning"
+                            href="{{ route('ticket', 'reg_sp=' . $waitingrepair->reg_sp) }}">Cetak Ticket</a>
                     @else
                         <a class="btn btn-md btn-secondary disabled">Update</a>
                         <a href="/" class="btn btn-md btn-secondary">Back</a>

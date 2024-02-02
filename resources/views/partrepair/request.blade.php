@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <form action="{{ route('partrepair.waitingtable.store') }}" method="POST">
+        <form action="{{ route('partrepair.waitingtable.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="container-fluid justify-content-center py-0">
                 <div class="container-fluid">
@@ -79,12 +79,14 @@
                                     <div class="col-sm-9">
                                         {{-- <input type="text" class="form-control mb-3" placeholder="Input Kode Part Repair"
                                             id="code_part_repair" name="code_part_repair"> --}}
-                                            <select class="form-select" name="code_part_repair" id="code_part_repair">
-                                                <option value="0" selected>Pilih ...</option>
-                                                @foreach ($finishRepair as $data)
-                                                    <option value="{{ $data->code_part_repair }}">{{ $data->code_part_repair }}|{{ $data->f_item_name }}|{{ $data->f_item_type }}</option>
-                                                @endforeach
-                                            </select>
+                                        <select class="form-select" name="code_part_repair" id="code_part_repair">
+                                            <option value="0" selected>Pilih ...</option>
+                                            @foreach ($finishRepair as $data)
+                                                <option value="{{ $data->code_part_repair }}">
+                                                    {{ $data->code_part_repair }}|{{ $data->f_item_name }}|{{ $data->f_item_type }}
+                                                </option>
+                                            @endforeach
+                                        </select>
 
                                         <div class="input-group mt-4">
                                             <input type="text" class="form-control disabledriko" id="number_of_repair"
@@ -161,7 +163,7 @@
                                             class="text-danger">*</sup></label>
                                     <div class="col">
                                         <select class="form-control" id="maker" name="maker" required>
-                                            <option selected disabled>Maker ...</option>
+                                            <option value="" selected disabled>Maker ...</option>
                                             @foreach ($maker as $mak)
                                                 <option value="{{ $mak->name }}">{{ $mak->name }}
                                                 </option>
@@ -169,9 +171,8 @@
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <select class="form-control" id="type_of_part" name="type_of_part"
-                                            required>
-                                            <option selected disabled>Type Of Part ...</option>
+                                        <select class="form-control" id="type_of_part" name="type_of_part" required>
+                                            <option value="" selected disabled>Type Of Part ...</option>
                                             <option value="1">Mechanic</option>
                                             <option value="2">Hydraulic</option>
                                             <option value="3">Pneumatic</option>
@@ -192,6 +193,40 @@
 
                         <div class="card col border m-2">
                             <div class="p-3">
+                                <div id="jenisPenggantian_div" class="mb-3 row">
+                                    <label for="jenisPenggantian" class="col-sm-3 col-form-label">Jenis Penggantian <sup
+                                            class="text-danger">*</sup></label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select" id="jenisPenggantian" name="jenisPenggantian"
+                                            required>
+                                            <option value="" selected disabled>Pilih ...</option>
+                                            <option value="Non MTBF">Non MTBF</option>
+                                            <option value="MTBF">MTBF</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="mauRekondisi_div" class="mb-3 row">
+                                    <label for="mauRekondisi" class="col-sm-3 col-form-label">Mau Rekondisi <sup
+                                            class="text-danger">*</sup></label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select" id="mauRekondisi" name="mauRekondisi">
+                                            <option value="" selected disabled>Pilih ...</option>
+                                            <option value="Non Rekondisi">Non Rekondisi</option>
+                                            <option value="Rekondisi">Rekondisi</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="ReconditionSheet_div" class="mb-3 row">
+                                    <label for="ReconditionSheet" class="col-sm-3 col-form-label">Recondition Sheet <sup
+                                            class="text-danger">*</sup></label>
+                                    <div class="col-sm-9">
+                                        <input type="file" class="form-control" id="ReconditionSheet"
+                                            name="ReconditionSheet" placeholder="Upload Recondition Sheet">
+                                    </div>
+                                </div>
+
                                 <div class="mb-3 row">
                                     <label for="problem" class="col-sm-3 col-form-label">Problem <sup
                                             class="text-danger">*</sup></label>
@@ -243,7 +278,9 @@
                                             <option value="" selected disabled>Pilih ...</option>
                                             @foreach ($user as $us)
                                                 @if ($us->jabatan != 'ADMIN' || 'Supervisor')
-                                                    <option value="{{ $us->name }}">{{ $us->name }} ({{ $us->jabatan }}) |
+                                                    <option value="{{ $us->name }}">{{ $us->name }}
+                                                        ({{ $us->jabatan }})
+                                                        |
                                                         {{ $us->NPK }}
                                                     </option>
                                                 @endif
@@ -257,7 +294,7 @@
                                             class="text-danger">*</sup></label>
                                     <div class="col-sm-9">
                                         <select class="form-control" id="status_repair" name="status_repair" required>
-                                            <option selected disabled>Pilih ...</option>
+                                            <option value="" selected disabled>Pilih ...</option>
                                             <option value="Normal">Normal</option>
                                             <option value="Urgent">Urgent</option>
                                         </select>
@@ -290,22 +327,41 @@
             <div class="container-fluid justify-content-center py-0">
                 <div class="container-fluid">
                     <div class="card border text-center mb-2">
-                        <h3 class="m-2">STANDARD</h3>
+                        <div class="row">
+                            <div class="col-9">
+                                <h3 class="m-2">STANDARD</h3>
+                            </div>
+                            <div class="col-3">
+                                <button id="importDataStandard" type="button" class="btn btn-primary m-2">Import
+                                    Standard</button>
+                            </div>
+                        </div>
                         <div class="row gx-3">
                             <div class="card col border m-2">
                                 <table id="myTable" class="table table-striped nowrap overflow-scroll display">
                                     <thead>
                                         <tr>
                                             {{-- <th scope="col">Action</th> --}}
+                                            <th scope="col">Check</th>
                                             <th scope="col">Item Pengecekan</th>
                                             <th scope="col">Unit Measurement</th>
                                             <th scope="col">Operation</th>
                                             <th scope="col">Standard</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="myTable_body">
                                         @forelse ($itemstandard as $tabw)
                                             <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="standard{{ $tabw->id }}checkbox"
+                                                            name="standard[{{ $tabw->id }}][checkbox]">
+                                                        <input class="form-check-input" type="hidden" value="0"
+                                                            id="standard{{ $tabw->id }}checkboxhidden"
+                                                            name="standard[{{ $tabw->id }}][checkbox]" disabled>
+                                                    </div>
+                                                </td>
                                                 <td>
                                                     <input type="hidden"
                                                         name="standard[{{ $tabw->id }}][item_check_id]"
@@ -315,13 +371,15 @@
                                                         id="" value="{{ $tabw->item_standard }}" readonly>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control"
+                                                    <input type="text" class="form-control disabledriko"
                                                         name="standard[{{ $tabw->id }}][unit_measurement]"
-                                                        id="" value="{{ $tabw->unit_measurement }}">
+                                                        id="standard{{ $tabw->id }}unit_measurement"
+                                                        value="{{ $tabw->unit_measurement }}" readonly>
                                                 </td>
                                                 <td>
                                                     <select name="standard[{{ $tabw->id }}][operation]"
-                                                        id="" class="form-control">
+                                                        id="standard{{ $tabw->id }}operation"
+                                                        class="form-control disabledriko" readonly>
                                                         <option value="" selected>Choose ...</option>
                                                         <option value="Min">Min</option>
                                                         <option value="Max">Max</option>
@@ -330,9 +388,9 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control"
+                                                    <input type="text" class="form-control disabledriko"
                                                         name="standard[{{ $tabw->id }}][standard_pengecekan_min]"
-                                                        id="">
+                                                        id="standard{{ $tabw->id }}standard_pengecekan_min" readonly>
                                                 </td>
                                             </tr>
                                         @empty
@@ -353,7 +411,8 @@
                                 <a href="{{ route('partrepair.waitingtable.index') }}"
                                     class="btn btn-md btn-secondary">Back</a>
                             @else
-                                <button type="submit" id="btnSubmitFormInput" class="btn btn-md btn-primary" disabled>Save
+                                <button type="submit" id="btnSubmitFormInput" class="btn btn-md btn-primary"
+                                    disabled>Save
                                     Ticket</button>
                                 <button href="{{ route('partrepair.waitingtable.index') }}"
                                     class="btn btn-md btn-secondary" disabled>Back</button>
@@ -441,7 +500,7 @@
                 $('#qty').val('')
 
                 getMaker()
-                getTypeOfPart()
+                // getTypeOfPart()
                 return
             } else {
                 $('#field2').removeClass('d-none');
@@ -457,7 +516,7 @@
                 $('#qty').val('')
 
                 getMaker()
-                getTypeOfPart()
+                // getTypeOfPart()
                 return;
             }
         }
@@ -469,7 +528,7 @@
                 dataType: 'JSON',
                 success: function(result) {
                     $('#maker').empty()
-                    $('#maker').append(`<option selected disabled>Maker ...</option>`)
+                    $('#maker').append(`<option value="" selected disabled>Maker ...</option>`)
                     $.each(result, function(id, value) {
                         $('#maker').append('<option value="' + value.id + '">' +
                             value.name + '</option>');
@@ -794,11 +853,15 @@
 
     <script>
         $(document).ready(function() {
-            $('#myTable').DataTable();
+            // $('#myTable').DataTable();
             $('#nama_pic').select2();
             $('#maker').select2();
             $('#type_of_part').select2();
             $('#code_part_repair').select2();
+            formChoice(0);
+            $('#mauRekondisi_div').hide();
+            $('#ReconditionSheet_div').hide();
+            checkCheckbox();
 
             $('#item_check_id').on('change', function() {
                 var itemCheck = $(this).val()
@@ -813,6 +876,289 @@
                 });
             });
 
+            $('#jenisPenggantian').on('change', function() {
+                var jenisPenggantian = $(this).val()
+
+                if (jenisPenggantian == 'MTBF') {
+                    $('#mauRekondisi_div').show()
+                    $('#mauRekondisi').prop('required', true)
+                } else {
+                    $('#mauRekondisi').prop('required', false)
+                    $('#mauRekondisi_div').hide()
+                }
+            });
+
+            $('#mauRekondisi').on('change', function() {
+                var mauRekondisi = $(this).val()
+
+                if (mauRekondisi == 'Non Rekondisi') {
+                    $('#ReconditionSheet_div').show();
+                    $('#ReconditionSheet').prop('required', true)
+                } else {
+                    $('#ReconditionSheet_div').hide();
+                    $('#ReconditionSheet').prop('required', false)
+                }
+            });
+
+            @forelse ($itemstandard as $tabw)
+                $('#standard{{ $tabw->id }}checkbox').on('change', function() {
+                    if ($(this).is(":checked")) {
+                        checkCheckbox()
+                    } else {
+                        checkCheckbox()
+                    }
+                });
+            @empty
+            @endforelse
+
+            function checkCheckbox() {
+                var i = 0;
+                @foreach ($itemstandard as $tabw)
+                    if ($('#standard{{ $tabw->id }}checkbox').is(':checked')) {
+                        i++;
+                        $('#standard{{ $tabw->id }}checkbox').val('1')
+                        $('#standard{{ $tabw->id }}checkboxhidden').prop('disabled', true)
+
+                        $('#standard{{ $tabw->id }}unit_measurement').prop('readonly', false)
+                        $('#standard{{ $tabw->id }}unit_measurement').removeClass('disabledriko')
+
+                        $('#standard{{ $tabw->id }}operation').prop('readonly', false)
+                        $('#standard{{ $tabw->id }}operation').removeClass('disabledriko')
+
+                        $('#standard{{ $tabw->id }}standard_pengecekan_min').prop('readonly', false)
+                        $('#standard{{ $tabw->id }}standard_pengecekan_min').removeClass(
+                            'disabledriko')
+                    } else {
+                        $('#standard{{ $tabw->id }}checkbox').val('0')
+                        $('#standard{{ $tabw->id }}checkboxhidden').prop('disabled', false)
+
+                        $('#standard{{ $tabw->id }}unit_measurement').prop('readonly', true)
+                        $('#standard{{ $tabw->id }}unit_measurement').addClass('disabledriko')
+
+                        $('#standard{{ $tabw->id }}operation').prop('readonly', true)
+                        $('#standard{{ $tabw->id }}operation').addClass('disabledriko')
+
+                        $('#standard{{ $tabw->id }}standard_pengecekan_min').prop('readonly', true)
+                        $('#standard{{ $tabw->id }}standard_pengecekan_min').addClass('disabledriko')
+                    }
+                @endforeach
+
+                var totalDataStandard = {{ $itemstandard->count() }};
+
+                if (i == 0) {
+                    $('#btnSubmitFormInput').addClass('disabled')
+                } else {
+                    $('#btnSubmitFormInput').removeClass('disabled')
+                }
+            }
+
+            $('#importDataStandard').on('click', function() {
+                var itemCode = $('#item_code').val();
+
+                if (itemCode != '') {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ route('get-standard-pengecekan') }}" + '/?itemCode=' + itemCode,
+                        dataType: 'JSON',
+                        success: function(result) {
+                            console.log(result)
+                            if (result.status == 'success') {
+                                $('#myTable_body').empty()
+
+                                $.each(result.data, function(index, x) {
+                                    if (x.operation == 'Min') {
+                                        var optionMin = 'selected';
+                                    } else {
+                                        var optionMin = '';
+                                    }
+                                    if (x.operation == 'Max') {
+                                        var optionMax = 'selected';
+                                    } else {
+                                        var optionMax = '';
+                                    }
+                                    if (x.operation == 'Between') {
+                                        var optionBetween = 'selected';
+                                    } else {
+                                        var optionBetween = '';
+                                    }
+                                    if (x.operation == 'Equal') {
+                                        var optionEqual = 'selected';
+                                    } else {
+                                        var optionEqual = '';
+                                    }
+
+                                    if (x.operation != null || x
+                                        .standard_pengecekan_min != null) {
+                                        $('#myTable_body').append(`
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="standard${index}checkbox"
+                                                            name="standard[${index}][checkbox]" checked>
+                                                        <input class="form-check-input" type="hidden" value="0"
+                                                            id="standard${index}checkboxhidden"
+                                                            name="standard[${index}][checkbox]" disabled>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden"
+                                                        name="standard[${index}][item_check_id]"
+                                                        value="${index}">
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[${index}][item_standard]"
+                                                        id="" value="${x.item_standard}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[${index}][unit_measurement]"
+                                                        id="standard${index}unit_measurement"
+                                                        value="${x.unit_measurement}">
+                                                </td>
+                                                <td>
+                                                    <select name="standard[${index}][operation]"
+                                                        id="standard${index}operation"
+                                                        class="form-control disabledriko" readonly>
+                                                        <option value="">Choose ...</option>
+                                                        <option value="Min" ${optionMin}>Min</option>
+                                                        <option value="Max" ${optionMax}>Max</option>
+                                                        <option value="Between" ${optionBetween}>Between</option>
+                                                        <option value="Equal" ${optionEqual}>Equal</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[${index}][standard_pengecekan_min]"
+                                                        id="standard${index}standard_pengecekan_min" value="${x.standard_pengecekan_min}">
+                                                </td>
+                                            </tr>
+                                        `);
+
+                                        checkCheckbox()
+                                    } else {
+                                        $('#myTable_body').append(`
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="standard${index}checkbox"
+                                                            name="standard[${index}][checkbox]">
+                                                        <input class="form-check-input" type="hidden" value="0"
+                                                            id="standard${index}checkboxhidden"
+                                                            name="standard[${index}][checkbox]">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden"
+                                                        name="standard[${index}][item_check_id]"
+                                                        value="${index}">
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[${index}][item_standard]"
+                                                        id="" value="${x.item_standard}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[${index}][unit_measurement]"
+                                                        id="standard${index}unit_measurement"
+                                                        value="${x.unit_measurement}" readonly>
+                                                </td>
+                                                <td>
+                                                    <select name="standard[${index}][operation]"
+                                                        id="standard${index}operation"
+                                                        class="form-control disabledriko" readonly>
+                                                        <option value="" selected>Choose ...</option>
+                                                        <option value="Min">Min</option>
+                                                        <option value="Max">Max</option>
+                                                        <option value="Between">Between</option>
+                                                        <option value="Equal">Equal</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[${index}][standard_pengecekan_min]"
+                                                        id="standard${index}standard_pengecekan_min" readonly>
+                                                </td>
+                                            </tr>
+                                        `);
+                                    }
+
+                                    $(`#standard` + index + `checkbox`).on(
+                                        'change',
+                                        function() {
+                                            if ($(this).is(":checked")) {
+                                                checkCheckbox()
+                                            } else {
+                                                checkCheckbox()
+                                            }
+                                        });
+                                });
+                            } else {
+                                alert('Data Tidak Ditemukan')
+
+                                $('#myTable_body').empty()
+                                $.each(result.data, function(index, x) {
+                                    $('#myTable_body').append(`
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="standard${x.id}checkbox"
+                                                            name="standard[${x.id}][checkbox]">
+                                                        <input class="form-check-input" type="hidden" value="0"
+                                                            id="standard${x.id}checkboxhidden"
+                                                            name="standard[${x.id}][checkbox]">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden"
+                                                        name="standard[${x.id}][item_check_id]"
+                                                        value="${x.id}">
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[${x.id}][item_standard]"
+                                                        id="" value="${x.item_standard}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[${x.id}][unit_measurement]"
+                                                        id="standard${x.id}unit_measurement"
+                                                        value="${x.unit_measurement}" readonly>
+                                                </td>
+                                                <td>
+                                                    <select name="standard[${x.id}][operation]"
+                                                        id="standard${x.id}operation"
+                                                        class="form-control disabledriko" readonly>
+                                                        <option value="" selected>Choose ...</option>
+                                                        <option value="Min">Min</option>
+                                                        <option value="Max">Max</option>
+                                                        <option value="Between">Between</option>
+                                                        <option value="Equal">Equal</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control disabledriko"
+                                                        name="standard[${x.id}][standard_pengecekan_min]"
+                                                        id="standard${x.id}standard_pengecekan_min" readonly>
+                                                </td>
+                                            </tr>
+                                        `);
+
+                                    $(`#standard` + x.id + `checkbox`).on(
+                                        'change',
+                                        function() {
+                                            if ($(this).is(":checked")) {
+                                                checkCheckbox()
+                                            } else {
+                                                checkCheckbox()
+                                            }
+                                        });
+                                });
+                            }
+                        },
+                    });
+                } else {
+                    alert('Item Code Belum Diisi!!!');
+                }
+            });
 
         });
     </script>

@@ -15,24 +15,24 @@
             <tr>
                 <th>NPK</th>
                 <td>:</td>
-                <td>{{ $npk }}</td>
+                <td>{{ $dataSend['npk'] }}</td>
             </tr>
             <tr>
                 <th>Nama</th>
                 <td>:</td>
-                <td>{{ $name }}</td>
+                <td>{{ $dataSend['name'] }}</td>
             </tr>
             <tr>
                 <th>Email</th>
                 <td>:</td>
-                <td>{{ $email }}</td>
+                <td>{{ $dataSend['email'] }}</td>
             </tr>
         </tbody>
     </table>
 
     <p>
         Silahkan klik link berikut untuk reset password anda :
-        <h3><a href="{{ $link }}">Please click this link to reset</a></h3>
+        <h3><a href="{{ $dataSend['link'] }}">Please click this link to reset</a></h3>
     </p>
 
     <br><br>
