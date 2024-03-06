@@ -71,6 +71,7 @@ class ProgressrepairController extends Controller
         $submit['lead_time'] = $data['lead_time'];
         $submit['time_period'] = $data['time_period'];
         $submit['quotation'] = $data['no_quotation'];
+        $submit['nomor_pp'] = $data['surat_jalan']; // kolom nomor_pp diisi dengan data nomor surat jalan
 
         if ($request->place_of_repair == "In House") {
             if ($request->plan_start_repair != '') {

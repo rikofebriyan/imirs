@@ -191,6 +191,7 @@ class ExportController extends Controller
                 'finishrepairs.f_nama_pic',
                 'finishrepairs.f_place_of_repair',
                 'progressrepairs.subcont_name',
+                'progressrepairs.nomor_pp', // diisi dengan data nomor surat jalan
                 'progressrepairs.quotation',
                 'finishrepairs.f_analisa',
                 'finishrepairs.f_action',
@@ -215,6 +216,7 @@ class ExportController extends Controller
             'nama_pic',
             'place_of_repair',
             'subcont_name',
+            'no_surat_jalan',
             'no_quotation',
             'analisa',
             'action',
@@ -294,6 +296,7 @@ class ExportController extends Controller
                 'progressrepairs.plan_start_repair',
                 'progressrepairs.plan_finish_repair',
                 'progressrepairs.subcont_name',
+                'progressrepairs.nomor_pp', // diisi dengan data nomor surat jalan
                 'progressrepairs.quotation',
                 'progressrepairs.lead_time',
                 'progressrepairs.time_period',
@@ -332,6 +335,7 @@ class ExportController extends Controller
             "plan_start_repair",
             "plan_finish_repair",
             "subcont_name",
+            "no_surat_jalan",
             "quotation",
             "lead_time",
             "time_period",
@@ -454,6 +458,7 @@ class ExportController extends Controller
             'nama_pic' => $waitingrepair->nama_pic,
             'place_of_repair' => $formFinish_progressrepair->place_of_repair,
             'subcont_name' => $formFinish_progressrepair->subcont_name,
+            'no_surat_jalan' => $formFinish_progressrepair->nomor_pp, // kolom nomor_pp diisi dengan data surat jalan
             'no_quotation' => $formFinish_progressrepair->quotation,
             'analisa' => $formFinish_progressrepair->analisa,
             'action' => $formFinish_progressrepair->action,
@@ -479,6 +484,7 @@ class ExportController extends Controller
             'nama_pic',
             'place_of_repair',
             'subcont_name',
+            'no_surat_jalan',
             'no_quotation',
             'analisa',
             'action',
