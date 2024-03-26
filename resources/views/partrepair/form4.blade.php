@@ -36,7 +36,7 @@
                         <tr>
                             <td>
                                 <button type="button"
-                                    class="btn btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif"
+                                    class="btn btn-primary @if ($waitingrepair->progress == 'Finish'  || $waitingrepair->progress == 'Scrap') disabled @endif"
                                     data-bs-toggle="modal" data-bs-target="#asu{{ $joi->id }}"
                                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size:
                                 .75rem">
@@ -44,7 +44,7 @@
                                 </button>
 
                                 <a href="{{ route('partrepair.progresstrial.delete', $joi->id) }}"
-                                    class="btn btn-danger @if ($waitingrepair->progress == 'Finish') disabled @endif"
+                                    class="btn btn-danger @if ($waitingrepair->progress == 'Finish'  || $waitingrepair->progress == 'Scrap') disabled @endif"
                                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem"
                                     onclick="return confirm('Yakin?')">Delete</a>
                             </td>
@@ -77,12 +77,12 @@
             <div class="d-flex justify-content-end">
                 @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                     <button type="button"
-                        class="btn btn-md btn-info me-1 @if ($waitingrepair->progress == 'Finish') disabled @endif"
+                        class="btn btn-md btn-info me-1 @if ($waitingrepair->progress == 'Finish'  || $waitingrepair->progress == 'Scrap') disabled @endif"
                         data-bs-toggle="modal" data-bs-target="#modalAddPengecekan">
                         Tambah Item Pengecekan
                     </button>
                     <button id="judgeok" type="submit"
-                        class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
+                        class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish'  || $waitingrepair->progress == 'Scrap') disabled @endif">Save</button>
                 @else
                     <button type="button" class="btn btn-md btn-info me-1 disabled">
                         Tambah Item Pengecekan

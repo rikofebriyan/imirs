@@ -52,7 +52,7 @@
                         <label for="disabledInput" class="col-sm-3 col-form-label">Maker</label>
                         <div class="col-sm-9 align-items-center d-flex">
                             <input type="text" name="f_maker" class="form-control border-0"
-                                value="{{ $waitingrepair->maker }}" readonly>
+                                value="{{ $waitingrepair->maker_name }}" readonly>
                         </div>
                     </div>
                     <div class="row">
@@ -255,9 +255,9 @@
                     <div class="p-3">
                         @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                             <button type="submit"
-                                class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif">Save</button>
+                                class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish' || $waitingrepair->progress == 'Scrap') disabled @endif">Save</button>
                             <a href="{{ route('partrepair.waitingtable.index') }}"
-                                class="btn btn-md btn-secondary @if ($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
+                                class="btn btn-md btn-secondary @if ($waitingrepair->progress == 'Finish' || $waitingrepair->progress == 'Scrap') disabled @endif">Back</a>
 
                             <a href="{{ route('ticket_finish', $waitingrepair->id) }}"
                                 class="btn icon btn-warning">Cetak Tiket</a>

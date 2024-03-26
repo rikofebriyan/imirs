@@ -366,7 +366,11 @@ class ExportController extends Controller
 
     public function ticket_finish($id)
     {
-        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->join('sparepartrepair.dbo.makers', 'waitingrepairs.maker', '=', 'makers.id')
+            ->select('waitingrepairs.*', 'makers.name as maker_name')
+            ->where('waitingrepairs.id', $id)->first();
+
         $progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $waitingrepair->id)->get();
         $formFinish_waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
         $formFinish_progressrepair = DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $formFinish_waitingrepair->id)->first();
@@ -453,7 +457,7 @@ class ExportController extends Controller
             'date' => $waitingrepair->date,
             'item_name' => $waitingrepair->item_name,
             'item_type' => $waitingrepair->item_type,
-            'maker' => $waitingrepair->maker,
+            'maker' => $waitingrepair->maker_name,
             'price' => $waitingrepair->price,
             'nama_pic' => $waitingrepair->nama_pic,
             'place_of_repair' => $formFinish_progressrepair->place_of_repair,
@@ -507,6 +511,57 @@ class ExportController extends Controller
             'actual_pengecekan',
             'judgement',
         ];
+
+        if ($formFinish_progressrepair->judgement == 'Scrap') {
+            $header_scrap = array(
+                'reg_sp',
+                'date',
+                'item_name',
+                'item_type',
+                'maker',
+                'price',
+                'nama_pic',
+                'place_of_repair',
+                'analisa',
+                'action',
+                'judgement',
+            );
+
+            $data_scrap = [
+                'reg_sp' => $waitingrepair->reg_sp,
+                'date' => $waitingrepair->date,
+                'item_name' => $waitingrepair->item_name,
+                'item_type' => $waitingrepair->item_type,
+                'maker' => $waitingrepair->maker_name,
+                'price' => $waitingrepair->price,
+                'nama_pic' => $waitingrepair->nama_pic,
+                'place_of_repair' => $formFinish_progressrepair->place_of_repair,
+                'analisa' => $formFinish_progressrepair->analisa,
+                'action' => $formFinish_progressrepair->action,
+                'judgement' => $formFinish_progressrepair->judgement,
+            ];
+
+            $spreadsheet = IOFactory::load(public_path('Ticket Scrap.xlsx'));
+            $sheet = $spreadsheet->getSheetByName('Sheet Export');
+            if ($sheet == null) {
+                $sheet = new Worksheet($spreadsheet, 'Sheet Export');
+                $spreadsheet->addSheet($sheet);
+            }
+
+            $sheet->fromArray([$header_scrap], null, 'A1');
+            $sheet->fromArray($data_scrap, null, 'A2');
+
+            // export to file
+            $fileName = "Ticket Scrap " . $waitingrepair->reg_sp .  ".xlsx";
+            $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+
+            return response()->stream(function () use ($writer) {
+                $writer->save('php://output');
+            }, 200, [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+            ]);
+        }
 
         // write data finish ke sheet export
         $spreadsheet = IOFactory::load(public_path('Ticket Finish.xlsx'));
@@ -563,6 +618,5 @@ class ExportController extends Controller
         } else {
             return Storage::download($keteranganMtbf->recondition_sheet);
         }
-
     }
 }

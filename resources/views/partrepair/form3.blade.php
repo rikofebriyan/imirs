@@ -25,7 +25,7 @@
                     <tr>
                         <td>
                             <button type="button"
-                                class="btn btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif"
+                                class="btn btn-primary @if ($waitingrepair->progress == 'Finish'  || $waitingrepair->progress == 'Scrap') disabled @endif"
                                 data-bs-toggle="modal" data-bs-target="#asu{{ $req->id }}"
                                 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size:
                                 .75rem">
@@ -193,7 +193,7 @@
                                 @method('DELETE')
 
                                 <button type="submit"
-                                    class="btn btn-danger @if ($waitingrepair->progress == 'Finish') disabled @endif"
+                                    class="btn btn-danger @if ($waitingrepair->progress == 'Finish'  || $waitingrepair->progress == 'Scrap') disabled @endif"
                                     style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem"
                                     onclick="return confirm('Yakin?')">Delete</button>
                             </form>
@@ -222,7 +222,7 @@
     <div class="d-flex justify-content-end">
         @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
             <div class="me-1">
-                <button id="fieldsealkit" class="btn btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif"
+                <button id="fieldsealkit" class="btn btn-primary @if ($waitingrepair->progress == 'Finish'  || $waitingrepair->progress == 'Scrap') disabled @endif"
                     data-bs-toggle="modal" data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
             </div>
         @else

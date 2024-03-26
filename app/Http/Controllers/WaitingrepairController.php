@@ -242,7 +242,11 @@ class WaitingrepairController extends Controller
 
     public function waitingRepairForm1($id)
     {
-        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->join('sparepartrepair.dbo.makers', 'waitingrepairs.maker', '=', 'makers.id')
+            ->select('waitingrepairs.*', 'makers.name as maker_name')
+            ->where('waitingrepairs.id', $id)->first();
+
         $keteranganMtbf = DB::table('sparepartrepair.dbo.keterangan_mtbfs')->where('form_input_id', $waitingrepair->id)->first();
 
         if ($keteranganMtbf == null) {
@@ -355,7 +359,7 @@ class WaitingrepairController extends Controller
         $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
 
         $join = DB::table('progresstrials')->where('form_input_id', $waitingrepair->id)
-            ->join('item_standards', 'item_standards.id', '=', 'progresstrials.item_check_id')
+            ->join('sparepartrepair.dbo.item_standards', 'item_standards.id', '=', 'progresstrials.item_check_id')
             ->select('progresstrials.*', 'item_standards.item_standard')
             ->get();
 
@@ -372,7 +376,11 @@ class WaitingrepairController extends Controller
     public function waitingRepairForm5($id)
     {
         // form 5
-        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
+        $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')
+            ->join('sparepartrepair.dbo.makers', 'waitingrepairs.maker', '=', 'makers.id')
+            ->select('waitingrepairs.*', 'makers.name as maker_name')
+            ->where('waitingrepairs.id', $id)->first();
+
         $progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $waitingrepair->id)->get();
         $formFinish_waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')->where('id', $id)->first();
         $formFinish_progressrepair = DB::table('sparepartrepair.dbo.progressrepairs')->where('form_input_id', $formFinish_waitingrepair->id)->first();

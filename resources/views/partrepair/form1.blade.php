@@ -113,7 +113,7 @@
                                 <option selected disabled>Maker ...</option>
                                 @foreach ($maker as $mak)
                                     <option value="{{ $mak->name }}"
-                                        @if ($waitingrepair->maker == $mak->name) selected @endif>
+                                        @if ($waitingrepair->maker_name == $mak->name) selected @endif>
                                         {{ $mak->name }}
                                     </option>
                                 @endforeach
@@ -295,9 +295,9 @@
 
                     @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
                         <button type="submit"
-                            class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish') disabled @endif">Update</button>
+                            class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish' || $waitingrepair->progress == 'Scrap') disabled @endif">Update</button>
                         <a href="{{ route('partrepair.waitingtable.index') }}"
-                            class="btn btn-md btn-secondary @if ($waitingrepair->progress == 'Finish') disabled @endif">Back</a>
+                            class="btn btn-md btn-secondary @if ($waitingrepair->progress == 'Finish' || $waitingrepair->progress == 'Scrap') disabled @endif">Back</a>
                         {{-- <button id="btnCetakTiket" type="button" class="btn icon btn-warning" data-bs-toggle="modal"
                             data-bs-target="#modalCetakTicket">Cetak
                             Tiket</button> --}}
