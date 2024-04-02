@@ -113,7 +113,7 @@
                                 <option selected disabled>Maker ...</option>
                                 @foreach ($maker as $mak)
                                     <option value="{{ $mak->name }}"
-                                        @if ($waitingrepair->maker_name == $mak->name) selected @endif>
+                                        @if ($waitingrepair->maker == $mak->name) selected @endif>
                                         {{ $mak->name }}
                                     </option>
                                 @endforeach

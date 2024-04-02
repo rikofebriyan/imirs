@@ -530,7 +530,7 @@
                     $('#maker').empty()
                     $('#maker').append(`<option value="" selected disabled>Maker ...</option>`)
                     $.each(result, function(id, value) {
-                        $('#maker').append('<option value="' + value.id + '">' +
+                        $('#maker').append('<option value="' + value.name + '">' +
                             value.name + '</option>');
                     });
                 }

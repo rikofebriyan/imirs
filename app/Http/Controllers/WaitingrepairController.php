@@ -242,9 +242,11 @@ class WaitingrepairController extends Controller
 
     public function waitingRepairForm1($id)
     {
+        // $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')
+        //     ->join('sparepartrepair.dbo.makers', 'waitingrepairs.maker', '=', 'makers.id')
+        //     ->select('waitingrepairs.*', 'makers.name as maker_name')
+        //     ->where('waitingrepairs.id', $id)->first();
         $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')
-            ->join('sparepartrepair.dbo.makers', 'waitingrepairs.maker', '=', 'makers.id')
-            ->select('waitingrepairs.*', 'makers.name as maker_name')
             ->where('waitingrepairs.id', $id)->first();
 
         $keteranganMtbf = DB::table('sparepartrepair.dbo.keterangan_mtbfs')->where('form_input_id', $waitingrepair->id)->first();
@@ -376,9 +378,12 @@ class WaitingrepairController extends Controller
     public function waitingRepairForm5($id)
     {
         // form 5
+        // $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')
+        //     ->join('sparepartrepair.dbo.makers', 'waitingrepairs.maker', '=', 'makers.id')
+        //     ->select('waitingrepairs.*', 'makers.name as maker_name')
+        //     ->where('waitingrepairs.id', $id)->first();
+
         $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')
-            ->join('sparepartrepair.dbo.makers', 'waitingrepairs.maker', '=', 'makers.id')
-            ->select('waitingrepairs.*', 'makers.name as maker_name')
             ->where('waitingrepairs.id', $id)->first();
 
         $progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $waitingrepair->id)->get();

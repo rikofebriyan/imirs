@@ -52,7 +52,7 @@
                         <label for="disabledInput" class="col-sm-3 col-form-label">Maker</label>
                         <div class="col-sm-9 align-items-center d-flex">
                             <input type="text" name="f_maker" class="form-control border-0"
-                                value="{{ $waitingrepair->maker_name }}" readonly>
+                                value="{{ $waitingrepair->maker }}" readonly>
                         </div>
                     </div>
                     <div class="row">
