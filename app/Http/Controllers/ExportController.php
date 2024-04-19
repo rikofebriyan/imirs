@@ -367,8 +367,8 @@ class ExportController extends Controller
     public function ticket_finish($id)
     {
         $waitingrepair = DB::table('sparepartrepair.dbo.waitingrepairs')
-            ->join('sparepartrepair.dbo.makers', 'waitingrepairs.maker', '=', 'makers.id')
-            ->select('waitingrepairs.*', 'makers.name as maker_name')
+            // ->join('sparepartrepair.dbo.makers', 'waitingrepairs.maker', '=', 'makers.id')
+            // ->select('waitingrepairs.*', 'makers.name as maker_name')
             ->where('waitingrepairs.id', $id)->first();
 
         $progresspemakaian = DB::table('sparepartrepair.dbo.progresspemakaians')->where('form_input_id', $waitingrepair->id)->get();
@@ -457,7 +457,7 @@ class ExportController extends Controller
             'date' => $waitingrepair->date,
             'item_name' => $waitingrepair->item_name,
             'item_type' => $waitingrepair->item_type,
-            'maker' => $waitingrepair->maker_name,
+            'maker' => $waitingrepair->maker,
             'price' => $waitingrepair->price,
             'nama_pic' => $waitingrepair->nama_pic,
             'place_of_repair' => $formFinish_progressrepair->place_of_repair,
@@ -532,7 +532,7 @@ class ExportController extends Controller
                 'date' => $waitingrepair->date,
                 'item_name' => $waitingrepair->item_name,
                 'item_type' => $waitingrepair->item_type,
-                'maker' => $waitingrepair->maker_name,
+                'maker' => $waitingrepair->maker,
                 'price' => $waitingrepair->price,
                 'nama_pic' => $waitingrepair->nama_pic,
                 'place_of_repair' => $formFinish_progressrepair->place_of_repair,
@@ -540,7 +540,7 @@ class ExportController extends Controller
                 'action' => $formFinish_progressrepair->action,
                 'judgement' => $formFinish_progressrepair->judgement,
             ];
-
+            // dd($data_scrap);
             $spreadsheet = IOFactory::load(public_path('Ticket Scrap.xlsx'));
             $sheet = $spreadsheet->getSheetByName('Sheet Export');
             if ($sheet == null) {
