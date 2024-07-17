@@ -88,9 +88,9 @@ class FinishrepairController extends Controller
         ]);
 
         $request3 = new CodePartRepair;
-        $request3->category = $request->category;
-        $request3->number = $request->number;
-        $request3->code_part_repair = $request->code_part_repair;
+        $request3->category = $request->category ? $request->category : "-";
+        $request3->number = $request->number ? $request->number : "-";
+        $request3->code_part_repair = $request->code_part_repair ? $request->code_part_repair : "-";
         $request3->save();
 
         return redirect()->route('finishtable')->with('success', 'Your task added successfully!');
