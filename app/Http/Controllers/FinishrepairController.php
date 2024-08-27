@@ -89,7 +89,8 @@ class FinishrepairController extends Controller
 
         $request3 = new CodePartRepair;
         $request3->category = $request->category ? $request->category : "-";
-        $request3->number = $request->number ? $request->number : "-";
+        // $request3->number = $request->number ? $request->number : "-";
+        $request3->number = preg_replace('/\D/','',$request->code_part_repair); // edit 27 aug 2024 untuk number repair ambil dari input code_part_repair
         $request3->code_part_repair = $request->code_part_repair ? $request->code_part_repair : "-";
         $request3->save();
 
