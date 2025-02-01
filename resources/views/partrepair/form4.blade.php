@@ -75,7 +75,7 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-end">
-                @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
+                @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan' || $loginUser->jabatan == 'Die Maintenance')
                     <button type="button"
                         class="btn btn-md btn-info me-1 @if ($waitingrepair->progress == 'Finish'  || $waitingrepair->progress == 'Scrap') disabled @endif"
                         data-bs-toggle="modal" data-bs-target="#modalAddPengecekan">
@@ -237,7 +237,7 @@
                     </div>
 
                 </div>
-                @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
+                @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan' || $loginUser->jabatan == 'Die Maintenance')
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save</button>

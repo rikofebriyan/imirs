@@ -253,7 +253,7 @@
 
                 <div class="mb-3 row">
                     <div class="p-3">
-                        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
+                        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan' || $loginUser->jabatan == 'Die Maintenance')
                             <button type="submit"
                                 class="btn btn-md btn-primary @if ($waitingrepair->progress == 'Finish' || $waitingrepair->progress == 'Scrap') disabled @endif">Save</button>
                             <a href="{{ route('partrepair.waitingtable.index') }}"

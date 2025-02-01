@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Maker;
 use App\Models\Section;
+use App\Models\ItemStandard;
 use Illuminate\Http\Request;
 use App\Models\Waitingrepair;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\ItemStandard;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PartrepairController extends Controller
 {
@@ -62,6 +63,7 @@ class PartrepairController extends Controller
         $user = DB::table('sparepartrepair.dbo.users')->orderBy('name')->get(['id', 'name', 'NPK', 'jabatan']);
         $section = DB::table('sparepartrepair.dbo.sections')->orderBy('name')->get();
         $finishRepair = DB::table('sparepartrepair.dbo.finishrepairs')->orderBy('code_part_repair')->get(['id', 'code_part_repair', 'f_item_name', 'f_item_type', 'f_maker']);
+        $userLogin = Auth::user(['id', 'name', 'NPK', 'jabatan']);
 
         return view('partrepair.request', [
             'section' => $section,
@@ -70,6 +72,7 @@ class PartrepairController extends Controller
             'maker' => $maker,
             'itemstandard' => $itemstandard,
             'finishRepair' => $finishRepair,
+            'userLogin' => $userLogin,
         ]);
     }
 

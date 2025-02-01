@@ -69,6 +69,7 @@
                                             <option value="1">Maintenance Spare Part</option>
                                             <option value="2">Tool Center</option>
                                             <option value="3">Tool Room</option>
+                                            <option value="4">Maintenance Dies</option>
                                         </select>
                                     </div>
                                 </div>
@@ -327,7 +328,7 @@
             <div class="container-fluid justify-content-center py-0">
                 <div class="container-fluid">
                     <div class="card border text-center mb-2">
-                        <div class="row">
+                        <div id="standardPengecekan_div" class="row">
                             <div class="col-9">
                                 <h3 class="m-2">STANDARD</h3>
                             </div>
@@ -336,7 +337,8 @@
                                     Standard</button>
                             </div>
                         </div>
-                        <div class="row gx-3">
+
+                        <div id="standardPengecekanform_div" class="row gx-3">
                             <div class="card col border m-2">
                                 <table id="myTable" class="table table-striped nowrap overflow-scroll display">
                                     <thead>
@@ -1160,6 +1162,26 @@
                 }
             });
 
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var jabatan = "{{ $userLogin->jabatan }}"
+
+            if (jabatan == 'Die Maintenance') {
+                $('#jenisPenggantian_div').addClass('d-none')
+                $('#standardPengecekan_div').addClass('d-none')
+                $('#standardPengecekanform_div').addClass('d-none')
+                $('#btnSubmitFormInput').removeClass('disabled')
+                $('#jenisPenggantian').prop('required', false)
+            } else {
+                $('#jenisPenggantian_div').removeClass('d-none')
+                $('#standardPengecekan_div').removeClass('d-none')
+                $('#standardPengecekanform_div').removeClass('d-none')
+                $('#btnSubmitFormInput').addClass('disabled')
+                $('#jenisPenggantian').prop('required', true)
+            }
         });
     </script>
 @endsection

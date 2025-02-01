@@ -230,7 +230,7 @@
                         </div>
                     </div>
 
-                    @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
+                    @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan' || $loginUser->jabatan == 'Die Maintenance')
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                             <button id="scrap" type="submit" class="btn btn-md btn-danger"
                                 style="display: none">Scrap</button>

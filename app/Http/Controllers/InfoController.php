@@ -28,8 +28,9 @@ class InfoController extends Controller
         $json1 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTC'), true);
         $json2 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
         $json3 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLC'), true);
+        $json4 = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTD'), true);
 
-        $mergedJson = array_merge($json3['data'], $json2['data'], $json1['data']);
+        $mergedJson = array_merge($json4['data'], $json3['data'], $json2['data'], $json1['data']);
         $mergedJsonFiltered = array_filter($mergedJson, function ($var) {
             return $var['StatusBarang'] == 'NE';
         });
@@ -82,6 +83,8 @@ class InfoController extends Controller
         } elseif ($storageId == '3') {
             // $itemJson = json_decode(file_get_contents(public_path('json/stockonhandlistTLR.json')), true);
             $itemJson = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=TLR'), true);
+        } elseif ($storageId == '4') {
+            $itemJson = json_decode(file_get_contents('http://172.31.42.5/ims/json/stockonhandlist.php?whCode=MTD'), true);
         }
 
         $item = array_filter($itemJson['data'], function ($var) {

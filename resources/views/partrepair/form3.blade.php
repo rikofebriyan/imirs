@@ -220,7 +220,7 @@
 
 
     <div class="d-flex justify-content-end">
-        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan')
+        @if ($loginUser->jabatan == 'ADMIN' || $loginUser->jabatan == 'RepairMan' || $loginUser->jabatan == 'Die Maintenance')
             <div class="me-1">
                 <button id="fieldsealkit" class="btn btn-primary @if ($waitingrepair->progress == 'Finish'  || $waitingrepair->progress == 'Scrap') disabled @endif"
                     data-bs-toggle="modal" data-bs-target="#exampleModal">TAMBAHKAN SEAL KIT</button>
@@ -262,6 +262,7 @@
                                                 <option value="1">Maintenance Spare Part</option>
                                                 <option value="2">Tool Center</option>
                                                 <option value="3">Tool Room</option>
+                                                <option value="4">Maintenance Dies</option>
                                             </select>
                                         </div>
                                     </div>
