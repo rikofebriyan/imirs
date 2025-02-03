@@ -92,7 +92,7 @@
                                 </option>
                                 <option value="Supervisor" @if ($errors->first('jabatan') == 'Supervisor') selected @endif>Supervisor
                                 </option>
-                                <option value="Supervisor" @if ($errors->first('jabatan') == 'Die Maintenance') selected @endif>Die Maintenance
+                                <option value="Die Maintenance" @if ($errors->first('jabatan') == 'Die Maintenance') selected @endif>Die Maintenance
                                 </option>
                             </select>
                             <div class="form-control-icon">
